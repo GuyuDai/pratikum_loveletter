@@ -2,7 +2,6 @@ package de.swe.oo.client.minimalClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.Socket;
 
 public class Listener extends Thread {
     BufferedReader reader;

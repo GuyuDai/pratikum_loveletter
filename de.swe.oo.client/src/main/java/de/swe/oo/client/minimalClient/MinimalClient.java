@@ -26,7 +26,7 @@ public class MinimalClient extends Thread {
         connect(finalPort);
     }
 
-    public int login(){
+    public int login() {
         try {
             clientSocket = new Socket(ip, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -54,14 +54,14 @@ public class MinimalClient extends Thread {
         }
         int finalPort = Integer.parseInt(answer);
         return finalPort;
-        }
+    }
 
-    public void connect(int finalPort){
-        if (finalPort < 0){
+    public void connect(int finalPort) {
+        if (finalPort < 0) {
             System.out.println("An error occured while requesting port.");
             return;
         }
-        while(true) {
+        while (true) {
             try {
                 sleep(20);
                 clientSocket = new Socket(ip, finalPort);
@@ -71,7 +71,7 @@ public class MinimalClient extends Thread {
                 break;
             } catch (IOException e) {
                 System.out.println("An error occurred while opening IO objects. " + e.getMessage());
-            } catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Error while connecting to final port. " + e.getMessage());
             }
         }
