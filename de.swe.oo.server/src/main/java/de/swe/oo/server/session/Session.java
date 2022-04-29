@@ -34,7 +34,7 @@ public class Session {
 
     public void remove(Player player) {
         player.connection.close();
-        player.listener.close();
+        player.serverListener.close();
         ChatMessage byeMsg = new ChatMessage(player.name + " left the room.");
         players.remove(player);
         chat.broadcast(byeMsg);

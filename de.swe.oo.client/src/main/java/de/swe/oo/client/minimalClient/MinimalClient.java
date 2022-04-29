@@ -11,7 +11,7 @@ public class MinimalClient extends Thread {
     Socket clientSocket;
     private String ip;
     private int port;
-    Listener listener;
+    ClientListener clientListener;
     PrintWriter out;
     BufferedReader in;
 
@@ -31,7 +31,7 @@ public class MinimalClient extends Thread {
             clientSocket = new Socket(ip, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            listener = new Listener(in);
+            clientListener = new ClientListener(in);
         } catch (IOException e) {
             System.out.println("An error occurred while opening IO objects for login. " + e.getMessage());
             return -1;
@@ -67,7 +67,7 @@ public class MinimalClient extends Thread {
                 clientSocket = new Socket(ip, finalPort);
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                listener = new Listener(in);
+                clientListener = new ClientListener(in);
                 break;
             } catch (IOException e) {
                 System.out.println("An error occurred while opening IO objects. " + e.getMessage());
@@ -75,10 +75,10 @@ public class MinimalClient extends Thread {
                 System.out.println("Error while connecting to final port. " + e.getMessage());
             }
         }
-        listener.start();
+        clientListener.start();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String currentInput = "";
-        while (currentInput != null && listener.running) {
+        while (clientSocket.isConnected() && clientListener.running) {
             System.out.println("Nachricht eingeben:");
             try {
                 currentInput = br.readLine();
@@ -88,6 +88,7 @@ public class MinimalClient extends Thread {
             }
             out.println(currentInput);
         }
+        System.out.println("Closing Client.");
     }
 
     public static void main(String[] args) {

@@ -8,17 +8,17 @@ public class Player {
     public String name;
     public Session session;
     public Connection connection;
-    public Listener listener;
+    public ServerListener serverListener;
 
     public Player(Session session, String name, int port) {
         this.session = session;
         this.name = name;
         this.connection = new Connection(port);
         this.connection.start();
-        this.listener = new Listener(this);
-        this.listener.start();
+        this.serverListener = new ServerListener(this);
+        this.serverListener.start();
         String threadName = name.concat("_Listener");
-        this.listener.setName(threadName);
+        this.serverListener.setName(threadName);
     }
 
     public void sendMessage(Message msg) {

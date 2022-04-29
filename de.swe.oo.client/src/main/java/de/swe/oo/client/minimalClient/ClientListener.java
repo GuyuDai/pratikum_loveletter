@@ -3,11 +3,11 @@ package de.swe.oo.client.minimalClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class Listener extends Thread {
+public class ClientListener extends Thread {
     BufferedReader reader;
     boolean running;
 
-    public Listener(BufferedReader reader) {
+    public ClientListener(BufferedReader reader) {
         this.reader = reader;
         this.running = true;
     }
