@@ -106,6 +106,7 @@ local.properties
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
 # .idea/modules.xml
+*.iml
 .idea/*.iml
 # .idea/modules
 
