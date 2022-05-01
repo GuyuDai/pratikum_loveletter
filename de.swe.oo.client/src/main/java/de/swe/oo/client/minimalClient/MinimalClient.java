@@ -4,91 +4,72 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.Socket;
 
 
-public class MinimalClient extends Thread {
-    Socket clientSocket;
-    private String ip;
-    private int port;
-    ClientListener clientListener;
-    PrintWriter out;
-    BufferedReader in;
+public class MinimalClient extends Client {
+    ConnectionManager connectionManager;
+    ConnectionListener connectionListener;
+    PrintWriter connectionOut;
+    UserInputListener userInputListener;
 
     public MinimalClient(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
+        this.connectionManager = new ConnectionManager(ip, port);
     }
 
     @Override
     public void run() {
-        int finalPort = login();
-        connect(finalPort);
+        login();
+        setupConnectionObjects();
+        connectionListener.start();
+        connectionListener.setName("connectionListener");
+        userInputListener.start();
+        userInputListener.setName("userInputListener");
+        try {
+            connectionListener.join();
+            userInputListener.join();
+        } catch (InterruptedException e) {
+            System.err.println("Error, client was interrupted. " + e.getMessage());
+        }
     }
 
-    public int login() {
-        try {
-            clientSocket = new Socket(ip, port);
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            clientListener = new ClientListener(in);
-        } catch (IOException e) {
-            System.out.println("An error occurred while opening IO objects for login. " + e.getMessage());
-            return -1;
-        }
-        String userName = "defaultName";
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Gewuenschten Nutzernamen eingeben:");
-        try {
-            userName = br.readLine();
-        } catch (IOException e) {
-            System.out.println("A problem occurred while reading input from the terminal. " + e.getMessage());
-        }
-        out.println(userName);
-        String answer;
-        try {
-            answer = in.readLine();
-        } catch (IOException e) {
-            System.out.println("Error receiving the User port. " + e.getMessage());
-            return -1;
-        }
-        int finalPort = Integer.parseInt(answer);
-        return finalPort;
-    }
-
-    public void connect(int finalPort) {
-        if (finalPort < 0) {
-            System.out.println("An error occured while requesting port.");
-            return;
-        }
-        while (true) {
+    public void login() {
+        String input;
+        boolean loggedIn = false;
+        BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
+        while (!loggedIn) {
+            outputChat("Bitte Nutzernamen eingeben:");
             try {
-                sleep(20);
-                clientSocket = new Socket(ip, finalPort);
-                out = new PrintWriter(clientSocket.getOutputStream(), true);
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                clientListener = new ClientListener(in);
-                break;
+                input = inReader.readLine();
             } catch (IOException e) {
-                System.out.println("An error occurred while opening IO objects. " + e.getMessage());
-            } catch (Exception e) {
-                System.out.println("Error while connecting to final port. " + e.getMessage());
-            }
-        }
-        clientListener.start();
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String currentInput = "";
-        while (clientSocket.isConnected() && clientListener.running) {
-            System.out.println("Nachricht eingeben:");
-            try {
-                currentInput = br.readLine();
-            } catch (IOException e) {
-                System.out.println("A problem occurred while reading input from the terminal. " + e.getMessage());
+                System.err.println("Error reading from console. " + e.getMessage());
                 continue;
             }
-            out.println(currentInput);
+            loggedIn = connectionManager.loginAs(input);
+            if (!loggedIn) {
+                System.err.println(connectionManager.getErrorMessage());
+            }
         }
-        System.out.println("Closing Client.");
+    }
+
+    public void setupConnectionObjects() {
+        connectionOut = connectionManager.getWriter();
+        connectionListener = new ConnectionListener(this, connectionManager.getReader());
+        userInputListener = new UserInputListener(this, new BufferedReader(new InputStreamReader(System.in)));
+    }
+
+    public void sendText(String text) {
+        connectionOut.println(text);
+    }
+
+    public void outputChat(String text) {
+        System.out.println(text);
+    }
+
+    public void close() {
+        // Problem: userInputListener locks the BufferedReader by calling readLine, thus it can't be closed easily.
+        connectionListener.close();
+        userInputListener.close();
+        connectionManager.closeConnection();
     }
 
     public static void main(String[] args) {
