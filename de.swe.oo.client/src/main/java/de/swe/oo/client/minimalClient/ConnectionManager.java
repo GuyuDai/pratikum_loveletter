@@ -9,6 +9,7 @@ import java.net.Socket;
 import static java.lang.Thread.sleep;
 
 public class ConnectionManager {
+    private Client client;
     private String ip;
     private int port;
     private String errorMessage;
@@ -17,9 +18,10 @@ public class ConnectionManager {
     private BufferedReader in;
     private boolean successfulLogin;
 
-    public ConnectionManager(String ip, int port) {
+    public ConnectionManager(String ip, int port, Client client){
         this.ip = ip;
         this.port = port;
+        this.client = client;
         this.errorMessage = "Nothing happened so far.";
         this.successfulLogin = false;
     }
@@ -88,7 +90,7 @@ public class ConnectionManager {
                 socket.close();
             }
         } catch (IOException e) {
-            System.out.println("Error: Couldn't close connection. " + e.getMessage());
+            System.err.println("Error: Couldn't close connection. " + e.getMessage());
         }
     }
 
@@ -99,7 +101,7 @@ public class ConnectionManager {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
-            System.out.println("An error occurred while opening IO objects for login. " + e.getMessage());
+            System.err.println("An error occurred while opening IO objects for login. " + e.getMessage());
             return false;
         }
         out.println(name);
@@ -107,7 +109,7 @@ public class ConnectionManager {
         try {
             answer = in.readLine();
         } catch (IOException e) {
-            System.out.println("Error receiving the User port. " + e.getMessage());
+            System.err.println("Error receiving the User port. " + e.getMessage());
             return false;
         }
         if (!isValidLoginResponse(answer)){
@@ -115,7 +117,7 @@ public class ConnectionManager {
         }
         int finalPort = Integer.parseInt(answer);
         if (finalPort < 0) {
-            System.out.println("An error occured while requesting port.");
+            System.err.println("An error occured while requesting port.");
             return false;
         }
         int errorCount = 0;
@@ -127,13 +129,13 @@ public class ConnectionManager {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 break;
             } catch (IOException e) {
-                System.out.println("An error occurred while opening IO objects. " + e.getMessage());
+                System.err.println("An error occurred while opening IO objects. " + e.getMessage());
                 ++errorCount;
                 if (errorCount > 15) {
                     return false;
                 }
             } catch (Exception e) {
-                System.out.println("Error while connecting to final port. " + e.getMessage());
+                System.err.println("Error while connecting to final port. " + e.getMessage());
                 ++errorCount;
                 if (errorCount > 15) {
                     return false;

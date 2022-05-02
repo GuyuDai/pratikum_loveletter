@@ -3,7 +3,7 @@ package de.swe.oo.client.minimalClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-abstract public class Listener extends Thread {
+public abstract class Listener extends Thread {
     Client client;
     BufferedReader reader;
     public boolean isRunning;
