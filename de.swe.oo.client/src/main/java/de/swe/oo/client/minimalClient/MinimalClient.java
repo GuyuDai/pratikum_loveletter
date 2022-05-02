@@ -49,7 +49,7 @@ public class MinimalClient extends Client {
             }
             loggedIn = connectionManager.loginAs(input);
             if (!loggedIn) {
-                System.err.println(connectionManager.getErrorMessage());
+                userOut.println(connectionManager.getErrorMessage());
             }
         }
     }

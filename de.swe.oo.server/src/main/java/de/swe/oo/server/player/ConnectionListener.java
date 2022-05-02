@@ -6,7 +6,7 @@ import de.swe.oo.server.messages.*;
 import java.io.IOException;
 
 public class ConnectionListener extends Thread {
-    boolean running;
+    private boolean running;
     private Player player;
 
     public ConnectionListener(Player player) {
@@ -19,19 +19,12 @@ public class ConnectionListener extends Thread {
         String input;
         Message msg;
         while (running) {
-            if (!player.connection.isSetUp) {
-                try {
-                    sleep(20);
-                } catch (Exception e) {
-                    System.out.println("Error while waiting for Connection to be set up.");
-                }
-                continue;
-            }
             try {
                 input = player.connection.getLine();
             } catch (IOException e) {
                 System.out.println("Listener couldn't get message. " + e.getMessage());
                 running = false;
+                player.quit();
                 continue;
             }
             msg = parseInput(input);
