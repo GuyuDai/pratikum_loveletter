@@ -5,11 +5,11 @@ import de.swe.oo.server.messages.*;
 
 import java.io.IOException;
 
-public class ServerListener extends Thread {
+public class ConnectionListener extends Thread {
     boolean running;
     private Player player;
 
-    public ServerListener(Player player) {
+    public ConnectionListener(Player player) {
         this.player = player;
         this.running = true;
     }

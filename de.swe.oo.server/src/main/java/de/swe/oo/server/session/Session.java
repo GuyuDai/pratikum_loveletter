@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Session {
+    //Erstellt eine Liste an Spielern
     List<Player> players;
     LoginHandler loginHandler;
     public Chat chat;
@@ -34,7 +35,7 @@ public class Session {
 
     public void remove(Player player) {
         player.connection.close();
-        player.serverListener.close();
+        player.connectionListener.close();
         ChatMessage byeMsg = new ChatMessage(player.name + " left the room.");
         players.remove(player);
         chat.broadcast(byeMsg);

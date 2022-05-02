@@ -15,7 +15,7 @@ public class ConnectionManager {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    public boolean successfulLogin;
+    private boolean successfulLogin;
 
     public ConnectionManager(String ip, int port) {
         this.ip = ip;
@@ -141,5 +141,13 @@ public class ConnectionManager {
             }
         }
         return true;
+    }
+
+    public boolean isSuccessfulLogin() {
+        return successfulLogin;
+    }
+
+    public void setSuccessfulLogin(boolean successfulLogin) {
+        this.successfulLogin = successfulLogin;
     }
 }
