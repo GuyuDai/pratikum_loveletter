@@ -20,13 +20,21 @@ abstract public class Listener extends Thread {
             String input;
             try {
                 input = reader.readLine();
-                if (input == null) {
-                    throw new IOException("EOF Error BufferedReader returned null.");
+                Boolean flag = true;
+                while(flag){
+                    sleep(20);
+                    if (input == null) {
+                        flag = false;
+                        isRunning = false;  //whether this line is needed?
+                        break;
+                    }
+                    handleInput(input);
                 }
-                handleInput(input);
             } catch (IOException e) {
                 System.err.println("Error while trying to read message inside listener. " + e.getMessage());
                 client.close();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
