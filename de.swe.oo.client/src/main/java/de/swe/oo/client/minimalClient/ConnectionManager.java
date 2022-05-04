@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ConnectionManager {
-    private Client client;
     private String ip;
     private int port;
     private String errorMessage;
@@ -16,10 +15,9 @@ public class ConnectionManager {
     private BufferedReader in;
 
 
-    public ConnectionManager(String ip, int port, Client client) {
+    public ConnectionManager(String ip, int port) {
         this.ip = ip;
         this.port = port;
-        this.client = client;
         this.errorMessage = "Nothing happened so far.";
     }
 

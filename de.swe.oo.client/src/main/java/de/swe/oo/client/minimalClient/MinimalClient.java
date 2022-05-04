@@ -17,7 +17,7 @@ public class MinimalClient extends Client {
     public MinimalClient(String ip, int port, BufferedReader userIn, PrintWriter out) {
         this.userIn = userIn;
         this.userOut = out;
-        this.connectionManager = new ConnectionManager(ip, port, this);
+        this.connectionManager = new ConnectionManager(ip, port);
     }
 
     @Override
