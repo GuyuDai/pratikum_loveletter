@@ -2,11 +2,13 @@ package de.swe.oo.client.minimalClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.LinkedList;
 
 abstract public class Listener extends Thread {
     Client client;
     BufferedReader reader;
     public boolean isRunning;
+
 
     public Listener(Client client, BufferedReader reader) {
         this.client = client;
@@ -20,21 +22,13 @@ abstract public class Listener extends Thread {
             String input;
             try {
                 input = reader.readLine();
-                Boolean flag = true;
-                while(flag){
-                    sleep(20);
-                    if (input == null) {
-                        flag = false;
-                        isRunning = false;  //whether this line is needed?
-                        break;
-                    }
-                    handleInput(input);
+                if (input == null) {
+                    throw new IOException("EOF Error BufferedReader returned null.");
                 }
+                handleInput(input);
             } catch (IOException e) {
                 System.err.println("Error while trying to read message inside listener. " + e.getMessage());
                 client.close();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
         }
     }
@@ -47,6 +41,7 @@ abstract public class Listener extends Thread {
             System.err.println("Error while closing a listener socket." + e.getMessage());
         }
     }
+
 
     abstract void handleInput(String input);
 }
