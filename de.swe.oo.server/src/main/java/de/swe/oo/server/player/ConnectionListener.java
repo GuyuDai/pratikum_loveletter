@@ -47,6 +47,10 @@ public class ConnectionListener extends Thread {
             case "GAME":
                 result = new GameMessage(text);
                 break;
+                // In case EXIT the ConnectionListener will quit the player
+            case "EXIT":
+                //result = new ChatMessage("bye");k
+                player.quit();
             default:
                 result = new ErrorMessage("Unknown Type.");
                 break;

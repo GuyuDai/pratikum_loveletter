@@ -11,5 +11,6 @@ public class ConnectionListener extends Listener {
     @Override
     void handleInput(String input) {
         client.outputChat(input);
+
     }
 }

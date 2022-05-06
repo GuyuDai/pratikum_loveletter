@@ -23,6 +23,10 @@ public abstract class Listener extends Thread {
                 if (input == null) {
                     throw new IOException("EOF Error BufferedReader returned null.");
                 }
+                if (input.equals("bye")){
+                    System.out.println("Goodbye:"+this.getName());
+                    client.close();
+                }
                 handleInput(input);
             } catch (IOException e) {
                 System.err.println("Error while trying to read message inside listener. " + e.getMessage());
