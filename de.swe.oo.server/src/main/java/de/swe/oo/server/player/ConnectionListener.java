@@ -40,11 +40,11 @@ public class ConnectionListener extends Thread {
         Message result;
         String type = input.substring(0, 4);
         String text = input.substring(5);
-        switch (MessageType.valueOf(type)) {
-            case CHAT:
+        switch (type) {
+            case "CHAT":
                 result = new ChatMessage(text);
                 break;
-            case GAME:
+            case "GAME":
                 result = new GameMessage(text);
                 break;
             default:
