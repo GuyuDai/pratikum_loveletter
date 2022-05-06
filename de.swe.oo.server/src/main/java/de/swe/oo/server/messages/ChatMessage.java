@@ -11,12 +11,12 @@ public class ChatMessage extends Message {
 
     public void handle(Player player) {
         if (messageText.equals("bye")) {
-            player.session.remove(player);
+            player.quit();
             return;
         }
         ChatMessage messageWithSender =
                 new ChatMessage(player.name + ": " + messageText);
-        player.session.chat.broadcast(messageWithSender);
+        player.session.broadcast(messageWithSender);
     }
 
     public String output() {

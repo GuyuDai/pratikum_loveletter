@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
-abstract public class Listener extends Thread {
+public abstract class Listener extends Thread {
     Client client;
     BufferedReader reader;
     public boolean isRunning;

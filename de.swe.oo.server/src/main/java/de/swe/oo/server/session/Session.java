@@ -1,22 +1,25 @@
 package de.swe.oo.server.session;
 
-
 import de.swe.oo.server.messages.ChatMessage;
+import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.player.Player;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Session {
+public class Session extends Thread {
+    public Chat chat;
     List<Player> players;
     LoginHandler loginHandler;
-    public Chat chat;
 
     public Session(int port) {
         this.loginHandler = new LoginHandler(this, port);
         this.chat = new Chat(this);
-        this.players = new LinkedList<Player>();
-        loginHandler.start(); //Needs to be moved, or does it?
+        this.players = new CopyOnWriteArrayList<Player>();
+    }
+
+    public void run() {
+        loginHandler.start();
         loginHandler.setName("LoginHandler");
     }
 
@@ -24,7 +27,7 @@ public class Session {
         players.add(newPlayer);
     }
 
-    public boolean isValidUsername(String testName) {
+    public boolean checkIfValidUsername(String testName) {
         boolean valid = true;
         for (Player player : players) {
             valid = valid && (!testName.equals(player.name));
@@ -33,14 +36,19 @@ public class Session {
     }
 
     public void remove(Player player) {
-        player.connection.close();
-        player.serverListener.close();
         ChatMessage byeMsg = new ChatMessage(player.name + " left the room.");
         players.remove(player);
-        chat.broadcast(byeMsg);
+        broadcast(byeMsg);
+    }
+
+    public void broadcast(Message msg) {
+        for (Player player : players) {
+            player.sendMessage(msg);
+        }
     }
 
     public static void main(String[] args) {
         Session testsession = new Session(4444);
+        testsession.start();
     }
 }

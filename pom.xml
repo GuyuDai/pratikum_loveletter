@@ -12,6 +12,7 @@
     <modules>
         <module>de.swe.oo.client</module>
         <module>de.swe.oo.server</module>
+        <module>de.swe.oo.test</module>
     </modules>
 
     <properties>

@@ -4,25 +4,31 @@ package de.swe.oo.server.player;
 import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.session.Session;
 
+import java.net.Socket;
+
 public class Player {
     public String name;
     public Session session;
     public Connection connection;
-    public ServerListener serverListener;
+    public ConnectionListener connectionListener;
 
-    public Player(Session session, String name, int port) {
+    public Player(Session session, String name, Socket socket) {
         this.session = session;
         this.name = name;
-        this.connection = new Connection(port);
-        this.connection.start();
-        this.serverListener = new ServerListener(this);
-        this.serverListener.start();
+        this.connection = new Connection(socket);
+        this.connectionListener = new ConnectionListener(this);
+        this.connectionListener.start();
         String threadName = name.concat("_Listener");
-        this.serverListener.setName(threadName);
+        this.connectionListener.setName(threadName);
     }
 
     public void sendMessage(Message msg) {
         connection.sendLine(msg.output());
     }
 
+    public void quit(){
+        session.remove(this);
+        connectionListener.close();
+        connection.close();
+    }
 }
