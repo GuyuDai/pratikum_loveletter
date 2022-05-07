@@ -1,8 +1,8 @@
 package de.swe.oo.test.bots;
 
-import de.swe.oo.client.minimalClient.Client;
-import de.swe.oo.client.minimalClient.ConnectionListener;
-import de.swe.oo.client.minimalClient.ConnectionManager;
+import de.swe.oo.client.Client;
+import de.swe.oo.client.connection.ConnectionListener;
+import de.swe.oo.client.connection.ConnectionManager;
 
 import java.io.PrintWriter;
 import java.util.Random;

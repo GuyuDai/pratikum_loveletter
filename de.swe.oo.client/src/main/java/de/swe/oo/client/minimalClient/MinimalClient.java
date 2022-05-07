@@ -1,5 +1,9 @@
 package de.swe.oo.client.minimalClient;
 
+import de.swe.oo.client.Client;
+import de.swe.oo.client.connection.ConnectionListener;
+import de.swe.oo.client.connection.ConnectionManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

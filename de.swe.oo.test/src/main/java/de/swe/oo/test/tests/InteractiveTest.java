@@ -1,6 +1,6 @@
 package de.swe.oo.test.tests;
 
-import de.swe.oo.client.minimalClient.ConnectionManager;
+import de.swe.oo.client.connection.ConnectionManager;
 import de.swe.oo.server.session.Session;
 import de.swe.oo.test.bots.ChatBot;
 

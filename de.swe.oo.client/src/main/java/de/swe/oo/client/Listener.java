@@ -1,12 +1,20 @@
-package de.swe.oo.client.minimalClient;
+package de.swe.oo.client;
+
+import de.swe.oo.client.Client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 public abstract class Listener extends Thread {
-    Client client;
-    BufferedReader reader;
-    public boolean isRunning;
+    protected Client client;
+    private BufferedReader reader;
+
+
+    private boolean isRunning;
+
+    public boolean isRunning() {
+        return isRunning;
+    }
 
     public Listener(Client client, BufferedReader reader) {
         this.client = client;
@@ -40,5 +48,5 @@ public abstract class Listener extends Thread {
         }
     }
 
-    abstract void handleInput(String input);
+    protected abstract void handleInput(String input);
 }
