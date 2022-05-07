@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 
-public class MinimalClient extends Client {
+public class DebugClient extends Client {
     BufferedReader userIn;
     PrintWriter userOut;
     ConnectionManager connectionManager;
@@ -14,7 +14,7 @@ public class MinimalClient extends Client {
     PrintWriter connectionOut;
     UserInputListener userInputListener;
 
-    public MinimalClient(String ip, int port, BufferedReader userIn, PrintWriter out) {
+    public DebugClient(String ip, int port, BufferedReader userIn, PrintWriter out) {
         this.userIn = userIn;
         this.userOut = out;
         this.connectionManager = new ConnectionManager(ip, port);
@@ -76,7 +76,7 @@ public class MinimalClient extends Client {
     }
 
     public static void main(String[] args) {
-        MinimalClient client = new MinimalClient("localhost", 4444,
+        DebugClient client = new DebugClient("localhost", 4444,
                 new BufferedReader(new InputStreamReader(System.in)),
                 new PrintWriter(System.out, true));
         client.start();

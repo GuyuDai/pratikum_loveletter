@@ -46,6 +46,7 @@ public class Connection {
     }
 
     public void sendLine(String message) {
+        notifyAll();
         out.println(message);
     }
 }

@@ -2,8 +2,7 @@ package de.swe.oo.client.minimalClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Objects;
+
 
 public abstract class Listener extends Thread {
     Client client;
@@ -22,17 +21,21 @@ public abstract class Listener extends Thread {
         while (isRunning) {
             String input;
             try {
-                if(reader.ready()){
-                    input = reader.readLine();
-                    //if(Objects.equals(input, " ")){   //for testing
-                    if (input == null) {
-                        throw new IOException("EOF Error BufferedReader returned null.");
-                    }
-                    //System.out.println(input);    //for testing
-                    handleInput(input);
+                wait();
+                input = reader.readLine();
+                if (input == null) {
+                    throw new IOException("EOF Error BufferedReader returned null.");
                 }
+                if (input.equals("bye")){
+                    System.out.println("Goodbye:"+this.getName());
+                    client.close();
+                }
+                handleInput(input);
             } catch (IOException e) {
                 System.err.println("Error while trying to read message inside listener. " + e.getMessage());
+                client.close();
+            }catch (InterruptedException e) {
+                System.out.println("InterruptedException in Listener" + e.getMessage());
                 client.close();
             }
         }
