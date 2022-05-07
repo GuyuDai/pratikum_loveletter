@@ -17,7 +17,7 @@ public abstract class Listener extends Thread {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         while (isRunning) {
             String input;
             try {
