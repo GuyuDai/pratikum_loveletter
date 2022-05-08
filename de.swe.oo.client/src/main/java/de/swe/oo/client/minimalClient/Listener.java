@@ -36,7 +36,7 @@ public abstract class Listener extends Thread {
             throw new IOException("EOF Error BufferedReader returned null.");
         }
         if (input.equals("bye")){
-            System.out.println("Goodbye:"+this.getName());
+            System.out.println("Goodbye: "+this.getName());
             client.close();
         }
         handleInput(input);

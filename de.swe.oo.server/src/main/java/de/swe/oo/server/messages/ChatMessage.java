@@ -15,7 +15,7 @@ public class ChatMessage extends Message {
             return;
         }
         ChatMessage messageWithSender =
-                new ChatMessage(player.name + ": " + messageText);
+                new ChatMessage(player.name  + messageText);
         player.session.broadcast(messageWithSender);
     }
 

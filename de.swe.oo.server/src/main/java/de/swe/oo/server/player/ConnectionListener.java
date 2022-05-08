@@ -42,7 +42,7 @@ public class ConnectionListener extends Thread {
         String text = input.substring(5);
         switch (type) {
             case "CHAT":
-                result = new ChatMessage(text);
+                result = new ChatMessage(": " + text);
                 break;
             case "GAME":
                 result = new GameMessage(text);
