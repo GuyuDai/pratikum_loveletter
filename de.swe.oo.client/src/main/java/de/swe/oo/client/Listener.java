@@ -34,6 +34,7 @@ public abstract class Listener extends Thread {
                 handleInput(input);
             } catch (IOException e) {
                 System.err.println("Error while trying to read message inside listener. " + e.getMessage());
+                close();
                 client.close();
             }
         }

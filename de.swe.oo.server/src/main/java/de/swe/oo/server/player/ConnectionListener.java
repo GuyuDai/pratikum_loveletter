@@ -33,19 +33,21 @@ public class ConnectionListener extends Thread {
     }
 
     private Message parseInput(String input) {
-        if (input.length() < 5) {
-            return new ErrorMessage("Message too short. At least 4 letters for message " +
-                    "Type and one space are needed.");
-        }
         Message result;
         String type = input.substring(0, 4);
-        String text = input.substring(5);
+        String text = "If you see this there is a bug.";
+        if (input.length() > 5){
+            text = input.substring(5);
+        }
         switch (type) {
             case "CHAT":
                 result = new ChatMessage(text);
                 break;
             case "GAME":
                 result = new GameMessage(text);
+                break;
+            case "EXIT":
+                result = new ExitMessage();
                 break;
             default:
                 result = new ErrorMessage("Unknown Type.");
