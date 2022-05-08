@@ -45,8 +45,7 @@ public class Connection {
         return in.readLine();
     }
 
-    public synchronized void sendLine(String message) {
-        notifyAll();
+    public void sendLine(String message) {
         out.println(message);
     }
 }

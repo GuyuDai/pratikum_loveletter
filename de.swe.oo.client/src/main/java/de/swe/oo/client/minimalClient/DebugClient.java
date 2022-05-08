@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 
 
 public class DebugClient extends Client {
+    InputStreamReader isr;
     BufferedReader userIn;
     PrintWriter userOut;
     ConnectionManager connectionManager;
@@ -14,8 +15,9 @@ public class DebugClient extends Client {
     PrintWriter connectionOut;
     UserInputListener userInputListener;
 
-    public DebugClient(String ip, int port, BufferedReader userIn, PrintWriter out) {
-        this.userIn = userIn;
+    public DebugClient(String ip, int port, InputStreamReader isr, PrintWriter out) {
+        this.isr = isr;
+        this.userIn = new BufferedReader(this.isr);
         this.userOut = out;
         this.connectionManager = new ConnectionManager(ip, port);
     }
@@ -57,7 +59,7 @@ public class DebugClient extends Client {
     public void setupConnectionObjects() {
         connectionOut = connectionManager.getWriter();
         connectionListener = new ConnectionListener(this, connectionManager.getReader());
-        userInputListener = new UserInputListener(this, userIn);
+        userInputListener = new UserInputListener(this, userIn, isr);
     }
 
     public void sendText(String text) {
@@ -77,7 +79,7 @@ public class DebugClient extends Client {
 
     public static void main(String[] args) {
         DebugClient client = new DebugClient("localhost", 4444,
-                new BufferedReader(new InputStreamReader(System.in)),
+                new InputStreamReader(System.in),
                 new PrintWriter(System.out, true));
         client.start();
     }

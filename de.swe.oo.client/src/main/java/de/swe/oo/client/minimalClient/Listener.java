@@ -10,6 +10,7 @@ public abstract class Listener extends Thread {
     public boolean isRunning;
 
 
+
     public Listener(Client client, BufferedReader reader) {
         this.client = client;
         this.reader = reader;
@@ -17,28 +18,28 @@ public abstract class Listener extends Thread {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         while (isRunning) {
-            String input;
             try {
-                wait();
-                input = reader.readLine();
-                if (input == null) {
-                    throw new IOException("EOF Error BufferedReader returned null.");
-                }
-                if (input.equals("bye")){
-                    System.out.println("Goodbye:"+this.getName());
-                    client.close();
-                }
-                handleInput(input);
+                readMessage();
             } catch (IOException e) {
                 System.err.println("Error while trying to read message inside listener. " + e.getMessage());
                 client.close();
-            }catch (InterruptedException e) {
-                System.out.println("InterruptedException in Listener" + e.getMessage());
-                client.close();
             }
         }
+    }
+
+    public void readMessage() throws IOException {
+        String input;
+        input = reader.readLine();
+        if (input == null) {
+            throw new IOException("EOF Error BufferedReader returned null.");
+        }
+        if (input.equals("bye")){
+            System.out.println("Goodbye:"+this.getName());
+            client.close();
+        }
+        handleInput(input);
     }
 
     public void close() {
