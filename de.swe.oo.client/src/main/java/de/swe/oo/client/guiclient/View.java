@@ -17,7 +17,7 @@ public class View extends VBox {
         TextField input = new TextField();
         input.setPromptText("Enter text here");
         Button button = new Button();
-        button.setText("ADD");
+        button.setText("ADD");   //What does this actually do? The actual Text is changed in demo.fxml
 
         // adding node elements to container
         getChildren().addAll(label, list, input, button);

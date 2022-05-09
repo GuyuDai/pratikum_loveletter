@@ -35,7 +35,7 @@ public class ConnectionListener extends Thread {
     private Message parseInput(String input) {
         Message result;
         String type = input.substring(0, 4);
-        String text = "If you see this there is a bug.";
+        String text = "";
         if (input.length() > 5){
             text = input.substring(5);
         }
