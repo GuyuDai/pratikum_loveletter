@@ -1,5 +1,9 @@
 package de.swe.oo.client.minimalClient;
 
+import de.swe.oo.client.Client;
+import de.swe.oo.client.connection.ConnectionListener;
+import de.swe.oo.client.connection.ConnectionManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,12 +11,16 @@ import java.io.PrintWriter;
 
 
 public class MinimalClient extends Client {
+    BufferedReader userIn;
+    PrintWriter userOut;
     ConnectionManager connectionManager;
     ConnectionListener connectionListener;
     PrintWriter connectionOut;
     UserInputListener userInputListener;
 
-    public MinimalClient(String ip, int port) {
+    public MinimalClient(String ip, int port, BufferedReader userIn, PrintWriter out) {
+        this.userIn = userIn;
+        this.userOut = out;
         this.connectionManager = new ConnectionManager(ip, port);
     }
 
@@ -35,18 +43,17 @@ public class MinimalClient extends Client {
     public void login() {
         String input;
         boolean loggedIn = false;
-        BufferedReader inReader = new BufferedReader(new InputStreamReader(System.in));
         while (!loggedIn) {
             outputChat("Bitte Nutzernamen eingeben:");
             try {
-                input = inReader.readLine();
+                input = userIn.readLine();
             } catch (IOException e) {
                 System.err.println("Error reading from console. " + e.getMessage());
                 continue;
             }
             loggedIn = connectionManager.loginAs(input);
             if (!loggedIn) {
-                System.err.println(connectionManager.getErrorMessage());
+                userOut.println(connectionManager.getErrorMessage());
             }
         }
     }
@@ -54,7 +61,7 @@ public class MinimalClient extends Client {
     public void setupConnectionObjects() {
         connectionOut = connectionManager.getWriter();
         connectionListener = new ConnectionListener(this, connectionManager.getReader());
-        userInputListener = new UserInputListener(this, new BufferedReader(new InputStreamReader(System.in)));
+        userInputListener = new UserInputListener(this, userIn);
     }
 
     public void sendText(String text) {
@@ -62,7 +69,7 @@ public class MinimalClient extends Client {
     }
 
     public void outputChat(String text) {
-        System.out.println(text);
+        userOut.println(text);
     }
 
     public void close() {
@@ -73,7 +80,9 @@ public class MinimalClient extends Client {
     }
 
     public static void main(String[] args) {
-        MinimalClient client = new MinimalClient("localhost", 4444);
+        MinimalClient client = new MinimalClient("localhost", 4444,
+                new BufferedReader(new InputStreamReader(System.in)),
+                new PrintWriter(System.out, true));
         client.start();
     }
 }

@@ -1,7 +1,9 @@
-package de.swe.oo.client.minimalClient;
+package de.swe.oo.client;
 
-abstract public class Client extends Thread{
+public abstract class Client extends Thread {
     abstract public void sendText(String text);
+
     abstract public void outputChat(String text);
+
     abstract public void close();
 }

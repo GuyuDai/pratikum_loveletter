@@ -1,4 +1,7 @@
-package de.swe.oo.client.minimalClient;
+package de.swe.oo.client.connection;
+
+import de.swe.oo.client.Client;
+import de.swe.oo.client.Listener;
 
 import java.io.BufferedReader;
 
@@ -9,7 +12,7 @@ public class ConnectionListener extends Listener {
     }
 
     @Override
-    void handleInput(String input) {
+    protected void handleInput(String input) {
         client.outputChat(input);
     }
 }
