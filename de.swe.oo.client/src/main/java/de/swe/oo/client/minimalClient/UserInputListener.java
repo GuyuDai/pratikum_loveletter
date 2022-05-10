@@ -1,5 +1,8 @@
 package de.swe.oo.client.minimalClient;
 
+import de.swe.oo.client.Client;
+import de.swe.oo.client.Listener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +18,7 @@ public class UserInputListener extends Listener {
 
 
     @Override
-    void handleInput(String input) {
+    public void handleInput(String input) {
         client.sendText(input);
     }
 

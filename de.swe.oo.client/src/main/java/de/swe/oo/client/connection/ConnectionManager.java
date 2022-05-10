@@ -1,4 +1,4 @@
-package de.swe.oo.client.minimalClient;
+package de.swe.oo.client.connection;
 
 import java.io.BufferedReader;
 import java.io.IOException;

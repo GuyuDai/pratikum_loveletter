@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="container"
+      stylesheets="demo.css"
+      xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/11.0.2"
+      fx:controller="de.swe.oo.client.guiclient.ViewModel"
+      spacing="10">
+    <Label text="Chat"/>
+    <ListView fx:id="list"/>
+    <HBox>
+        <TextField fx:id="input"
+                   HBox.hgrow="ALWAYS"
+                   promptText="Enter text here"
+                   onKeyPressed="#handleKeyPressed"/>
+        <Button fx:id="button"
+                onAction="#handleButtonPress"
+                styleClass="button" text="SEND"/>
+    </HBox>
+</VBox>

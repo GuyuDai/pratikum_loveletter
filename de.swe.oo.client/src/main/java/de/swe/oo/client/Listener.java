@@ -1,15 +1,20 @@
-package de.swe.oo.client.minimalClient;
+package de.swe.oo.client;
+
+import de.swe.oo.client.Client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-
 public abstract class Listener extends Thread {
-    Client client;
-    BufferedReader reader;
-    public boolean isRunning;
+    protected Client client;
+    private BufferedReader reader;
 
 
+    private boolean isRunning;
+
+    public boolean isRunning() {
+        return isRunning;
+    }
 
     public Listener(Client client, BufferedReader reader) {
         this.client = client;
@@ -20,26 +25,19 @@ public abstract class Listener extends Thread {
     @Override
     public void run() {
         while (isRunning) {
+            String input;
             try {
-                readMessage();
+                input = reader.readLine();
+                if (input == null) {
+                    throw new IOException("EOF Error BufferedReader returned null.");
+                }
+                handleInput(input);
             } catch (IOException e) {
                 System.err.println("Error while trying to read message inside listener. " + e.getMessage());
+                close();
                 client.close();
             }
         }
-    }
-
-    public void readMessage() throws IOException {
-        String input;
-        input = reader.readLine();
-        if (input == null) {
-            throw new IOException("EOF Error BufferedReader returned null.");
-        }
-        if (input.equals("bye")){
-            System.out.println("Goodbye: "+this.getName());
-            client.close();
-        }
-        handleInput(input);
     }
 
     public void close() {
@@ -51,6 +49,5 @@ public abstract class Listener extends Thread {
         }
     }
 
-
-    abstract void handleInput(String input);
+    protected abstract void handleInput(String input);
 }
