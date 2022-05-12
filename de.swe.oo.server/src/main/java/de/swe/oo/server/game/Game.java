@@ -5,7 +5,6 @@ import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.player.Player;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game extends Thread {
@@ -31,15 +30,27 @@ public class Game extends Thread {
     @Override
     public void run() {
         while (isGoingOn) {
-            try {
-                sleep(2000);
-                System.out.println("Game is going on.");
-                sendToAllPlayers(new GameAnnounceMessage("The Game is going along fine."));
-            } catch (InterruptedException e) {
-                System.err.println("An error occurred during sleep. " + e.getMessage());
+            for (Player player : players) {
+                handleTurn(player);
             }
         }
+        cleanUp();
     }
+
+    private void handleTurn(Player player) {
+        sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
+        scoreMap.put(player, scoreMap.get(player) + 1);
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            System.err.println("Error while sleeping in Game Thread. " + e.getMessage());
+        }
+    }
+
+    private void cleanUp(){
+        sendToAllPlayers(new GameAnnounceMessage("Shutting down the game. Final scores: " + getScoreString()));
+    }
+
 
     public synchronized boolean join(Player player) {
         if (players.size() < MAXPLAYERS && !isGoingOn && !players.contains(player)) {
@@ -52,6 +63,7 @@ public class Game extends Thread {
 
     public synchronized boolean startGame() {
         if (players.size() >= MINPLAYERS) {
+            reorderPlayers();
             isGoingOn = true;
             this.start();
             sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
@@ -59,6 +71,10 @@ public class Game extends Thread {
             return true;
         }
         return false;
+    }
+
+    private void reorderPlayers() {
+        return;     //Currently the players stay in the order they joined the game.
     }
 
     private void initializeScores() {
@@ -85,15 +101,13 @@ public class Game extends Thread {
         return scoreMap.get(player);
     }
 
-    public synchronized void shutdown() {
-        if (isGoingOn) {
-            sendToAllPlayers(new GameAnnounceMessage("Shutting down the game. Final scores: " + getScoreString()));
-            isGoingOn = false;
-        }
+    public void shutdown() {
+        isGoingOn = false;
     }
-    private String getScoreString(){
+
+    private String getScoreString() {
         String scoreString = "";
-        for (Player player : players){
+        for (Player player : players) {
             scoreString = scoreString + player.getName() + ": " + scoreMap.get(player) + " ";
         }
         return scoreString;
