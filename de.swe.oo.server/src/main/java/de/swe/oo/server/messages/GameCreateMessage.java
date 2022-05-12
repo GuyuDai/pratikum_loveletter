@@ -4,8 +4,8 @@ import de.swe.oo.server.game.Game;
 import de.swe.oo.server.player.Player;
 
 public class GameCreateMessage extends GameMessage {
-    public GameCreateMessage(String messageText) {
-        super(messageText);
+    public GameCreateMessage() {
+        super("");
     }
 
     @Override
@@ -14,7 +14,7 @@ public class GameCreateMessage extends GameMessage {
             player.sendMessage(new GameAnnounceMessage("Game already exists."));
             return;
         } else {
-            player.getSession().startGame();
+            player.getSession().createGame();
             player.getSession().broadcast(new GameAnnounceMessage(player.getName() + " created a new Game."));
         }
     }

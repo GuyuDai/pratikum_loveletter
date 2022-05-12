@@ -61,10 +61,16 @@ public class ConnectionListener extends Thread {
 
     private GameMessage parseGameMessage(String gameMessageText){
         if (gameMessageText.startsWith("CREATE")){
-            return new GameCreateMessage("");
+            return new GameCreateMessage();
         }
         if (gameMessageText.startsWith("RESPONSE")){
             return new GameResponseMessage(gameMessageText.substring(9));  //Remove RESPONSE and one space
+        }
+        if (gameMessageText.startsWith("JOIN")){
+            return new GameJoinMessage();
+        }
+        if (gameMessageText.startsWith("START")){
+            return new GameStartMessage();
         }
         // Default case, shouldn't actually be reached.
         return new GameMessage(gameMessageText);

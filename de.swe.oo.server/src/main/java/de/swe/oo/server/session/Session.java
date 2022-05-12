@@ -49,12 +49,22 @@ public class Session extends Thread {
         }
     }
 
-    public void startGame(){
+    public void createGame(){
         currentGame = Game.getGame();
     }
+
+    public boolean joinGame(Player player){
+
+        return currentGame.addPlayer(player);
+    }
+
 
     public static void main(String[] args) {
         Session testsession = new Session(4444);
         testsession.start();
+    }
+
+    public boolean startGame() {
+        return currentGame.startGame();
     }
 }
