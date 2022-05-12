@@ -1,7 +1,7 @@
 package de.swe.oo.server.cards;
 
 import de.swe.oo.server.player.Player;
-import de.swe.oo.server.session.Game;
+import de.swe.oo.server.game.Game;
 
 public abstract class Card {
     String name;

@@ -1,5 +1,5 @@
 module de.swe.oo.client {
-    exports de.swe.oo.client.minimalClient;
+    exports de.swe.oo.client.debugClient;
     exports de.swe.oo.client.connection;
     exports de.swe.oo.client;
 

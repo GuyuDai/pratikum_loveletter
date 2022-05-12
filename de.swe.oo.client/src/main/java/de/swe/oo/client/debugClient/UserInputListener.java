@@ -1,4 +1,4 @@
-package de.swe.oo.client.minimalClient;
+package de.swe.oo.client.debugClient;
 
 import de.swe.oo.client.Client;
 import de.swe.oo.client.Listener;

@@ -1,5 +1,6 @@
 package de.swe.oo.server.session;
 
+import de.swe.oo.server.game.Game;
 import de.swe.oo.server.messages.ChatMessage;
 import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.player.Player;
@@ -11,6 +12,7 @@ public class Session extends Thread {
     public Chat chat;
     List<Player> players;
     LoginHandler loginHandler;
+    Game currentGame;
 
     public Session(int port) {
         this.loginHandler = new LoginHandler(this, port);
@@ -30,13 +32,13 @@ public class Session extends Thread {
     public boolean checkIfValidUsername(String testName) {
         boolean valid = true;
         for (Player player : players) {
-            valid = valid && (!testName.equals(player.name));
+            valid = valid && (!testName.equals(player.getName()));
         }
         return valid;
     }
 
     public void remove(Player player) {
-        ChatMessage byeMsg = new ChatMessage(player.name + " left the room.");
+        ChatMessage byeMsg = new ChatMessage(player.getName() + " left the room.");
         players.remove(player);
         broadcast(byeMsg);
     }
@@ -45,6 +47,10 @@ public class Session extends Thread {
         for (Player player : players) {
             player.sendMessage(msg);
         }
+    }
+
+    public void startGame(){
+        currentGame = Game.getGame();
     }
 
     public static void main(String[] args) {

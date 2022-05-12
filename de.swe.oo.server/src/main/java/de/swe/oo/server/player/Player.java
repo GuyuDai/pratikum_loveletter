@@ -7,8 +7,10 @@ import de.swe.oo.server.session.Session;
 import java.net.Socket;
 
 public class Player {
-    public String name;
-    public Session session;
+    private String name;
+
+
+    private Session session;
     public Connection connection;
     public ConnectionListener connectionListener;
 
@@ -20,6 +22,13 @@ public class Player {
         this.connectionListener.start();
         String threadName = name.concat("_Listener");
         this.connectionListener.setName(threadName);
+    }
+    public String getName() {
+        return name;
+    }
+
+    public Session getSession() {
+        return session;
     }
 
     public void sendMessage(Message msg) {

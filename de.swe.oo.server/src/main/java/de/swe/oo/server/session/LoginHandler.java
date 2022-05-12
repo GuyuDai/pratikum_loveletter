@@ -102,14 +102,14 @@ public class LoginHandler extends Thread {
     }
 
     private void greet(Player player) {
-        Message msg = new ChatMessage("Willkommen " + player.name + ".");
+        Message msg = new ChatMessage("Willkommen " + player.getName() + ".");
         player.sendMessage(msg);
     }
 
     private void announce(Player newPlayer) {
         for (Player player : session.players) {
-            if (player.name != newPlayer.name) {
-                Message msg = new ChatMessage(newPlayer.name + " hat den Raum betreten.");
+            if (player.getName() != newPlayer.getName()) {
+                Message msg = new ChatMessage(newPlayer.getName() + " hat den Raum betreten.");
                 player.sendMessage(msg);
             }
         }

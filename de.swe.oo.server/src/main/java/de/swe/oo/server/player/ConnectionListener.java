@@ -33,6 +33,9 @@ public class ConnectionListener extends Thread {
     }
 
     private Message parseInput(String input) {
+        if (input.length() < 4){
+            return new ErrorMessage("Message too short.");
+        }
         Message result;
         String type = input.substring(0, 4);
         String text = "";
@@ -44,7 +47,7 @@ public class ConnectionListener extends Thread {
                 result = new ChatMessage(text);
                 break;
             case "GAME":
-                result = new GameMessage(text);
+                result = parseGameMessage(text);
                 break;
             case "EXIT":
                 result = new ExitMessage();
@@ -54,6 +57,17 @@ public class ConnectionListener extends Thread {
                 break;
         }
         return result;
+    }
+
+    private GameMessage parseGameMessage(String gameMessageText){
+        if (gameMessageText.startsWith("CREATE")){
+            return new GameCreateMessage("");
+        }
+        if (gameMessageText.startsWith("RESPONSE")){
+            return new GameResponseMessage(gameMessageText.substring(9));  //Remove RESPONSE and one space
+        }
+        // Default case, shouldn't actually be reached.
+        return new GameMessage(gameMessageText);
     }
 
     public void close() {

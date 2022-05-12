@@ -10,7 +10,7 @@ public class ErrorMessage extends Message {
     }
 
     public void handle(Player player) {
-        System.out.println("An error occurred with player " + player.name +
+        System.out.println("An error occurred with player " + player.getName() +
                 ". Message:" + this.messageText);
     }
 

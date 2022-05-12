@@ -15,8 +15,8 @@ public class ChatMessage extends Message {
             return;
         }
         ChatMessage messageWithSender =
-                new ChatMessage(player.name + ": " + messageText);
-        player.session.broadcast(messageWithSender);
+                new ChatMessage(player.getName() + ": " + messageText);
+        player.getSession().broadcast(messageWithSender);
     }
 
     public String output() {
