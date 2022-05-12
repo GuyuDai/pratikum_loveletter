@@ -4,6 +4,8 @@ import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.player.Player;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game extends Thread {
@@ -14,9 +16,11 @@ public class Game extends Thread {
 
     private boolean isGoingOn;
     private CopyOnWriteArrayList<Player> players;
+    private HashMap<Player, Integer> scoreMap;
 
     public Game() {
         players = new CopyOnWriteArrayList<Player>();
+        scoreMap = new HashMap<Player, Integer>();
         isGoingOn = false;
     }
 
@@ -30,7 +34,7 @@ public class Game extends Thread {
             try {
                 sleep(2000);
                 System.out.println("Game is going on.");
-                sendAllPlayers(new GameAnnounceMessage("The Game is going along fine."));
+                sendToAllPlayers(new GameAnnounceMessage("The Game is going along fine."));
             } catch (InterruptedException e) {
                 System.err.println("An error occurred during sleep. " + e.getMessage());
             }
@@ -38,7 +42,7 @@ public class Game extends Thread {
     }
 
     public synchronized boolean join(Player player) {
-        if (players.size() < MAXPLAYERS && !isGoingOn) {
+        if (players.size() < MAXPLAYERS && !isGoingOn && !players.contains(player)) {
             players.add(player);
             return true;
         } else {
@@ -50,19 +54,48 @@ public class Game extends Thread {
         if (players.size() >= MINPLAYERS) {
             isGoingOn = true;
             this.start();
-            sendAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
+            sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
+            initializeScores();
             return true;
         }
         return false;
+    }
+
+    private void initializeScores() {
+        for (Player player : players) {
+            scoreMap.put(player, 0);
+        }
     }
 
     public int getNumberOfPlayers() {
         return players.size();
     }
 
-    private void sendAllPlayers(Message msg) {
+    private void sendToAllPlayers(Message msg) {
         for (Player player : players) {
             player.sendMessage(msg);
         }
+    }
+
+    public boolean isPlaying(Player player) {
+        return players.contains(player);
+    }
+
+    public int getScore(Player player) {
+        return scoreMap.get(player);
+    }
+
+    public synchronized void shutdown() {
+        if (isGoingOn) {
+            sendToAllPlayers(new GameAnnounceMessage("Shutting down the game. Final scores: " + getScoreString()));
+            isGoingOn = false;
+        }
+    }
+    private String getScoreString(){
+        String scoreString = "";
+        for (Player player : players){
+            scoreString = scoreString + player.getName() + ": " + scoreMap.get(player) + " ";
+        }
+        return scoreString;
     }
 }

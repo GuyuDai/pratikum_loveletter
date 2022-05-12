@@ -75,6 +75,9 @@ public class ConnectionListener extends Thread {
         if (gameMessageText.startsWith("STATUS")){
             return new GameStatusRequestMessage();
         }
+        if (gameMessageText.startsWith("SCORE")){
+            return new GameScoreRequestMessage();
+        }
         // Default case, shouldn't actually be reached.
         return new GameMessage(gameMessageText);
     }

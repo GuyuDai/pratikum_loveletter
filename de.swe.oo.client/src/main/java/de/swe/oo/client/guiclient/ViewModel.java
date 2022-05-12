@@ -111,6 +111,9 @@ public class ViewModel extends Client {
             case "start":
                 sendText("GAME START");
                 break;
+            case "score":
+                sendText("GAME SCORE");
+                break;
             case "status":
                 sendText("GAME STATUS");
                 break;

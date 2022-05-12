@@ -45,6 +45,10 @@ public class Session extends Thread {
         ChatMessage byeMsg = new ChatMessage(player.getName() + " left the room.");
         players.remove(player);
         broadcast(byeMsg);
+        if (isPlaying(player)){
+            currentGame.shutdown();
+            currentGame = null;
+        }
     }
 
     public void broadcast(Message msg) {
@@ -78,5 +82,9 @@ public class Session extends Thread {
 
     public boolean gameExists() {
         return currentGame != null;
+    }
+
+    public boolean isPlaying(Player player) {
+        return currentGame.isPlaying(player);
     }
 }
