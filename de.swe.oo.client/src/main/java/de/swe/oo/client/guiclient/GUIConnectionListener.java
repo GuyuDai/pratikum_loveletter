@@ -14,6 +14,11 @@ public class GUIConnectionListener extends Listener {
     protected void handleInput(String input) {
         if (input.startsWith("CHAT")){
             client.outputChat(input.substring(5));
+            return;
+        }
+        if (input.startsWith("GAME ANNOUNCE")){
+            client.outputChat("Game Announcement: " + input.substring(14));
+            return;
         }
     }
 }

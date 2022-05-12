@@ -82,14 +82,41 @@ public class ViewModel extends Client {
             input.requestFocus();
             return;
         }
-        if (textInput.equals("bye")){
+        handleInput(textInput);
+        input.requestFocus();
+    }
+
+    private void handleInput(String input){
+        if (input.startsWith("/")){
+            handleGameCommand(input.substring(1));
+            return;
+        }
+        if (input.equals("bye")){
             sendText("EXIT");
             outputChat("Shutting down client.");
         }
         else{
-            sendText("CHAT " + textInput);
+            sendText("CHAT " + input);
         }
-        input.requestFocus();
+    }
+
+    private void handleGameCommand(String command) {
+        switch(command.toLowerCase()){
+            case "create":
+                sendText("GAME CREATE");
+                break;
+            case "join":
+                sendText("GAME JOIN");
+                break;
+            case "start":
+                sendText("GAME START");
+                break;
+            case "status":
+                sendText("GAME STATUS");
+                break;
+            default:
+                outputChat("Unknown command. See the README-file for usage instructions.");
+        }
     }
 
     @FXML

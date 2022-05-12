@@ -50,6 +50,7 @@ public class Game extends Thread {
         if (players.size() >= MINPLAYERS) {
             isGoingOn = true;
             this.start();
+            sendAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
             return true;
         }
         return false;
