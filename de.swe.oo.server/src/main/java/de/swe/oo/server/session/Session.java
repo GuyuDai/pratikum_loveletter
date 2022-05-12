@@ -49,12 +49,11 @@ public class Session extends Thread {
         }
     }
 
-    public void createGame(){
-        currentGame = Game.getGame();
+    public synchronized void createNewGame() {
+        currentGame = new Game();
     }
 
-    public boolean joinGame(Player player){
-
+    public boolean joinGame(Player player) {
         return currentGame.addPlayer(player);
     }
 
@@ -65,6 +64,15 @@ public class Session extends Thread {
     }
 
     public boolean startGame() {
-        return currentGame.startGame();
+        if (gameExists()) {
+            return currentGame.startGame();
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean gameExists() {
+        return currentGame != null;
     }
 }

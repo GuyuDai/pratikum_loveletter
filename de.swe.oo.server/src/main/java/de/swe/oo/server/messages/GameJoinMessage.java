@@ -10,8 +10,8 @@ public class GameJoinMessage extends GameMessage {
 
     @Override
     public void handle(Player player) {
-        if (!Game.wasAlreadyCreated()) {
-            player.sendMessage(new GameAnnounceMessage("Couldn't join Game, it wasn't created yet."));
+        if (!player.getSession().gameExists()) {
+            player.sendMessage(new GameAnnounceMessage("Couldn't join Game, it hasn't been created yet."));
             return;
         }
         if (player.getSession().joinGame(player)) {

@@ -12,7 +12,8 @@ public class GameStartMessage extends GameMessage {
         if (player.getSession().startGame()) {
             return;
         } else {
-            player.sendMessage(new GameAnnounceMessage("Couldn't start game. Probably too few players."));
+            player.sendMessage(new GameAnnounceMessage("Couldn't start game. Probably too few players " +
+                    "or game doesn't exist."));
         }
     }
 }
