@@ -17,7 +17,7 @@ public class GameJoinMessage extends GameMessage {
         if (player.getSession().joinGame(player)) {
             player.getSession().broadcast(new GameAnnounceMessage(player.getName() + " joined the game."));
         } else {
-            player.sendMessage(new GameAnnounceMessage("Game refused join. Probably already full."));
+            player.sendMessage(new GameAnnounceMessage("Game refused join. Probably already full or running."));
         }
     }
 

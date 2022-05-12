@@ -19,7 +19,11 @@ public class Session extends Thread {
         this.chat = new Chat(this);
         this.players = new CopyOnWriteArrayList<Player>();
     }
+    public Game getCurrentGame() {
+        return currentGame;
+    }
 
+    @Override
     public void run() {
         loginHandler.start();
         loginHandler.setName("LoginHandler");
@@ -54,7 +58,7 @@ public class Session extends Thread {
     }
 
     public boolean joinGame(Player player) {
-        return currentGame.addPlayer(player);
+        return currentGame.join(player);
     }
 
 
