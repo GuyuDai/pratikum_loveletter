@@ -48,12 +48,8 @@ public class Session extends Thread {
         }
     }
 
-    public void sendTo(Message msg, String target_name){
-        for (Player player : players) {
-            if(player.name.equals(target_name)){
-                player.sendMessage(msg);
-            }
-        }
+    public void sendTo(Message msg, String targetName){
+        getPlayerByName(targetName).sendMessage(msg);
     }
 
     public List<String> getPlayers(){
@@ -62,6 +58,15 @@ public class Session extends Thread {
             players_name.add(player.name);
         }
         return players_name;
+    }
+
+    public Player getPlayerByName(String targetName){
+        for(Player player : players){
+            if(targetName.equals(player.name)){
+                return player;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {

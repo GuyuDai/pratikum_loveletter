@@ -15,28 +15,25 @@ public class ChatMessage extends Message {
             return;
         }
 
-        if(messageText.contains("@")){
-            int begin = messageText.lastIndexOf("@") + 1;
-            int end = messageText.length() - 1;
-            while(begin != end){
-                String name = messageText.subSequence(begin, end).toString();
-                for(String player_name : player.session.getPlayers()){
-                    if(name.equals(player_name)){
-                        ChatMessage messageWithSender =
-                            new ChatMessage(player.name + ": " + messageText);
-                        player.session.sendTo(messageWithSender, name);
-                        return;
-                    }
-                }
-                end --;
+        if(messageText.startsWith("@")){
+            //if the @ is inside the message, this message will be regarded as a normal ChatMessage
+            String targetName = messageText.substring(1, messageText.indexOf(" "));
+            String targetMessage = messageText.substring(messageText.indexOf(" "));
+            Player target = player.session.getPlayerByName(targetName);
+            if(target != null){
+                //@person in the game
+                target.sendMessage(new ChatMessage
+                    ("[" + player.name + "]" + targetMessage));
+                player.sendMessage(new ChatMessage
+                    (player.name + "->" + targetMessage));
+            }else{
+                //@person not in the game
+                player.sendMessage(new ChatMessage
+                    ("could not send private message, unknown player name"));
             }
-            player.session.sendTo
-                (new ChatMessage("the @person is not in the game"), player.name);
-
         }else{
-            ChatMessage messageWithSender =
-            new ChatMessage(player.name + ": " + messageText);
-            player.session.broadcast(messageWithSender);
+            //is not private message
+            player.session.broadcast(new ChatMessage(player.name + ":" + messageText));
         }
     }
 
