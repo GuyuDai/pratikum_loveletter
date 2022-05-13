@@ -1,6 +1,8 @@
 package de.swe.oo.server.player;
 
 
+import de.swe.oo.server.messages.ErrorMessage;
+import de.swe.oo.server.messages.GameRequestMessage;
 import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.session.Session;
 
@@ -14,6 +16,16 @@ public class Player {
     public Connection connection;
     public ConnectionListener connectionListener;
 
+
+    private boolean pendingRequestExists;
+    private String lastResponse;
+
+    public boolean pendingRequestExists() {
+        synchronized (this) {
+            return pendingRequestExists;
+        }
+    }
+
     public Player(Session session, String name, Socket socket) {
         this.session = session;
         this.name = name;
@@ -22,7 +34,10 @@ public class Player {
         this.connectionListener.start();
         String threadName = name.concat("_Listener");
         this.connectionListener.setName(threadName);
+        this.pendingRequestExists = false;
+        this.lastResponse = "No client responses yet.";
     }
+
     public String getName() {
         return name;
     }
@@ -35,9 +50,31 @@ public class Player {
         connection.sendLine(msg.output());
     }
 
-    public void quit(){
+    public void quit() {
         session.remove(this);
         connectionListener.close();
         connection.close();
+    }
+
+    public boolean requestFromPlayer(GameRequestMessage msg) {
+        synchronized (this) {
+            if (!pendingRequestExists) {
+                sendMessage(msg);
+                pendingRequestExists = true;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public void processResponse(String response) {
+        synchronized (this) {
+            if (pendingRequestExists) {
+                lastResponse = response;
+                pendingRequestExists = false;
+            } else {
+                sendMessage(new ErrorMessage("Received an unexpected message."));
+            }
+        }
     }
 }

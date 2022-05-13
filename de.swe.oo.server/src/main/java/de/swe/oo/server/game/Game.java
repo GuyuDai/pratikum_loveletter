@@ -8,21 +8,20 @@ import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game extends Thread {
-    protected int MINPLAYERS;
-    protected int MAXPLAYERS;
-    private static volatile Game gameInstance;
+    private static int BUSYWAIT_INTERVALMS = 40;
+    protected int minPlayers;
+    protected int maxPlayers;
 
-
-    private boolean isGoingOn;
-    private CopyOnWriteArrayList<Player> players;
-    private HashMap<Player, Integer> scoreMap;
+    protected boolean isGoingOn;
+    protected CopyOnWriteArrayList<Player> players;
+    protected HashMap<Player, Integer> scoreMap;
 
     public Game(int minPlayers, int maxPlayers) {
+        this.minPlayers = minPlayers;
+        this.maxPlayers = maxPlayers;
         players = new CopyOnWriteArrayList<Player>();
         scoreMap = new HashMap<Player, Integer>();
         isGoingOn = false;
-        MINPLAYERS = minPlayers;
-        MAXPLAYERS = maxPlayers;
     }
 
     public boolean isGoingOn() {
@@ -31,9 +30,15 @@ public class Game extends Thread {
 
     @Override
     public void run() {
+        sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
+        reorderPlayers();
+        initializeScores();
         while (isGoingOn) {
             for (Player player : players) {
                 handleTurn(player);
+                if (!isGoingOn) {
+                    break;     //Otherwise all players will have a turn after shutdown was initialized.
+                }
             }
         }
         cleanUp();
@@ -49,13 +54,13 @@ public class Game extends Thread {
         }
     }
 
-    protected void cleanUp(){
+    protected void cleanUp() {
         sendToAllPlayers(new GameAnnounceMessage("Shutting down the game. Final scores: " + getScoreString()));
     }
 
 
     public synchronized boolean join(Player player) {
-        if (players.size() < this.MAXPLAYERS && !isGoingOn && !players.contains(player)) {
+        if (players.size() < this.maxPlayers && !isGoingOn && !players.contains(player)) {
             players.add(player);
             return true;
         } else {
@@ -64,19 +69,25 @@ public class Game extends Thread {
     }
 
     public synchronized boolean startGame() {
-        if (players.size() >= this.MINPLAYERS) {
-            reorderPlayers();
+        if (players.size() >= this.minPlayers) {
             isGoingOn = true;
             this.start();
-            sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
-            initializeScores();
+            this.setName("GameThread");
             return true;
         }
         return false;
     }
 
+    /**
+     * Currently this only serves as a demonstration. It just ouputs the order of the players. Overwrite this method
+     * in a subclass if you want to manually order the players.
+     */
     protected void reorderPlayers() {
-        return;     //Currently the players stay in the order they joined the game.
+        int i = 1;
+        for (Player player : players) {
+            sendToAllPlayers(new GameAnnounceMessage(player.getName() + " is player number " + i + "."));
+            ++i;
+        }
     }
 
     protected void initializeScores() {
@@ -114,4 +125,28 @@ public class Game extends Thread {
         }
         return scoreString;
     }
+
+    protected void waitForAllResponses() {
+        boolean requestsOngoing = areRequestsOngoing();
+        while (isGoingOn && requestsOngoing) {
+            try {
+                sleep(BUSYWAIT_INTERVALMS);
+            } catch (InterruptedException e) {
+                System.err.println("Error while waiting for responses from players. " + e.getMessage());
+            }
+            requestsOngoing = areRequestsOngoing();
+        }
+    }
+
+    private boolean areRequestsOngoing() {
+        boolean requestsOngoing = false;
+        for (Player player : players) {
+            if (player.pendingRequestExists()) {
+                requestsOngoing = true;
+                break;
+            }
+        }
+        return requestsOngoing;
+    }
+
 }

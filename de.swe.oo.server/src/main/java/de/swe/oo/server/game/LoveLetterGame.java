@@ -1,6 +1,12 @@
 package de.swe.oo.server.game;
 
+import de.swe.oo.server.messages.GameAnnounceMessage;
+import de.swe.oo.server.messages.GameChoiceRequestMessage;
+import de.swe.oo.server.messages.GameInputRequestMessage;
+import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.player.Player;
+
+import java.util.HashMap;
 
 public class LoveLetterGame extends Game{
     private static int MINPLAYERS = 2;
@@ -8,10 +14,12 @@ public class LoveLetterGame extends Game{
     public LoveLetterGame(){
         super(MINPLAYERS, MAXPLAYERS);
     }
-    @Override
+
+
     protected void handleTurn(Player player){
         try {
-            sleep(500);
+            sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
+            sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -19,6 +27,12 @@ public class LoveLetterGame extends Game{
 
     @Override
     protected void reorderPlayers(){
-        return;
+        HashMap<Player, String> lastDates = new HashMap<>();
+        GameInputRequestMessage dateInputRequest = new GameInputRequestMessage(
+                "Please enter the date of your last date. (yyyymmdd)");
+        for (Player player : players){
+            player.requestFromPlayer(dateInputRequest);
+        }
+        waitForAllResponses();
     }
 }
