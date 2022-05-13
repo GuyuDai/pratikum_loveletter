@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game extends Thread {
-    protected static final int MINPLAYERS = 2;
-    protected static final int MAXPLAYERS = 4;
+    protected int MINPLAYERS;
+    protected int MAXPLAYERS;
     private static volatile Game gameInstance;
 
 
@@ -17,10 +17,12 @@ public class Game extends Thread {
     private CopyOnWriteArrayList<Player> players;
     private HashMap<Player, Integer> scoreMap;
 
-    public Game() {
+    public Game(int minPlayers, int maxPlayers) {
         players = new CopyOnWriteArrayList<Player>();
         scoreMap = new HashMap<Player, Integer>();
         isGoingOn = false;
+        MINPLAYERS = minPlayers;
+        MAXPLAYERS = maxPlayers;
     }
 
     public boolean isGoingOn() {
@@ -37,7 +39,7 @@ public class Game extends Thread {
         cleanUp();
     }
 
-    private void handleTurn(Player player) {
+    protected void handleTurn(Player player) {
         sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
         scoreMap.put(player, scoreMap.get(player) + 1);
         try {
@@ -47,13 +49,13 @@ public class Game extends Thread {
         }
     }
 
-    private void cleanUp(){
+    protected void cleanUp(){
         sendToAllPlayers(new GameAnnounceMessage("Shutting down the game. Final scores: " + getScoreString()));
     }
 
 
     public synchronized boolean join(Player player) {
-        if (players.size() < MAXPLAYERS && !isGoingOn && !players.contains(player)) {
+        if (players.size() < this.MAXPLAYERS && !isGoingOn && !players.contains(player)) {
             players.add(player);
             return true;
         } else {
@@ -62,7 +64,7 @@ public class Game extends Thread {
     }
 
     public synchronized boolean startGame() {
-        if (players.size() >= MINPLAYERS) {
+        if (players.size() >= this.MINPLAYERS) {
             reorderPlayers();
             isGoingOn = true;
             this.start();
@@ -73,11 +75,11 @@ public class Game extends Thread {
         return false;
     }
 
-    private void reorderPlayers() {
+    protected void reorderPlayers() {
         return;     //Currently the players stay in the order they joined the game.
     }
 
-    private void initializeScores() {
+    protected void initializeScores() {
         for (Player player : players) {
             scoreMap.put(player, 0);
         }
@@ -87,7 +89,7 @@ public class Game extends Thread {
         return players.size();
     }
 
-    private void sendToAllPlayers(Message msg) {
+    protected void sendToAllPlayers(Message msg) {
         for (Player player : players) {
             player.sendMessage(msg);
         }
@@ -105,7 +107,7 @@ public class Game extends Thread {
         isGoingOn = false;
     }
 
-    private String getScoreString() {
+    protected String getScoreString() {
         String scoreString = "";
         for (Player player : players) {
             scoreString = scoreString + player.getName() + ": " + scoreMap.get(player) + " ";

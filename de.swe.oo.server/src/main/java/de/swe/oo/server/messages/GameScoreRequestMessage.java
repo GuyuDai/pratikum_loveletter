@@ -10,7 +10,7 @@ public class GameScoreRequestMessage extends GameMessage{
 
     @Override
     public void handle(Player player){
-        if (player.getSession().isPlaying(player)){
+        if (player.getSession().isPlaying(player) && player.getSession().getCurrentGame().isGoingOn()){
             int score = player.getSession().getCurrentGame().getScore(player);
             player.sendMessage(new GameAnnounceMessage("Your score is " + score + "."));
         } else{

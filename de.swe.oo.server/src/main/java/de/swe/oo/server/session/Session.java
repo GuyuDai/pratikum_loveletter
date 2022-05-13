@@ -1,6 +1,7 @@
 package de.swe.oo.server.session;
 
 import de.swe.oo.server.game.Game;
+import de.swe.oo.server.game.LoveLetterGame;
 import de.swe.oo.server.messages.ChatMessage;
 import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.player.Player;
@@ -46,7 +47,9 @@ public class Session extends Thread {
         players.remove(player);
         broadcast(byeMsg);
         if (isPlaying(player)){
-            currentGame.shutdown();
+            if (currentGame != null){
+                currentGame.shutdown();
+            }
             currentGame = null;
         }
     }
@@ -58,7 +61,7 @@ public class Session extends Thread {
     }
 
     public synchronized void createNewGame() {
-        currentGame = new Game();
+        currentGame = new LoveLetterGame();
     }
 
     public boolean joinGame(Player player) {
@@ -85,6 +88,6 @@ public class Session extends Thread {
     }
 
     public boolean isPlaying(Player player) {
-        return currentGame.isPlaying(player);
+        return currentGame == null || currentGame.isPlaying(player);
     }
 }

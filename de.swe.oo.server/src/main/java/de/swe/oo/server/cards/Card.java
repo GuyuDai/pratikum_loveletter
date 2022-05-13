@@ -16,5 +16,5 @@ public abstract class Card {
         this.owner = owner;
     }
 
-    abstract void discard();
+    abstract void discard(Game game, Player player);
 }
