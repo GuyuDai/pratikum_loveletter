@@ -2,6 +2,7 @@ package de.swe.oo.server.player;
 
 
 import de.swe.oo.server.messages.ErrorMessage;
+import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameRequestMessage;
 import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.session.Session;
@@ -72,9 +73,14 @@ public class Player {
             if (pendingRequestExists) {
                 lastResponse = response;
                 pendingRequestExists = false;
+                sendMessage(new GameAnnounceMessage("Received an expected input."));
             } else {
                 sendMessage(new ErrorMessage("Received an unexpected message."));
             }
         }
+    }
+
+    public String getLastResponse() {
+        return lastResponse;
     }
 }

@@ -5,7 +5,7 @@ public class GameChoiceRequestMessage extends GameRequestMessage {
 
     public GameChoiceRequestMessage(String prompt, String[] choices) {
         super(prompt);
-        choices = choices;
+        this.choices = choices;
     }
 
     @Override
@@ -15,8 +15,8 @@ public class GameChoiceRequestMessage extends GameRequestMessage {
 
     private String choicesString() {
         String result ="";
-        for (String choice : choices){
-            result = result + " " + encodeSpaces(choice);
+        for (int i=0; i< choices.length; ++i){
+            result = result + " " + encodeSpaces(choices[i]);
         }
         return result;
     }

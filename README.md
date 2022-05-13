@@ -18,3 +18,4 @@ Aktuell mögliche Befehle:
 2. /join tritt dem Spiel bei
 3. /start startet das Spiel
 4. /status gibt den aktuellen Zustand des Spieles zurück
+5. /respond [Text] sendet eine Antwort an den letzten Request.

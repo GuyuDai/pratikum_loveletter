@@ -101,7 +101,16 @@ public class ViewModel extends Client {
     }
 
     private void handleGameCommand(String command) {
-        switch(command.toLowerCase()){
+        String firstword;
+        String argument;
+        if (command.contains(" ")){
+            firstword = command.substring(0, command.indexOf(" "));
+            argument = command.substring(command.indexOf(" "));
+        } else{
+            firstword = command;
+            argument = "";
+        }
+        switch(firstword.toLowerCase()){
             case "create":
                 sendText("GAME CREATE");
                 break;
@@ -116,6 +125,9 @@ public class ViewModel extends Client {
                 break;
             case "status":
                 sendText("GAME STATUS");
+                break;
+            case "respond":
+                sendText("GAME RESPONSE " + argument);
                 break;
             default:
                 outputChat("Unknown command. See the README-file for usage instructions.");

@@ -110,14 +110,18 @@ public class Game extends Thread {
         return players.contains(player);
     }
 
-    public int getScore(Player player) {
-        return scoreMap.get(player);
-    }
 
     public void shutdown() {
         isGoingOn = false;
     }
 
+    public int getScore(Player player) {
+        return scoreMap.get(player);
+    }
+    protected void changeScore(Player player, int change){
+        int oldScore = scoreMap.get(player);
+        scoreMap.put(player, oldScore + change);
+    }
     protected String getScoreString() {
         String scoreString = "";
         for (Player player : players) {
@@ -147,6 +151,10 @@ public class Game extends Thread {
             }
         }
         return requestsOngoing;
+    }
+
+    protected void announceState(){
+        sendToAllPlayers(new GameAnnounceMessage("Current Scores: " + getScoreString()));
     }
 
 }
