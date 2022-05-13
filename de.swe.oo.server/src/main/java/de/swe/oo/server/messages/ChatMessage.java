@@ -25,7 +25,7 @@ public class ChatMessage extends Message {
                 target.sendMessage(new ChatMessage
                     ("[" + player.name + "]" + targetMessage));
                 player.sendMessage(new ChatMessage
-                    (player.name + "->" + targetMessage));
+                    (player.name + "->" + target.name + targetMessage));
             }else{
                 //@person not in the game
                 player.sendMessage(new ChatMessage
