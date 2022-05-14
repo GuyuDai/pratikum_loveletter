@@ -6,6 +6,7 @@ import de.swe.oo.server.messages.ChatMessage;
 import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -58,6 +59,27 @@ public class Session extends Thread {
         for (Player player : players) {
             player.sendMessage(msg);
         }
+    }
+
+    public void sendTo(Message msg, String targetName){
+        getPlayerByName(targetName).sendMessage(msg);
+    }
+
+    public List<String> getPlayers(){
+        List<String> players_name = new ArrayList<>();
+        for(Player player : players){
+            players_name.add(player.name);
+        }
+        return players_name;
+    }
+
+    public Player getPlayerByName(String targetName){
+        for(Player player : players){
+            if(targetName.equals(player.name)){
+                return player;
+            }
+        }
+        return null;
     }
 
     public synchronized void createNewGame() {

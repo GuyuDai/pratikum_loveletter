@@ -14,9 +14,27 @@ public class ChatMessage extends Message {
             player.quit();
             return;
         }
-        ChatMessage messageWithSender =
-                new ChatMessage(player.getName() + ": " + messageText);
-        player.getSession().broadcast(messageWithSender);
+
+        if(messageText.startsWith("@")){
+            //if the @ is inside the message, this message will be regarded as a normal ChatMessage
+            String targetName = messageText.substring(1, messageText.indexOf(" "));
+            String targetMessage = messageText.substring(messageText.indexOf(" "));
+            Player target = player.session.getPlayerByName(targetName);
+            if(target != null){
+                //@person in the game
+                target.sendMessage(new ChatMessage
+                    ("[" + player.name + "]" + targetMessage));
+                player.sendMessage(new ChatMessage
+                    (player.name + "->" + target.name + targetMessage));
+            }else{
+                //@person not in the game
+                player.sendMessage(new ChatMessage
+                    ("could not send private message, unknown player name"));
+            }
+        }else{
+            //is not private message
+            player.session.broadcast(new ChatMessage(player.name + ":" + messageText));
+        }
     }
 
     public String output() {
