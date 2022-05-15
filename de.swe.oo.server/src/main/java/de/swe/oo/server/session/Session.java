@@ -68,14 +68,14 @@ public class Session extends Thread {
     public List<String> getPlayers(){
         List<String> players_name = new ArrayList<>();
         for(Player player : players){
-            players_name.add(player.name);
+            players_name.add(player.getName());
         }
         return players_name;
     }
 
     public Player getPlayerByName(String targetName){
         for(Player player : players){
-            if(targetName.equals(player.name)){
+            if(targetName.equals(player.getName())){
                 return player;
             }
         }

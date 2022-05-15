@@ -18,4 +18,8 @@ public abstract class Card {
     }
 
     abstract void discard();
+
+    public String getName() {
+        return name;
+    }
 }
