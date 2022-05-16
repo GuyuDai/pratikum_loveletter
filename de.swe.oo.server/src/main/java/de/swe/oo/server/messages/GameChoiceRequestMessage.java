@@ -1,7 +1,7 @@
 package de.swe.oo.server.messages;
 
 public class GameChoiceRequestMessage extends GameRequestMessage {
-    String[] choices;
+    String [] choices;
 
     public GameChoiceRequestMessage(String prompt, String[] choices) {
         super(prompt);
@@ -15,7 +15,7 @@ public class GameChoiceRequestMessage extends GameRequestMessage {
 
     private String choicesString() {
         String result ="";
-        for (int i=0; i< choices.length; ++i){
+        for (int i = 0; i< choices.length; ++i){
             result = result + " " + encodeSpaces(choices[i]);
         }
         return result;

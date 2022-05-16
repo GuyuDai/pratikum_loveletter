@@ -7,6 +7,7 @@ import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.lang.Integer.parseInt;
@@ -14,6 +15,10 @@ import static java.lang.Integer.parseInt;
 public class LoveLetterGame extends Game {
     private static int MINPLAYERS = 2;
     private static int MAXPLAYERS = 4;
+
+    public CopyOnWriteArrayList<Player> getActivePlayers() {
+        return activePlayers;
+    }
 
     protected CopyOnWriteArrayList<Player> activePlayers;
 
@@ -173,21 +178,19 @@ public class LoveLetterGame extends Game {
         return round;
     }
 
-    public String getNameOfActivePlayers(){
-       int number = getNumberOfActivePlayers();
-       int i=1;
-       String result="";
-       String temp;
-       for ( Player player : activePlayers){
-           temp = "player " + i + ": " + player.getName()+ "/n";
-           result = result + temp;
-           i++;
-       }
-       return result;
+    public List<String> getNameOfActivePlayers(){
+        List<String> activeplayers_name = new ArrayList<>();
+
+
+        for(Player player : activePlayers){
+            activeplayers_name.add(player.getName());
+        }
+        return activeplayers_name;
+
     }
 
-    public String choosePlayerDeck(Player targetplayer){
-        return targetplayer.showHands();
+    public String  choosePlayerDeck(Player targetplayer){
+        return String.valueOf(targetplayer.showHands());
     }
     public Player getPlayer(String targetName){
         for(Player player : activePlayers){

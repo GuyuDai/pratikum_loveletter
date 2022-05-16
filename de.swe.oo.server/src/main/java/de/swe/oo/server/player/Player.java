@@ -22,12 +22,12 @@ public class Player {
           return hands.get(i);
     }
 
-    public String showHands(){
+    public String[] showHands(){
         String result="";
         for(Card card : hands){
             result = result + card.getName() + " ";
         }
-        return result;
+        return new String[]{result};
     }
 
     public void setHands(Card card) {
