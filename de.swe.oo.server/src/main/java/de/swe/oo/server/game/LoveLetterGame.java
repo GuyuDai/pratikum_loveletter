@@ -15,6 +15,17 @@ public class LoveLetterGame extends Game {
 
     public LoveLetterGame() {
         super(MINPLAYERS, MAXPLAYERS);
+        switch (this.players.size()){
+            case 2:
+                this.targetAffection = 7;
+                break;
+            case 3:
+                this.targetAffection = 5;
+                break;
+            case 4:
+                this.targetAffection = 4;
+                break;
+        }
     }
 
 
