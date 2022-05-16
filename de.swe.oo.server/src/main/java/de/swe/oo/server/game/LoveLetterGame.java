@@ -166,13 +166,26 @@ public class LoveLetterGame extends Game {
                 (targetPlayer.getName() + "is not active in the current game"));
     }
 
+    public void choosePlayerDeck(){
+
+    }
     public int getRound() {
         return round;
     }
 
+    public void getNameOfActivePlayers(){
+       int number = getNumberOfActivePlayers();
+       int i=1;
+       for ( Player player : activePlayers){
+           String result = "player" + i + player.getName();
+           i++;
+       }
+
+    }
     public int getNumberOfActivePlayers(){
         return activePlayers.size();
     }
+
 
     public void announceRoundInfo(){
         String result = "used cards are: ";

@@ -1,6 +1,7 @@
 package de.swe.oo.server.player;
 
 
+import de.swe.oo.server.cards.Card;
 import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameRequestMessage;
@@ -8,6 +9,7 @@ import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.session.Session;
 
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Player {
     private String name;
@@ -16,6 +18,20 @@ public class Player {
 
     private int affectionTockens = 0;
 
+    public void getHands(int i) {
+         hands.get(i);
+    }
+
+    public void showHands(){
+        getHands(0);
+        getHands(1);
+    }
+
+    public void setHands(Card card) {
+        hands.add(card);
+    }
+
+    private ArrayList<Card> hands = new ArrayList<>(2);
 
     private Session session;
     public Connection connection;
