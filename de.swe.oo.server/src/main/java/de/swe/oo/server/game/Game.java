@@ -23,17 +23,6 @@ public class Game extends Thread {
     public Game(int minPlayers, int maxPlayers) {
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
-        switch (this.players.size()){
-            case 2:
-                this.targetAffection = 7;
-                break;
-            case 3:
-                this.targetAffection = 5;
-                break;
-            case 4:
-                this.targetAffection = 4;
-                break;
-        }
         players = new CopyOnWriteArrayList<Player>();
         scoreMap = new HashMap<Player, Integer>();
         isGoingOn = false;
