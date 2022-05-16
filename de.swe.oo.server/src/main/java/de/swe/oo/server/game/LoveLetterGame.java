@@ -177,11 +177,9 @@ public class LoveLetterGame extends Game {
     public int getRound() {
         return round;
     }
-
+    /** gives back a String list of the names of all active players*/
     public List<String> getNameOfActivePlayers(){
         List<String> activeplayers_name = new ArrayList<>();
-
-
         for(Player player : activePlayers){
             activeplayers_name.add(player.getName());
         }
