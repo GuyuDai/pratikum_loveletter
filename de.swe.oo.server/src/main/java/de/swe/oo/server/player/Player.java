@@ -18,13 +18,16 @@ public class Player {
 
     private int affectionTockens = 0;
 
-    public void getHands(int i) {
-         hands.get(i);
+    public Card getHands(int i) {
+          return hands.get(i);
     }
 
-    public void showHands(){
-        getHands(0);
-        getHands(1);
+    public String showHands(){
+        String result="";
+        for(Card card : hands){
+            result = result + card.getName() + " ";
+        }
+        return result;
     }
 
     public void setHands(Card card) {

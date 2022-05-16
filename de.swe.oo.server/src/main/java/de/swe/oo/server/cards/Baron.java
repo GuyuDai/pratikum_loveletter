@@ -20,7 +20,8 @@ public class Baron extends Card {
     void discard(){
     this.currentGame.getNameOfActivePlayers();
     owner.sendMessage(new GameResponseMessage("Choose one of the above Names to compare deck"));
-    //sendToAllPlayers(new GameInputRequestMessage())
+    //this.currentGame.getPlayer(targetplayername);
+
     }
 }
 

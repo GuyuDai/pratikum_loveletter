@@ -173,14 +173,29 @@ public class LoveLetterGame extends Game {
         return round;
     }
 
-    public void getNameOfActivePlayers(){
+    public String getNameOfActivePlayers(){
        int number = getNumberOfActivePlayers();
        int i=1;
+       String result="";
+       String temp;
        for ( Player player : activePlayers){
-           String result = "player" + i + player.getName();
+           temp = "player " + i + ": " + player.getName()+ "/n";
+           result = result + temp;
            i++;
        }
+       return result;
+    }
 
+    public String choosePlayerDeck(Player targetplayer){
+        return targetplayer.showHands();
+    }
+    public Player getPlayer(String targetName){
+        for(Player player : activePlayers){
+            if(player.getName().equals(targetName)){
+                return player;
+            }
+        }
+        return null;
     }
     public int getNumberOfActivePlayers(){
         return activePlayers.size();
@@ -194,4 +209,6 @@ public class LoveLetterGame extends Game {
         }
         sendToAllPlayers(new GameAnnounceMessage(result));
     }
+
+
 }
