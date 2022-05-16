@@ -12,13 +12,28 @@ public class Game extends Thread {
     protected int minPlayers;
     protected int maxPlayers;
 
+    protected int targetAffection;
+
     protected boolean isGoingOn;
     protected CopyOnWriteArrayList<Player> players;
     protected HashMap<Player, Integer> scoreMap;
 
+
+
     public Game(int minPlayers, int maxPlayers) {
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
+        switch (this.players.size()){
+            case 2:
+                this.targetAffection = 7;
+                break;
+            case 3:
+                this.targetAffection = 5;
+                break;
+            case 4:
+                this.targetAffection = 4;
+                break;
+        }
         players = new CopyOnWriteArrayList<Player>();
         scoreMap = new HashMap<Player, Integer>();
         isGoingOn = false;
@@ -153,8 +168,18 @@ public class Game extends Thread {
         return requestsOngoing;
     }
 
-    protected void announceState(){
+    protected void announceScore(){
         sendToAllPlayers(new GameAnnounceMessage("Current Scores: " + getScoreString()));
     }
+
+    public void announcePlayersInfo(){
+        for(Player player : players){
+            sendToAllPlayers(new GameAnnounceMessage
+                (player.getName() + "'s last date with Princess was on day " +player.getLastDateOfDate()));
+            sendToAllPlayers(new GameAnnounceMessage
+                (player.getName() + " has " +player.getAffectionTockens() + "Affection Tockens"));
+        }
+    }
+
 
 }

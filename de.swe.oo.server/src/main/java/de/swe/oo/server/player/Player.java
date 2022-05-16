@@ -12,6 +12,10 @@ import java.net.Socket;
 public class Player {
     private String name;
 
+    private int lastDateOfDate = 0;
+
+    private int affectionTockens = 0;
+
 
     private Session session;
     public Connection connection;
@@ -82,5 +86,21 @@ public class Player {
 
     public String getLastResponse() {
         return lastResponse;
+    }
+
+    public int getLastDateOfDate() {
+        return lastDateOfDate;
+    }
+
+    public void setLastDateOfDate(int lastDateOfDate) {
+        this.lastDateOfDate = lastDateOfDate;
+    }
+
+    public int getAffectionTockens() {
+        return affectionTockens;
+    }
+
+    public void setAffectionTockens(int affectionTockens) {
+        this.affectionTockens = affectionTockens;
     }
 }
