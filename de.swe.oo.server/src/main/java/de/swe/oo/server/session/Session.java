@@ -7,12 +7,14 @@ import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.player.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Session extends Thread {
     public Chat chat;
     List<Player> players;
+    
     LoginHandler loginHandler;
     Game currentGame;
 
@@ -24,6 +26,7 @@ public class Session extends Thread {
     public Game getCurrentGame() {
         return currentGame;
     }
+
 
     @Override
     public void run() {

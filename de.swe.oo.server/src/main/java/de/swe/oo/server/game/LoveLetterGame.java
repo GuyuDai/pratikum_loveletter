@@ -22,6 +22,8 @@ public class LoveLetterGame extends Game {
 
     protected CopyOnWriteArrayList<Player> activePlayers;
 
+    private List<Player> currentPlayers;
+
     protected Player playerInCurrentTurn = null;
 
     protected int round = 0;
@@ -89,6 +91,22 @@ public class LoveLetterGame extends Game {
         setPlayerInCurrentTurn();
     }
 
+
+    public void addCurrentPlayer(Player activePlayer){
+        currentPlayers.add(activePlayer);
+    }
+
+    public List<Player> getCurrentPlayers() {
+        return currentPlayers;
+    }
+
+    public void removeCurrentPlayer(Player activePlayer){
+        for (int i = 0; i < currentPlayers.size(); i++) {
+            if (currentPlayers.get(i) == activePlayer){
+                currentPlayers.remove(i);
+            }
+        }
+    }
     public void ifRoundEnd(){
         if(getNumberOfActivePlayers() == 1){
             playerWin(activePlayers.get(0));

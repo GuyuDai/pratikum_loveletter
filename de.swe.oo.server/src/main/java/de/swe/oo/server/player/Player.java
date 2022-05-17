@@ -13,13 +13,28 @@ import java.util.ArrayList;
 
 public class Player {
     private String name;
-
     private int lastDateOfDate = 0;
-
     private int affectionTockens = 0;
-
+    private boolean isImmune = false;
+    private ArrayList<Card> hands = new ArrayList<>(2);
+    private Session session;
+    public Connection connection;
+    public ConnectionListener connectionListener;
+    private boolean pendingRequestExists;
+    private String lastResponse;
     public Card getHands(int i) {
           return hands.get(i);
+    }
+    public int getHandsSize(){
+        return hands.size();
+    }
+
+    public void setImmune(boolean immune) {
+        isImmune = immune;
+    }
+
+    public boolean isImmune() {
+        return isImmune;
     }
 
     public String[] showHands(){
@@ -33,16 +48,6 @@ public class Player {
     public void setHands(Card card) {
         hands.add(card);
     }
-
-    private ArrayList<Card> hands = new ArrayList<>(2);
-
-    private Session session;
-    public Connection connection;
-    public ConnectionListener connectionListener;
-
-
-    private boolean pendingRequestExists;
-    private String lastResponse;
 
     public boolean pendingRequestExists() {
         synchronized (this) {

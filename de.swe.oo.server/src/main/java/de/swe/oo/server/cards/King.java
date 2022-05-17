@@ -26,7 +26,7 @@ public class King extends Card {
         owner.sendMessage(new GameMessage(currentGame.choosePlayerDeck(targetPlayer)));
         owner.sendMessage(new GameMessage("Do you want to trade decks?"));
         /** If yes decks get changed*/
-        if (owner.getLastResponse() == "yes" ||owner.getLastResponse()=="Yes"){
+        if (owner.getLastResponse().equalsIgnoreCase("yes")){
             /** card1 and card 2 as temporary safed cards */
             Card card1= targetPlayer.getHands(0);
             Card card2= targetPlayer.getHands(1);
