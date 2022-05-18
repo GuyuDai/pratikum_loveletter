@@ -40,6 +40,9 @@ public abstract class Card {
                 this.name = "gurad";
                 this.value = 1;
                 break;
+
+            case PRIEST:
+
         }
     }
 

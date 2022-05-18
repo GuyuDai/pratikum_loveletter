@@ -29,6 +29,8 @@ public class Player {
     private boolean pendingRequestExists;
     private String lastResponse;
 
+    private boolean isProtected = false;
+
     public boolean pendingRequestExists() {
         synchronized (this) {
             return pendingRequestExists;
@@ -110,9 +112,9 @@ public class Player {
 
     public Card getHand(int i){
         return hands.get(i);
-    }
+    }  //return a card(type Card) of given index
 
-    public String showHands(){
+    public String showHands(){  //return the cards from player's hand in String type
         String result = "";
         for(Card card : hands){
             result = result + card.getName() + " ";
@@ -122,5 +124,13 @@ public class Player {
 
     public void setHands(Card card) {
         this.hands.add(card);
+    }  //add a card to a player's hand
+
+    public boolean getIsProtected(){
+        return isProtected;
+    }
+
+    public void resetIsProtected(){
+        isProtected = false;
     }
 }

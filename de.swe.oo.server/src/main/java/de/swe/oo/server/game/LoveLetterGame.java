@@ -54,6 +54,7 @@ public class LoveLetterGame extends Game implements GameLogic{
 
     public void handleTurn(Player player) {
         sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
+        getPlayerInCurrentTurn().resetIsProtected();  //the effect of handmaid has expired
         String[] options = {"1", "12", "-1"};
         player.requestFromPlayer(new GameChoiceRequestMessage("Please choose one of the numbers.", options));
         waitForAllResponses();
@@ -85,7 +86,7 @@ public class LoveLetterGame extends Game implements GameLogic{
     public void turnEnd(){  //current player will go to the end of activePlayers, and reset the playerInCurrentTurn
         activePlayers.remove(getPlayerInCurrentTurn());
         activePlayers.add(getPlayerInCurrentTurn());
-        setPlayerInCurrentTurn();
+        setPlayerInCurrentTurn();  //next player will take his or her turn
     }
 
     public void ifRoundEnd(){  //check if a round end or not
@@ -204,10 +205,19 @@ public class LoveLetterGame extends Game implements GameLogic{
         return targetPlayer.showHands();
     }
 
+    //when a player uses some kind of cards(like Baron), it is required to choose a certain player
+    //but calling this method has a risk to return a null
+    //maybe this problem could be handled by using a while(true) loop, to check the output of this method
+    //before really using it, and ask for another choose when it returns null
     public Player getPlayer(String targetName) {  //to get a certain player
                                         // this method needs a Sting name as variable and returns a Player object
-        for(Player player : activePlayers){
+        for(Player player : activePlayers){  //traverse the active players to check whether the target player is active
             if(player.getName().equals(targetName)){
+                if(player.getIsProtected()){  //check if this player was protected by Handmaid
+                    //sendMessage(new GameAnnounceMessage  //if true
+                    //("this player was protected by Handmaid, please choose another player"));
+                    return null;
+                }
                 return player;
             }
         }
