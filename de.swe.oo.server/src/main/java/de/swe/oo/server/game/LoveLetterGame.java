@@ -11,13 +11,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.lang.Integer.parseInt;
 
-public class LoveLetterGame extends Game {
+public class LoveLetterGame extends Game implements GameLogic{
     private static int MINPLAYERS = 2;
     private static int MAXPLAYERS = 4;
 
     protected CopyOnWriteArrayList<Player> activePlayers;
 
-    protected Player playerInCurrentTrun = null;
+    protected Player playerInCurrentTurn = null;
 
     protected int round = 0;
 
@@ -43,16 +43,16 @@ public class LoveLetterGame extends Game {
     @Override
     public void run() {
         sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
-        initialize();
+        roundInitialize();
         while (isGoingOn) {
-            handleTurn(getPlayerInCurrentTrun());
+            handleTurn(getPlayerInCurrentTurn());
             ifRoundEnd();
             turnEnd();
         }
         cleanUp();
     }
 
-    protected void handleTurn(Player player) {
+    public void handleTurn(Player player) {
         sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
         String[] options = {"1", "12", "-1"};
         player.requestFromPlayer(new GameChoiceRequestMessage("Please choose one of the numbers.", options));
@@ -64,9 +64,13 @@ public class LoveLetterGame extends Game {
     }
 
     @Override
-    protected void reorderPlayers() {
-        int temp = round;
-        activePlayers = new CopyOnWriteArrayList<>();
+    public void reorderPlayers() {
+        int temp = round;  //first set a temporary variable equals the current round
+        activePlayers = new CopyOnWriteArrayList<>();  //new an empty activePlayers List
+        //The player who is in front of the list, the closer he had a date with princess (lastDateOfDate is bigger)
+        //and if there are some players which have the same lastDateOfDate (tie)
+        //the order is the same as the order in which the game was added
+        //because the order of Players list will never be changed, so the players who was most recently on a date will always go first
         while(temp >= 0){
             for(Player player : players){
                 if(player.getLastDateOfDate() == temp){
@@ -75,26 +79,26 @@ public class LoveLetterGame extends Game {
             }
             temp--;
         }
-        setPlayerInCurrentTrun();
+        setPlayerInCurrentTurn();
     }
 
     public void turnEnd(){  //current player will go to the end of activePlayers, and reset the playerInCurrentTurn
-        activePlayers.remove(getPlayerInCurrentTrun());
-        activePlayers.add(getPlayerInCurrentTrun());
-        setPlayerInCurrentTrun();
+        activePlayers.remove(getPlayerInCurrentTurn());
+        activePlayers.add(getPlayerInCurrentTurn());
+        setPlayerInCurrentTurn();
     }
 
-    public void ifRoundEnd(){
-        if(getNumberOfActivePlayers() == 1){
-            playerWin(activePlayers.get(0));
+    public void ifRoundEnd(){  //check if a round end or not
+        if(getNumberOfActivePlayers() == 1){  //check if there is only one active player
+            playerWin(activePlayers.get(0));  //is true, this player will be the winner
             announcePlayersInfo();
-            ifGameEnd();
+            ifGameEnd();  //check if the whole game end or not
             return;
         }
-        if(deck.size() == 0){
-            announceScore();
-            int tempScore = 0;
-            ArrayList<Player> tempWinner = new ArrayList<>();
+        if(deck.size() == 0){  //check whether the deck of cards is empty or not
+            announceScore();  //if true, show the scores of each player
+            int tempScore = 0;  //a temporary variable to save the highest score
+            ArrayList<Player> tempWinner = new ArrayList<>();  //because the winner could be more than one, so use a ArrayList
             for(Player player : activePlayers){  //find out the highest score
                 if(scoreMap.get(player) >= tempScore){
                     tempScore = scoreMap.get(player);
@@ -105,64 +109,66 @@ public class LoveLetterGame extends Game {
                     tempWinner.add(player);
                 }
             }
-            for(Player player : tempWinner){  //players win
+            for(Player player : tempWinner){  //for loop to deal with the winners
                 playerWin(player);
             }
             announcePlayersInfo();
-            ifGameEnd();
+            ifGameEnd();  //check if game end
             return;
         }
         return;
     }
 
-    public void playerWin(Player player){
-        sendToAllPlayers(new GameAnnounceMessage(player.getName() + "win!"));
-        player.setLastDateOfDate(this.getRound());
-        player.setAffectionTockens(player.getAffectionTockens() + 1);
+    public void playerWin(Player player){  //when a player wins, this method will be called
+        sendToAllPlayers(new GameAnnounceMessage(player.getName() + "win!"));  //announce who wins
+        player.setLastDateOfDate(this.getRound());  //the winner will have a date on the day "round" with princess
+        player.setAffectionTockens(player.getAffectionTockens() + 1);  //winner's affection tokens +1
     }
 
     public void initializeDeck(){
 
     }
-    protected void initialize(){
-        initializeScores();
-        reorderPlayers();
-        initializeDeck();
-        round++;
+    public void roundInitialize(){  //initialize a new round
+        initializeScores();  //initialize the score
+        reorderPlayers();  //reorder the players
+        initializeDeck();  //initialize the card deck
+        round++;  //round +1
     }
-    public void ifGameEnd(){
-        for(Player player : players){
-            if(player.getAffectionTockens() == targetAffection){
-                sendToAllPlayers(new GameAnnounceMessage
+    public void ifGameEnd(){  //check if the whole game end or not
+        for(Player player : players){  //check whether there is a player achieve the target number of the affection tokens
+            if(player.getAffectionTockens() == targetAffection){  //if true
+                sendToAllPlayers(new GameAnnounceMessage  //announce who is the final winner
                     (player.getName() + "is the final winner"));
-                isGoingOn = false;
+                isGoingOn = false;  //the game will not be going on
                 return;
             }
         }
-        initialize();
+        roundInitialize();  //because this method is only called by ifRoundEnd() inside the TRUE branch
+                       //it means only a round ends, this method will be called
+                       //so at the end of this method, initialize a new round is necessary when the game not ends
     }
 
-    public Player getPlayerInCurrentTrun() {
-        return playerInCurrentTrun;
+    public Player getPlayerInCurrentTurn() {
+        return playerInCurrentTurn;
     }
 
-    public void setPlayerInCurrentTrun() {
-        this.playerInCurrentTrun = activePlayers.get(0);
+    public void setPlayerInCurrentTurn() {
+        this.playerInCurrentTurn = activePlayers.get(0);
     }
 
-    public void playerKickedOff(Player targetPlayer){
-        int pointer = 0;
-        while(pointer < this.getNumberOfActivePlayers()){
-            if(activePlayers.get(pointer).getName().equals(targetPlayer.getName())){
+    public void playerKickedOff(Player targetPlayer){  //kick off a player in a certain round
+        int pointer = 0;  //temp variable to traverse the activePlayers List
+        while(pointer < this.getNumberOfActivePlayers()){  //traverse the activePlayers
+            if(activePlayers.get(pointer).getName().equals(targetPlayer.getName())){  //if the current pointed player is the targetPlayer
                 sendToAllPlayers(new GameAnnounceMessage
-                    (targetPlayer.getName() + "failed"));
-                activePlayers.remove(pointer);
-                setPlayerInCurrentTrun();  //to prevent that the removed player is the head of activePlayers
-                return;
+                    (targetPlayer.getName() + "is out of this round"));  // announce who is kicked off
+                activePlayers.remove(pointer);  //remove this player in the activePlayers List
+                setPlayerInCurrentTurn();  //to prevent that the removed player is the head of activePlayers
+                return;  //end the method
             }
-            pointer ++;
+            pointer ++;  //point to the next active player
         }
-        sendToAllPlayers(new ErrorMessage
+        sendToAllPlayers(new ErrorMessage  //if the target player is not active
             (targetPlayer.getName() + "is not active in the current game"));
     }
 
@@ -174,11 +180,37 @@ public class LoveLetterGame extends Game {
         return activePlayers.size();
     }
 
-    public void announceRoundInfo(){
+    public void announceRoundInfo(){  //show to everyone the used cards (also the removed cards at the beginning of a round)
         String result = "used cards are: ";
         for(Card card : usedCards){
             result = result + card.getName() + ", ";
         }
         sendToAllPlayers(new GameAnnounceMessage(result));
+    }
+
+    public String getNameOfActivePlayers(){  //this method will return a String
+        int i = 1;
+        String result = "";
+        String temp;
+        for(Player player : activePlayers){
+            temp = "player " + i + ": " + player.getName() + "/n";
+            result = result + temp;
+            i++;
+        }
+        return result;
+    }
+
+    public String choosePlayerDeck(Player targetPlayer){
+        return targetPlayer.showHands();
+    }
+
+    public Player getPlayer(String targetName) {  //to get a certain player
+                                        // this method needs a Sting name as variable and returns a Player object
+        for(Player player : activePlayers){
+            if(player.getName().equals(targetName)){
+                return player;
+            }
+        }
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package de.swe.oo.server.player;
 
 
+import de.swe.oo.server.cards.Card;
 import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameRequestMessage;
@@ -8,13 +9,16 @@ import de.swe.oo.server.messages.Message;
 import de.swe.oo.server.session.Session;
 
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Player {
     private String name;
 
-    private int lastDateOfDate = 0;
+    private int lastDateOfDate = 0;  //a certain player had the last date with princess on day <lastDateOfDate>
 
     private int affectionTockens = 0;
+
+    private ArrayList<Card> hands = new ArrayList<>(2);
 
 
     private Session session;
@@ -102,5 +106,21 @@ public class Player {
 
     public void setAffectionTockens(int affectionTockens) {
         this.affectionTockens = affectionTockens;
+    }
+
+    public Card getHand(int i){
+        return hands.get(i);
+    }
+
+    public String showHands(){
+        String result = "";
+        for(Card card : hands){
+            result = result + card.getName() + " ";
+        }
+        return result;
+    }
+
+    public void setHands(Card card) {
+        this.hands.add(card);
     }
 }
