@@ -1,6 +1,8 @@
 package de.swe.oo.server.game;
 
 import de.swe.oo.server.cards.Card;
+import de.swe.oo.server.cards.Deck;
+import de.swe.oo.server.cards.Princess;
 import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
@@ -21,9 +23,7 @@ public class LoveLetterGame extends Game implements GameLogic{
 
     protected int round = 0;
 
-    private ArrayList<Card> deck;
-
-    private ArrayList<Card> usedCards;
+    private Deck deck;
 
     public LoveLetterGame() {
         super(MINPLAYERS, MAXPLAYERS);
@@ -45,18 +45,20 @@ public class LoveLetterGame extends Game implements GameLogic{
         sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
         roundInitialize();
         while (isGoingOn) {
-            handleTurn(getPlayerInCurrentTurn());
+            handleTurn();
             ifRoundEnd();
             turnEnd();
         }
         cleanUp();
     }
 
-    public void handleTurn(Player player) {
+    public void handleTurn() {
+        Player player = playerInCurrentTurn;
         sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
-        getPlayerInCurrentTurn().resetIsProtected();  //the effect of handmaid has expired
-        String[] options = {"1", "12", "-1"};
-        player.requestFromPlayer(new GameChoiceRequestMessage("Please choose one of the numbers.", options));
+        getPlayerInCurrentTurn().resetIsProtected();  //the effect of handmaid expired
+        deck.draw(player);  //player draws card
+        String[] options = player.showHands().trim().split(" ");  //use space to split the String hands to Array
+        player.requestFromPlayer(new GameChoiceRequestMessage("Please choose a card to discard", options));
         waitForAllResponses();
         int responseIndex = parseInt(player.getLastResponse().trim());
         int response = parseInt(options[responseIndex]);
@@ -76,6 +78,7 @@ public class LoveLetterGame extends Game implements GameLogic{
             for(Player player : players){
                 if(player.getLastDateOfDate() == temp){
                     activePlayers.add(player);
+                    player.setCurrentgame(this);
                 }
             }
             temp--;
@@ -96,7 +99,7 @@ public class LoveLetterGame extends Game implements GameLogic{
             ifGameEnd();  //check if the whole game end or not
             return;
         }
-        if(deck.size() == 0){  //check whether the deck of cards is empty or not
+        if(deck.getRemainingCards().size() == 0){  //check whether the deck of cards is empty or not
             announceScore();  //if true, show the scores of each player
             int tempScore = 0;  //a temporary variable to save the highest score
             ArrayList<Player> tempWinner = new ArrayList<>();  //because the winner could be more than one, so use a ArrayList
@@ -127,7 +130,27 @@ public class LoveLetterGame extends Game implements GameLogic{
     }
 
     public void initializeDeck(){
+        this.deck = new Deck(this);
+        //create 16 specific cards (like new Princess), add them to deck
+        for(int i = 16; i > 0; i--){
+            deck.getRemainingCards().add(new Princess(this));  //for testing
+        }
+        switch(activePlayers.size()){  //remove some cards
+            case 2:
+                deck.removeCard();
+                deck.removeCard();
+                deck.removeCard();
+                break;
 
+            case 3:
+                deck.removeCard();
+                deck.removeCard();
+                break;
+
+            case 4:
+                deck.removeCard();
+                break;
+        }
     }
     public void roundInitialize(){  //initialize a new round
         initializeScores();  //initialize the score
@@ -183,7 +206,7 @@ public class LoveLetterGame extends Game implements GameLogic{
 
     public void announceRoundInfo(){  //show to everyone the used cards (also the removed cards at the beginning of a round)
         String result = "used cards are: ";
-        for(Card card : usedCards){
+        for(Card card : getDeck().getUsedCards()){
             result = result + card.getName() + ", ";
         }
         sendToAllPlayers(new GameAnnounceMessage(result));
@@ -222,5 +245,9 @@ public class LoveLetterGame extends Game implements GameLogic{
             }
         }
         return null;
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 }

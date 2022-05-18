@@ -2,6 +2,8 @@ package de.swe.oo.server.player;
 
 
 import de.swe.oo.server.cards.Card;
+import de.swe.oo.server.game.Game;
+import de.swe.oo.server.game.LoveLetterGame;
 import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameRequestMessage;
@@ -30,6 +32,8 @@ public class Player {
     private String lastResponse;
 
     private boolean isProtected = false;
+
+    private LoveLetterGame currentgame = null;
 
     public boolean pendingRequestExists() {
         synchronized (this) {
@@ -132,5 +136,19 @@ public class Player {
 
     public void resetIsProtected(){
         isProtected = false;
+    }
+
+    public Game getCurrentgame() {
+        return currentgame;
+    }
+
+    public void setCurrentgame(LoveLetterGame currentgame) {
+        this.currentgame = currentgame;
+    }
+
+    public void discard(Card card){
+        card.effect();
+        hands.remove(card);
+        this.currentgame.getDeck().getUsedCards().add(card);
     }
 }
