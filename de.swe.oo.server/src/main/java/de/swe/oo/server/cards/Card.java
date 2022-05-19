@@ -61,4 +61,8 @@ public abstract class Card {
     public void setOwner(Player owner) {
         this.owner = owner;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
