@@ -61,7 +61,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         player.requestFromPlayer(new GameChoiceRequestMessage("Please choose a card to discard", options));
         waitForAllResponses();
         int responseIndex = parseInt(player.getLastResponse().trim());  //player enter the index of which card the player want to discard
-        Card response = player.getHand(responseIndex);  //get this card
+        Card response = player.getHands(responseIndex);  //get this card
         changeScore(player, response.getValue());  //score up
         player.discard(response);  //discard
         announceScore();
@@ -212,18 +212,16 @@ public class LoveLetterGame extends Game implements GameLogic{
         }
         sendToAllPlayers(new GameAnnounceMessage(result));
     }
-
-    public String getNameOfActivePlayers(){  //this method will return a String
-        int i = 1;
-        String result = "";
-        String temp;
-        for(Player player : activePlayers){
-            temp = "player " + i + ": " + player.getName() + "/n";
-            result = result + temp;
+    public void getNameOfActivePlayers(){
+        int number = getNumberOfActivePlayers();
+        int i=1;
+        for ( Player player : activePlayers){
+            String result = "player" + i + player.getName();
             i++;
         }
-        return result;
+
     }
+
 
     public String choosePlayerDeck(Player targetPlayer){
         return targetPlayer.showHands();

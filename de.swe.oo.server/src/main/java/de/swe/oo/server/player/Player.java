@@ -114,21 +114,23 @@ public class Player {
         this.affectionTockens = affectionTockens;
     }
 
-    public Card getHand(int i){
-        return hands.get(i);
-    }  //return a card(type Card) of given index
-
-    public String showHands(){  //return the cards from player's hand in String type
-        String result = "";
+    public String[] showHands(){
+        String result="";
         for(Card card : hands){
             result = result + card.getName() + " ";
         }
-        return result;
+        return new String[]{result};
     }
 
     public void setHands(Card card) {
-        this.hands.add(card);
-    }  //add a card to a player's hand
+        hands.add(card);
+    }
+
+    public Card getHands(int i) {
+        return hands.get(i);
+    }
+
+
 
     public boolean getIsProtected(){
         return isProtected;
