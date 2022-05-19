@@ -9,11 +9,11 @@ public class Princess extends Card {
     private static int VALUE = 8;
 
     public Princess(LoveLetterGame currentGame, Player owner ) {
-        super(NAME, VALUE, currentGame, owner);
+        super(NAME,currentGame);
     }
     /** If the player plays or discards this card for any reason, they are eliminated from the round*/
     @Override
-    void discard(){
+    public void effect(){
     this.currentGame.playerKickedOff(owner);
     }
 }

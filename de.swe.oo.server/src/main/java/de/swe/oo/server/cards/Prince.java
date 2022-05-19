@@ -11,12 +11,12 @@ public class Prince extends Card {
     private static int VALUE = 5;
 
     public Prince(LoveLetterGame currentGame, Player owner) {
-        super(NAME, VALUE, currentGame, owner);
+        super(NAME,currentGame);
     }
 
     // Player may choose any player (including themselves) to discard their hand and draw a new one
     @Override
-    void discard(){
+    public void effect(){
 
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name to show their hands*/
@@ -32,7 +32,7 @@ public class Prince extends Card {
                     currentGame.removeCurrentPlayer(targetPlayer);
                 } else{
                     for (int i = 0; i < targetPlayer.getHandsSize(); i++) {
-                        discard(); //TODO: Discard all cards correctly
+                        effect(); //TODO: Discard all cards correctly
                         //TODO: Draw cards
                     }
                 }

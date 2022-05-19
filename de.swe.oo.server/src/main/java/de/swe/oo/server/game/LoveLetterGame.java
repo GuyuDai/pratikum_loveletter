@@ -7,6 +7,7 @@ import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.player.Player;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -18,6 +19,8 @@ public class LoveLetterGame extends Game implements GameLogic{
     private static int MAXPLAYERS = 4;
 
     protected CopyOnWriteArrayList<Player> activePlayers;
+
+    private List<Player> currentPlayers;
 
     protected Player playerInCurrentTurn = null;
 
@@ -57,7 +60,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
         getPlayerInCurrentTurn().resetIsProtected();  //the effect of handmaid expired
         deck.draw(player);  //player draws card
-        String[] options = player.showHands().trim().split(" ");  //use space to split the String hands to Array
+        String[] options = player.showHands().toString().trim().split(" ");  //use space to split the String hands to Array
         player.requestFromPlayer(new GameChoiceRequestMessage("Please choose a card to discard", options));
         waitForAllResponses();
         int responseIndex = parseInt(player.getLastResponse().trim());  //player enter the index of which card the player want to discard
@@ -134,7 +137,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         this.deck = new Deck(this);
         //create 16 specific cards (like new Princess), add them to deck
         for(int i = 16; i > 0; i--){
-            deck.getRemainingCards().add(new Princess(this));  //for testing
+            deck.getRemainingCards().add(new Princess(this,null));  //for testing
         }
         switch(activePlayers.size()){  //remove some cards
             case 2:
@@ -212,19 +215,34 @@ public class LoveLetterGame extends Game implements GameLogic{
         }
         sendToAllPlayers(new GameAnnounceMessage(result));
     }
-    public void getNameOfActivePlayers(){
-        int number = getNumberOfActivePlayers();
-        int i=1;
-        for ( Player player : activePlayers){
-            String result = "player" + i + player.getName();
-            i++;
+    public List<String> getNameOfActivePlayers(){
+        List<String> activeplayers_name = new ArrayList<>();
+        for(Player player : activePlayers){
+            activeplayers_name.add(player.getName());
         }
+        return activeplayers_name;
 
+    }
+
+    public void addCurrentPlayer(Player activePlayer){
+        currentPlayers.add(activePlayer);
+    }
+
+    public List<Player> getCurrentPlayers() {
+        return currentPlayers;
+    }
+
+    public void removeCurrentPlayer(Player activePlayer){
+        for (int i = 0; i < currentPlayers.size(); i++) {
+            if (currentPlayers.get(i) == activePlayer){
+                currentPlayers.remove(i);
+            }
+        }
     }
 
 
     public String choosePlayerDeck(Player targetPlayer){
-        return targetPlayer.showHands();
+        return targetPlayer.showHands().toString();
     }
 
     //when a player uses some kind of cards(like Baron), it is required to choose a certain player

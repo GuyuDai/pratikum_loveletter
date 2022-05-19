@@ -5,6 +5,7 @@ import de.swe.oo.server.game.LoveLetterGame;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.player.Player;
 
+
 import static java.lang.Integer.parseInt;
 
 public class Guard extends Card{
@@ -12,14 +13,14 @@ public class Guard extends Card{
     private static int VALUE = 1;
 
     public Guard(LoveLetterGame currentGame, Player owner) {
-        super(NAME, VALUE, currentGame, owner);
+        super(NAME,currentGame);
     }
 
     @Override
     /**When you discard the Guard, choose a player and name a number (other than 1).
      * If that player has that number in their hand, that player is knocked out of the round.
      */
-    void discard(){
+    public void effect(){
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name */
         owner.sendMessage(new GameChoiceRequestMessage("Choose one of the names", namelist));

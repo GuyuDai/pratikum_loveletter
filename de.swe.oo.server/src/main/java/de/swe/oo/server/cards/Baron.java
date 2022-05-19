@@ -12,12 +12,12 @@ public class Baron extends Card {
     private static int VALUE = 3;
 
     public Baron(LoveLetterGame currentGame, Player owner) {
-        super(NAME, VALUE, currentGame, owner);
+        super(NAME, currentGame);
     }
 
     /**Player may choose another player and privately compare hands. The player with the lower-value card is eliminated.*/
     @Override
-    void discard(){
+    public void effect(){
     /** create nameList with all the Names of active Players */
     String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
     /** Player can choose a name to show their hands*/

@@ -11,12 +11,12 @@ public class Priest extends Card {
     private static int VALUE = 2;
 
     public Priest(LoveLetterGame currentGame, Player owner) {
-        super(NAME, VALUE, currentGame, owner);
+        super(NAME, currentGame);
     }
 
     //Player may privately see another players hand
     @Override
-    void discard(){
+    public void effect(){
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name to show their hands*/
         owner.sendMessage(new GameChoiceRequestMessage("Choose one of the names to look into their deck", namelist));

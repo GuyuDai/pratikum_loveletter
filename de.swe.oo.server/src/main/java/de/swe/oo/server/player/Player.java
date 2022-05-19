@@ -130,6 +130,9 @@ public class Player {
         return hands.get(i);
     }
 
+    public int getHandsSize(){
+        return hands.size();
+    }
 
 
     public boolean getIsProtected(){

@@ -11,12 +11,12 @@ public class King extends Card {
     private static int VALUE = 6;
 
     public King(LoveLetterGame currentGame, Player owner) {
-        super(NAME, VALUE, currentGame, owner);
+        super(NAME, currentGame);
     }
 
     //Player may trade hands with other player
     @Override
-    void discard(){
+    public void effect(){
         /** create nameList with all the Names of active Players */
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name to show their hands*/
