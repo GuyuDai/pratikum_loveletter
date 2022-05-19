@@ -2,6 +2,8 @@ package de.swe.oo.server.player;
 
 
 import de.swe.oo.server.cards.Card;
+import de.swe.oo.server.game.Game;
+import de.swe.oo.server.game.LoveLetterGame;
 import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameRequestMessage;
@@ -13,41 +15,25 @@ import java.util.ArrayList;
 
 public class Player {
     private String name;
-    private int lastDateOfDate = 0;
+
+    private int lastDateOfDate = 0;  //a certain player had the last date with princess on day <lastDateOfDate>
+
     private int affectionTockens = 0;
-    private boolean isImmune = false;
+
     private ArrayList<Card> hands = new ArrayList<>(2);
+
+
     private Session session;
     public Connection connection;
     public ConnectionListener connectionListener;
+
+
     private boolean pendingRequestExists;
     private String lastResponse;
-    public Card getHands(int i) {
-          return hands.get(i);
-    }
-    public int getHandsSize(){
-        return hands.size();
-    }
 
-    public void setImmune(boolean immune) {
-        isImmune = immune;
-    }
+    private boolean isProtected = false;
 
-    public boolean isImmune() {
-        return isImmune;
-    }
-
-    public String[] showHands(){
-        String result="";
-        for(Card card : hands){
-            result = result + card.getName() + " ";
-        }
-        return new String[]{result};
-    }
-
-    public void setHands(Card card) {
-        hands.add(card);
-    }
+    private LoveLetterGame currentgame = null;
 
     public boolean pendingRequestExists() {
         synchronized (this) {
@@ -126,5 +112,43 @@ public class Player {
 
     public void setAffectionTockens(int affectionTockens) {
         this.affectionTockens = affectionTockens;
+    }
+
+    public Card getHand(int i){
+        return hands.get(i);
+    }  //return a card(type Card) of given index
+
+    public String showHands(){  //return the cards from player's hand in String type
+        String result = "";
+        for(Card card : hands){
+            result = result + card.getName() + " ";
+        }
+        return result;
+    }
+
+    public void setHands(Card card) {
+        this.hands.add(card);
+    }  //add a card to a player's hand
+
+    public boolean getIsProtected(){
+        return isProtected;
+    }
+
+    public void resetIsProtected(){
+        isProtected = false;
+    }
+
+    public Game getCurrentgame() {
+        return currentgame;
+    }
+
+    public void setCurrentgame(LoveLetterGame currentgame) {
+        this.currentgame = currentgame;
+    }
+
+    public void discard(Card card){
+        card.effect();
+        hands.remove(card);
+        this.currentgame.getDeck().getUsedCards().add(card);
     }
 }

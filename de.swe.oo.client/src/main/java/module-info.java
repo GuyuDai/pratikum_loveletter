@@ -6,6 +6,5 @@ module de.swe.oo.client {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.fxml;
-  requires de.swe.oo.server;
   opens de.swe.oo.client.guiclient;
 }

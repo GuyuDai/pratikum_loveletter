@@ -157,16 +157,16 @@ public class Game extends Thread {
         return requestsOngoing;
     }
 
-    protected void announceScore(){
+    protected void announceScore(){  //announce the current score of each player
         sendToAllPlayers(new GameAnnounceMessage("Current Scores: " + getScoreString()));
     }
 
-    public void announcePlayersInfo(){
+    public void announcePlayersInfo(){  //announce the current affection tokens of each player, and their last date of date
         for(Player player : players){
             sendToAllPlayers(new GameAnnounceMessage
                 (player.getName() + "'s last date with Princess was on day " +player.getLastDateOfDate()));
             sendToAllPlayers(new GameAnnounceMessage
-                (player.getName() + " has " +player.getAffectionTockens() + "Affection Tockens"));
+                (player.getName() + " has " +player.getAffectionTockens() + "Affection Tokens"));
         }
     }
 
