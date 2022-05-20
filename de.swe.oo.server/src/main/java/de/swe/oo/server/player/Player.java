@@ -114,12 +114,12 @@ public class Player {
         this.affectionTockens = affectionTockens;
     }
 
-    public String[] showHands(){
-        String result="";
+    public String[] showHands(){  //return the cards from player's hand in String type
+        String temp = "";
         for(Card card : hands){
-            result = result + card.getName() + " ";
+            temp = temp + card.getName() + " ";
         }
-        return new String[]{result};
+        return temp.trim().split(" ");
     }
 
     public void setHands(Card card) {

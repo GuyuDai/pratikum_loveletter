@@ -44,6 +44,17 @@ public class LoveLetterGame extends Game implements GameLogic{
     }
 
     @Override
+    public synchronized boolean startGame() {
+        if (players.size() >= this.minPlayers) {
+            isGoingOn = true;
+            this.start();
+            this.setName("LoveLetterGameThread");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void run() {
         sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
         roundInitialize();
@@ -60,7 +71,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
         getPlayerInCurrentTurn().resetIsProtected();  //the effect of handmaid expired
         deck.draw(player);  //player draws card
-        String[] options = player.showHands().toString().trim().split(" ");  //use space to split the String hands to Array
+        String[] options = player.showHands();  //use space to split the String hands to Array
         player.requestFromPlayer(new GameChoiceRequestMessage("Please choose a card to discard", options));
         waitForAllResponses();
         int responseIndex = parseInt(player.getLastResponse().trim());  //player enter the index of which card the player want to discard
@@ -137,7 +148,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         this.deck = new Deck(this);
         //create 16 specific cards (like new Princess), add them to deck
         for(int i = 16; i > 0; i--){
-            deck.getRemainingCards().add(new Princess(this,null));  //for testing
+            deck.getRemainingCards().add(new Princess(this));  //for testing
         }
         switch(activePlayers.size()){  //remove some cards
             case 2:
@@ -157,10 +168,14 @@ public class LoveLetterGame extends Game implements GameLogic{
         }
     }
     public void roundInitialize(){  //initialize a new round
+        round++;  //round +1
+        sendToAllPlayers(new GameAnnounceMessage("Round " + round));
         initializeScores();  //initialize the score
         reorderPlayers();  //reorder the players
         initializeDeck();  //initialize the card deck
-        round++;  //round +1
+        for(Player player : activePlayers){  //everyone draws a card
+            deck.draw(player);
+        }
     }
     public void ifGameEnd(){  //check if the whole game end or not
         for(Player player : players){  //check whether there is a player achieve the target number of the affection tokens
