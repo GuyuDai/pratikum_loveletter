@@ -7,7 +7,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Deck {
     private CopyOnWriteArrayList<Card> remainingCards;
     private CopyOnWriteArrayList<Card> usedCards;
-
     private LoveLetterGame currentgame;
 
     public Deck(LoveLetterGame currentgame) { //create a deck for a round
@@ -44,5 +43,4 @@ public class Deck {
       player.setHands(card);  //this card will be added to the player's hand
       remainingCards.remove(card);  //remove this card from the deck
     }
-
 }

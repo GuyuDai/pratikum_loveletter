@@ -15,7 +15,8 @@ public abstract class Card {
         this.currentGame = currentGame;
         switch (name){
             case "Guard" :
-                this.value = "Guard";
+                this.value = 1;
+                this.name = "Guard";
                 break;
 
             case "Priest":
