@@ -1,8 +1,6 @@
 package de.swe.oo.server.game;
 
-import de.swe.oo.server.cards.Card;
-import de.swe.oo.server.cards.Deck;
-import de.swe.oo.server.cards.Princess;
+import de.swe.oo.server.cards.*;
 import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
@@ -146,10 +144,26 @@ public class LoveLetterGame extends Game implements GameLogic{
 
     public void initializeDeck(){
         this.deck = new Deck(this);
-        //create 16 specific cards (like new Princess), add them to deck
-        for(int i = 16; i > 0; i--){
-            deck.getRemainingCards().add(new Princess(this));  //for testing
-        }
+        //create 16 specific cards, add them to deck
+
+            deck.getRemainingCards().add(
+                    new Princess(this, null));
+                    new Countess(this, null);
+                    new King(this, null);
+                    new Prince(this, null);
+                    new Prince(this, null);
+                    new Handmaid(this, null);
+                    new Handmaid(this, null);
+                    new Baron(this, null);
+                    new Baron(this, null);
+                    new Priest(this, null);
+                    new Priest(this,null);
+                    new Guard(this, null);
+                    new Guard(this, null);
+                    new Guard(this, null);
+                    new Guard(this, null);
+                    new Guard(this, null);
+
         switch(activePlayers.size()){  //remove some cards
             case 2:
                 deck.removeCard();
