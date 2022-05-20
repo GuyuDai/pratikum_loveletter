@@ -22,3 +22,4 @@ public class Handmaid extends Card {
         currentGame.removeCurrentPlayer(owner); //removes the current player for now, as he is immune (currentplayerlist only stores player which can be effected)
     }
 }
+
