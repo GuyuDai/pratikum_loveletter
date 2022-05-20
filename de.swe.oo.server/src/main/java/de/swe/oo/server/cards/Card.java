@@ -16,26 +16,32 @@ public abstract class Card {
         switch (name){
             case "Guard" :
                 this.value = 1;
+                this.name="Guard";
                 break;
 
             case "Priest":
                 this.value = 2;
+                this.name="Guard";
                 break;
 
             case "Baron":
                 this.value = 3;
+                this.name="Guard";
                 break;
 
             case "Handmaid":
                 this.value = 4;
+                this.name="Guard";
                 break;
 
             case "Prince":
                 this.value = 5;
+                this.name="Guard";
                 break;
 
             case "King":
                 this.value = 6;
+                this.name="King";
                 break;
 
             case "Countess":
@@ -44,6 +50,7 @@ public abstract class Card {
 
             case "Princess":
                 this.value = 8;
+                this.name="Princess";
                 break;
         }
     }

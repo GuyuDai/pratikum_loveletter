@@ -11,7 +11,7 @@ public class King extends Card {
     private static int VALUE = 6;
 
     public King(LoveLetterGame currentGame, Player owner) {
-        super(NAME, currentGame);
+        super("King", currentGame);
     }
 
     //Player may trade hands with other player

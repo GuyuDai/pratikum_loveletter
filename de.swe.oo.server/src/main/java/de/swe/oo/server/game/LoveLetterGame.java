@@ -148,7 +148,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         this.deck = new Deck(this);
         //create 16 specific cards (like new Princess), add them to deck
         for(int i = 16; i > 0; i--){
-            deck.getRemainingCards().add(new Princess(this));  //for testing
+            deck.getRemainingCards().add(new Princess(this,null));  //for testing
         }
         switch(activePlayers.size()){  //remove some cards
             case 2:

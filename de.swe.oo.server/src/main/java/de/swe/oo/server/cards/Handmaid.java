@@ -11,7 +11,7 @@ public class Handmaid extends Card {
     private static int VALUE = 4;
 
     public Handmaid(LoveLetterGame currentGame, Player owner) {
-        super(NAME, currentGame);
+        super("Handmaid", currentGame);
     }
 
     // Player cannot be affected by any other player´s cards until their next turn

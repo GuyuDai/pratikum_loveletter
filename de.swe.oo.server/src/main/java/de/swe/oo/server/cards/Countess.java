@@ -10,7 +10,7 @@ public class Countess extends Card {
     private static int VALUE = 7;
 
     public Countess(LoveLetterGame currentGame, Player owner) {
-        super(NAME, currentGame);
+        super("Countess", currentGame);
         /** If the player holds this card either and the King or the Prince,
          * this card must be played immediately, which otherwise does nothing*/
         String[] handsdeck = this.owner.showHands();
