@@ -12,6 +12,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
+/**
+ * Handles the login "protocol". Once a client connects a potential name is immediately expected as input. This is
+ * checked for availability. If the desired name isn't already taken a new player is created with the socket connected
+ * to the client. If the name is already taken the connection is closed and the client needs to connect again to try
+ * a different name.
+ */
 public class LoginHandler extends Thread {
     private Session session;
     private int port;
