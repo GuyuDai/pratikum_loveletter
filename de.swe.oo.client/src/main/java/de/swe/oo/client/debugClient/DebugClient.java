@@ -18,6 +18,12 @@ public class DebugClient extends Client {
     PrintWriter connectionOut;
     UserInputListener userInputListener;
 
+    /**
+     * @param ip
+     * @param port
+     * @param userIn BufferedReader from which user input is taken.
+     * @param out Printer where output for the user is sent.
+     */
     public DebugClient(String ip, int port, BufferedReader userIn, PrintWriter out) {
         this.userIn = userIn;
         this.userOut = out;
@@ -40,6 +46,10 @@ public class DebugClient extends Client {
         }
     }
 
+    /**
+     * The login method executed the entire login procedure, i.e. in case of invalid input it will keep asking
+     * repeatedly for a new name.
+     */
     public void login() {
         String input;
         boolean loggedIn = false;
@@ -64,10 +74,19 @@ public class DebugClient extends Client {
         userInputListener = new UserInputListener(this, userIn);
     }
 
+    /**
+     * This method sends the exact input directly to the server. No modifications are applied, so you have to
+     * add all protocol prefixes yourself.
+     * @param text raw text to send to the server
+     */
     public void sendText(String text) {
         connectionOut.println(text);
     }
 
+    /**
+     * Outputs the exact string on the userOut PrinterWriter.
+     * @param text chat output.
+     */
     public void outputChat(String text) {
         userOut.println(text);
     }

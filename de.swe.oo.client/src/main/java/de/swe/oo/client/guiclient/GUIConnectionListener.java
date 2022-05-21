@@ -5,6 +5,9 @@ import de.swe.oo.client.Listener;
 
 import java.io.BufferedReader;
 
+/**
+ * Listens to input from a connection and prehandles it for a gui-Client.
+ */
 public class GUIConnectionListener extends Listener {
     public GUIConnectionListener(Client client, BufferedReader reader) {
         super(client, reader);

@@ -5,6 +5,9 @@ import de.swe.oo.client.Listener;
 
 import java.io.BufferedReader;
 
+/**
+ * Listens to a TCP-connection and outputs all incoming messages directly on the chat.
+ */
 public class ConnectionListener extends Listener {
 
     public ConnectionListener(Client client, BufferedReader reader) {
