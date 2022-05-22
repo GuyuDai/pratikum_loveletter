@@ -11,6 +11,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Main Server class. Contains references to pretty much all state of the server application and handles setup and
+ * shutdown.
+ */
 public class Session extends Thread {
     public Chat chat;
     List<Player> players;

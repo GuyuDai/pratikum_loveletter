@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.Objects;
 
 /**
- * Main class to start the application
+ * Main class to start the application. This implementation is very ugly and shouldn't be used anymore.
  */
 public class App extends Application {
 

@@ -5,6 +5,10 @@ import de.swe.oo.client.Client;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+/**
+ * Abstract listener that asynchronously receives input from a buffered reader and does certein things based on
+ * the input.
+ * */
 public abstract class Listener extends Thread {
     protected Client client;
     private BufferedReader reader;
