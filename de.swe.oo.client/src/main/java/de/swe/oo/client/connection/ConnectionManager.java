@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Keeps references to all relevant objects of a TCP connection. Is created after successful login.
+ */
 public class ConnectionManager {
     private String ip;
     private int port;
