@@ -102,7 +102,7 @@ public class Game extends Thread {
         return players.size();
     }
 
-    protected void sendToAllPlayers(Message msg) {
+    public void sendToAllPlayers(Message msg) {
         for (Player player : players) {
             player.sendMessage(msg);
         }

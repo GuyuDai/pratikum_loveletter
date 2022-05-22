@@ -178,6 +178,10 @@ public class Player {
         return isProtected;
     }
 
+    public void setIsProtected(){
+        this.isProtected = true;
+    }
+
     public void resetIsProtected(){
         isProtected = false;
     }
