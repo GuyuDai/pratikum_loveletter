@@ -12,7 +12,7 @@ public class Baron extends Card {
     private static int VALUE = 3;
 
     public Baron(LoveLetterGame currentGame, Player owner) {
-        super(NAME, currentGame);
+        super("Baron", currentGame);
     }
 
     /**Player may choose another player and privately compare hands. The player with the lower-value card is eliminated.*/

@@ -11,7 +11,7 @@ public class Priest extends Card {
     private static int VALUE = 2;
 
     public Priest(LoveLetterGame currentGame, Player owner) {
-        super(NAME, currentGame);
+        super("Priest", currentGame);
     }
 
     //Player may privately see another players hand

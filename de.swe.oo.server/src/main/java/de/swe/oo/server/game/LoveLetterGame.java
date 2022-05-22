@@ -1,8 +1,6 @@
 package de.swe.oo.server.game;
 
-import de.swe.oo.server.cards.Card;
-import de.swe.oo.server.cards.Deck;
-import de.swe.oo.server.cards.Princess;
+import de.swe.oo.server.cards.*;
 import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
@@ -59,7 +57,6 @@ public class LoveLetterGame extends Game implements GameLogic{
     }
 
     public void handleTurn() {
-        //System.out.println("really enter module handleTurn");  //for testing
         Player player = playerInCurrentTurn;
         sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
         getPlayerInCurrentTurn().resetIsProtected();  //the effect of handmaid expired
@@ -83,11 +80,9 @@ public class LoveLetterGame extends Game implements GameLogic{
         //the order is the same as the order in which the game was added
         //because the order of Players list will never be changed, so the players who was most recently on a date will always go first
         while(temp >= 0){
-        //System.out.println("temp" + temp);  //for testing
             for(Player player : players){
                 if(player.getLastDateOfDate() == temp){
                     activePlayers.add(player);
-                    //System.out.println(player.getName() + "was added");  //for testing
                     player.setCurrentgame(this);
                     player.handInitialize();
                 }
@@ -180,7 +175,6 @@ public class LoveLetterGame extends Game implements GameLogic{
                 break;
         }
     }
-
     public void roundInitialize(){  //initialize a new round
         round++;  //round +1
         sendToAllPlayers(new GameAnnounceMessage("Round " + round));

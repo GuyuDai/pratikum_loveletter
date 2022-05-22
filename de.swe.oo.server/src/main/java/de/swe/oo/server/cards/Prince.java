@@ -11,7 +11,7 @@ public class Prince extends Card {
     private static int VALUE = 5;
 
     public Prince(LoveLetterGame currentGame, Player owner) {
-        super(NAME,currentGame);
+        super("Prince",currentGame);
     }
 
     // Player may choose any player (including themselves) to discard their hand and draw a new one

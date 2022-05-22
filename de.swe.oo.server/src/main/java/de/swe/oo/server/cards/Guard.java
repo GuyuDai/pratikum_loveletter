@@ -13,7 +13,7 @@ public class Guard extends Card{
     private static int VALUE = 1;
 
     public Guard(LoveLetterGame currentGame, Player owner) {
-        super(NAME,currentGame);
+        super("Guard",currentGame);
     }
 
     @Override
