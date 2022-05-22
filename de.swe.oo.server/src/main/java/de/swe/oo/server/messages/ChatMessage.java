@@ -29,11 +29,11 @@ public class ChatMessage extends Message {
             }else{
                 //@person not in the game
                 player.sendMessage(new ChatMessage
-                    ("could not send private message, unknown player name"));
+                    (" could not send private message, unknown player name"));
             }
         }else{
             //is not private message
-            player.getSession().broadcast(new ChatMessage(player.getName() + ":" + messageText));
+            player.getSession().broadcast(new ChatMessage(player.getName() + ":" + ""+ messageText));
         }
     }
 

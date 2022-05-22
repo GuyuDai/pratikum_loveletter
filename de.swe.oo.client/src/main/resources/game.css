@@ -1,0 +1,10 @@
+* {
+    -color-light-black: #252525;
+    -color-dark-black: #0a0a0a;
+    -color-red: #941131;
+    -color-dark-red: 0000007D;
+}
+
+#container {
+    -fx-background-color: -color-red;
+}

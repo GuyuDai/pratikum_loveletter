@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="container" prefHeight="709.0" prefWidth="546.0" spacing="10" style="-fx-background-color: #941131;" stylesheets="demo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.swe.oo.client.guiclient.ViewModel">
+    <!--Love Letter title-->
+   <Label>
+      <graphic>
+          <ImageView fitHeight="85.0" fitWidth="547.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@LL title 1.png" />
+            </image>
+          </ImageView>
+      </graphic>
+   </Label>
+    <!--Love Letter title end>
+
+    <!-Rules Card-->
+   <Pane prefHeight="307.0" prefWidth="547.0">
+      <children>
+         <Button fx:id="rulesBtn" layoutX="37.0" layoutY="93.0" mnemonicParsing="false" onAction="#showCardEffects" prefHeight="35.0" prefWidth="123.0" style="-fx-background-color: #0000007D; -fx-background-radius: 7;" text="CardEffects" textFill="#c6b7b7">
+            <font>
+               <Font name="Charter Roman" size="18.0" />
+            </font>
+         </Button>
+         <ImageView fx:id="rulesCard" fitHeight="221.0" fitWidth="181.0" layoutX="300.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <image>
+               <Image url="@rulesCard.png" />
+            </image>
+         </ImageView>
+      </children>
+   </Pane>
+    <!--Rules Card End-->
+
+    <Label alignment="CENTER" contentDisplay="CENTER" text="Chat" textFill="#e4e0c9">
+        <font>
+            <Font name="System Bold" size="18.0" />
+        </font>
+    </Label>
+
+    <!-- Chat window-->
+    <ListView fx:id="list" prefWidth="445.0" style="-fx-background-color: #0000007D; -fx-background-radius: 7;" />
+    <!--Chat window end-->
+
+    <!--Chat textfield/ input message-->
+    <HBox>
+        <TextField fx:id="input" onKeyPressed="#handleKeyPressed" prefHeight="37.0" prefWidth="382.0" promptText="Enter text here" HBox.hgrow="ALWAYS" />
+      <Separator orientation="VERTICAL" prefHeight="9.0" prefWidth="7.0" style="-fx-background-color: #941131;" />
+        <Button fx:id="button" onAction="#handleButtonPress" prefHeight="32.0" prefWidth="56.0" style="-fx-background-color: #0000007D; -fx-background-radius: 10;" styleClass="button">
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@heart.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+    </HBox>
+    <!--Chat textfield/input message-->
+</VBox>
