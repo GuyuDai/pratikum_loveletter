@@ -6,6 +6,8 @@ import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
 
+import static java.lang.Integer.parseInt;
+
 public class Prince extends Card {
     private static String NAME = "Prince";
     private static int VALUE = 5;
@@ -20,9 +22,11 @@ public class Prince extends Card {
 
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name to show their hands*/
-        owner.sendMessage(new GameChoiceRequestMessage("Choose one of the names to discard their deck", namelist));
+        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the names to discard their deck", namelist));
+        currentGame.waitForAllResponses();
         /** Chosen player needs to show their cards*/
-        Player targetPlayer= currentGame.getPlayer(owner.getLastResponse());
+        int responseIndex1 = parseInt(owner.getLastResponse().trim());
+        Player targetPlayer= currentGame.getPlayer(namelist[responseIndex1]);
         owner.sendMessage(new GameMessage(currentGame.choosePlayerDeck(targetPlayer)));
         owner.sendMessage(new GameMessage("Do you want to discard their deck?"));
         /** If yes decks gets discarded*/

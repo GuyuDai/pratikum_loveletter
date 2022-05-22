@@ -15,7 +15,8 @@ public class Countess extends Card {
 
     public void effect(){
         /** If the player holds this card either and the King or the Prince,
-         * this card must be played immediately, which otherwise does nothing*/
+         * this card must be played immediately, which otherwise does nothing
+         * @Author Nik*/
         String[] handsDeck = this.owner.showHands();
         for (String s : handsDeck) {
             if (s.contains("King") || s.contains("Prince")) {
