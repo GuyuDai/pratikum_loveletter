@@ -59,4 +59,16 @@ public class Deck {
       player.addHands(card);  //this card will be added to the player's hand
       remainingCards.remove(card);  //remove this card from the deck
     }
+
+  /**
+   * @author dai
+   * this method is prepared for Prince
+   * @param player
+   */
+  public void drawFromUsedcards(Player player){
+      Card card = usedCards.get(0);  //get the first card from the used cards
+      card.setOwner(player);
+      player.addHands(card);
+      usedCards.remove(card);
+    }
 }

@@ -10,11 +10,11 @@ import de.swe.oo.server.player.Player;
 import static java.lang.Integer.parseInt;
 
 public class Guard extends Card{
-    private static String NAME = "Guard";
+    private static String NAME = "GUARD";
     private static int VALUE = 1;
 
     public Guard(LoveLetterGame currentGame) {
-        super("Guard",currentGame);
+        super("GUARD",currentGame);
     }
 
     @Override
@@ -25,13 +25,13 @@ public class Guard extends Card{
     public void effect(){
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name */
-        owner.requestFromPlayer((new GameChoiceRequestMessage("Choose one of the names!", namelist)));
+        owner.requestFromPlayer((new GameChoiceRequestMessage("Choose one of the players!", namelist)));
         currentGame.waitForAllResponses();
         int responseIndex1 = parseInt(owner.getLastResponse().trim());
         Player targetPlayer= currentGame.getPlayer(namelist[responseIndex1]);
         /** Choose number value of cards*/
         String[] options = {"2", "3", "4", "5", "6", "7", "8"};
-        owner.requestFromPlayer((new GameChoiceRequestMessage("Choose one of the numbers!", options)));
+        owner.requestFromPlayer((new GameChoiceRequestMessage("Now choose a number!", options)));
         currentGame.waitForAllResponses();
         //owner.sendMessage(new GameChoiceRequestMessage("Choose number", options));
         int responseIndex2 = parseInt(owner.getLastResponse().trim());
@@ -44,6 +44,6 @@ public class Guard extends Card{
             currentGame.playerKickedOff(targetPlayer);
             return;
         }
-       else owner.sendMessage(new GameAnnounceMessage("You guess wrongly"));
+       else owner.sendMessage(new GameAnnounceMessage("Your guess was wrong! "));
     }
 }

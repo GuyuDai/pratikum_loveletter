@@ -30,7 +30,7 @@ public class ConnectionManager {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
-            errorMessage = "Error opening Connection during login. " + e.getMessage();
+            errorMessage = "Error opening connection during login. " + e.getMessage();
             closeConnection();
             return false;
         }

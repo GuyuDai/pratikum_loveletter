@@ -214,6 +214,16 @@ public class Player {
     }
 
     /**
+     * @author dai
+     * this method is prepared for Prince
+     * @param card
+     */
+    public void discardWithoutEffect(Card card){
+        hands.remove(card);
+        this.currentgame.getDeck().getUsedCards().add(card);
+    }
+
+    /**
      *@author dai
      * initialize the hand of a player as an empty list
      */

@@ -32,7 +32,7 @@ public class Game extends Thread {
 
     @Override
     public void run() {
-        sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
+        sendToAllPlayers(new GameAnnounceMessage("The Game has started successfully!"));
         reorderPlayers();
         initializeScores();
         while (isGoingOn) {

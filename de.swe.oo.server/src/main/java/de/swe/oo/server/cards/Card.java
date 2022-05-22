@@ -14,44 +14,44 @@ public abstract class Card {
     public Card(String name, LoveLetterGame currentGame){
         this.currentGame = currentGame;
         switch (name){
-            case "Guard" :
+            case "GUARD" :
                 this.value = 1;
-                this.name="Guard";
+                this.name="GUARD";
                 break;
 
-            case "Priest":
+            case "PRIEST":
                 this.value = 2;
-                this.name="Priest";
+                this.name="PRIEST";
                 break;
 
-            case "Baron":
+            case "BARON":
                 this.value = 3;
-                this.name="Baron";
+                this.name="BARON";
                 break;
 
-            case "Handmaid":
+            case "HANDMAID":
                 this.value = 4;
-                this.name="Handmaid";
+                this.name="HANDMAID";
                 break;
 
-            case "Prince":
+            case "PRINCE":
                 this.value = 5;
-                this.name="Prince";
+                this.name="PRINCE";
                 break;
 
-            case "King":
+            case "KING":
                 this.value = 6;
-                this.name="King";
+                this.name="KING";
                 break;
 
-            case "Countess":
+            case "COUNTESS":
                 this.value = 7;
-                this.name="Countess";
+                this.name="COUNTESS";
                 break;
 
-            case "Princess":
+            case "PRINCESS":
                 this.value = 8;
-                this.name="Princess";
+                this.name="PRINCESS";
                 break;
         }
     }

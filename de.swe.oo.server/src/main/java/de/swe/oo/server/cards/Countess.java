@@ -1,17 +1,16 @@
 package de.swe.oo.server.cards;
 
 import de.swe.oo.server.game.LoveLetterGame;
-import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
 
 public class Countess extends Card {
-    private static String NAME = "Countess";
+    private static String NAME = "COUNTESS";
     private static int VALUE = 7;
 
     public Countess(LoveLetterGame currentGame) {
-        super("Countess", currentGame);
+        super("COUNTESS", currentGame);
     }
 
     public void effect(){
@@ -20,11 +19,11 @@ public class Countess extends Card {
          * @Author Nik*/
         String[] handsDeck = this.owner.showHands();
         for (String s : handsDeck) {
-            if (s.contains("King") || s.contains("Prince")) {
+            if (s.contains("KING") || s.contains("PRINCE")) {
                 effect();
             }
         }
-            owner.sendMessage(new GameAnnounceMessage("This card was played because you had a Prince or a King in your Hands"));
+            owner.sendMessage(new GameMessage("This card was played because you had a Prince or a King in your Hands."));
     }
 }
 

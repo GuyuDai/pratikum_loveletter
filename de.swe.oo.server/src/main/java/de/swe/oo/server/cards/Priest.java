@@ -10,11 +10,11 @@ import de.swe.oo.server.player.Player;
 import static java.lang.Integer.parseInt;
 
 public class Priest extends Card {
-    private static String NAME = "Priest";
+    private static String NAME = "PRIEST";
     private static int VALUE = 2;
 
     public Priest(LoveLetterGame currentGame) {
-        super("Priest", currentGame);
+        super("PRIEST", currentGame);
     }
 
     /**Player may privately see another players hand*/
@@ -22,7 +22,7 @@ public class Priest extends Card {
     public void effect(){
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name to show their hands*/
-        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the names to look into their deck", namelist));
+        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the players to look into their deck", namelist));
         currentGame.waitForAllResponses();
         /** Chosen player needs to show his/her cards*/
         int responseIndex1 = parseInt(owner.getLastResponse().trim());

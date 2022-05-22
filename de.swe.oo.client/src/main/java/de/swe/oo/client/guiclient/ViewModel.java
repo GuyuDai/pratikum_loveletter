@@ -54,7 +54,7 @@ public class ViewModel extends Client {
         list.itemsProperty().set(model.getListContentProperty());
         input.textProperty().bindBidirectional(model.getTextFieldContent());
         button.disableProperty().bind(input.textProperty().isEmpty());
-        outputChat("Please enter user name:");
+        outputChat("Please enter your user name:");
     }
 
     /**

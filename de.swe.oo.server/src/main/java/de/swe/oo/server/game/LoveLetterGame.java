@@ -53,7 +53,7 @@ public class LoveLetterGame extends Game implements GameLogic{
      */
     @Override
     public void run() {
-        sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
+        sendToAllPlayers(new GameAnnounceMessage("The Game has started successfully!"));
         roundInitialize();
         while (isGoingOn) {
             handleTurn();
@@ -180,7 +180,7 @@ public class LoveLetterGame extends Game implements GameLogic{
      * @param player is the winner
      */
     public void playerWin(Player player){  //when a player wins, this method will be called
-        sendToAllPlayers(new GameAnnounceMessage(player.getName() + " wins!"));  //announce who wins
+        sendToAllPlayers(new GameAnnounceMessage(player.getName() + " IS THE WINNER!!!"));  //announce who wins
         player.setLastDateOfDate(this.getRound());  //the winner will have a date on the day "round" with princess
         player.setAffectionTockens(player.getAffectionTockens() + 1);  //winner's affection tokens +1
     }
@@ -278,7 +278,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         for(Player player : activePlayers){  //everyone draws a card
             deck.draw(player);
             player.sendMessage(new GameAnnounceMessage
-                ("your first card is " + player.getHands(0).getName()));
+                ("Your first card is " + player.getHands(0).getName()));
         }
     }
 
@@ -290,7 +290,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         for(Player player : players){  //check whether there is a player achieve the target number of the affection tokens
             if(player.getAffectionTockens() == targetAffection){  //if true
                 sendToAllPlayers(new GameAnnounceMessage  //announce who is the final winner
-                    (player.getName() + " is the final winner"));
+                    (player.getName() + " is the final winner!"));
                 isGoingOn = false;  //the game will not be going on
                 return;
             }

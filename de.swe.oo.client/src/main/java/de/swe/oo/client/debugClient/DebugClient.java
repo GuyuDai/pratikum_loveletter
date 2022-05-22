@@ -54,7 +54,7 @@ public class DebugClient extends Client {
         String input;
         boolean loggedIn = false;
         while (!loggedIn) {
-            outputChat("Bitte Nutzernamen eingeben:");
+            outputChat("Pleaser enter your username:");
             try {
                 input = userIn.readLine();
             } catch (IOException e) {
