@@ -7,16 +7,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Deck {
     private CopyOnWriteArrayList<Card> remainingCards;
     private CopyOnWriteArrayList<Card> usedCards;
-    private LoveLetterGame currentgame;
+    private LoveLetterGame currentGame;
 
   /**
    * @author dai
    * when the deck is created, the ramaining cards and used cards are all empty at first
    * these will only be initialized after a LoveLetterGame started
-   * @param currentgame
+   * @param currentGame
    */
-  public Deck(LoveLetterGame currentgame) { //create a deck for a round
-      this.currentgame = currentgame;
+  public Deck(LoveLetterGame currentGame) { //create a deck for a round
+      this.currentGame = currentGame;
       this.remainingCards = new CopyOnWriteArrayList<Card>();
       this.usedCards = new CopyOnWriteArrayList<Card>();
     }

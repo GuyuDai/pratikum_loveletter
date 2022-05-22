@@ -99,7 +99,7 @@ public class LoveLetterGame extends Game implements GameLogic{
             for(Player player : players){
                 if(player.getLastDateOfDate() == temp){
                     activePlayers.add(player);
-                    player.setCurrentgame(this);
+                    player.setCurrentGame(this);
                     player.handInitialize();
                 }
             }
@@ -185,12 +185,63 @@ public class LoveLetterGame extends Game implements GameLogic{
         player.setAffectionTockens(player.getAffectionTockens() + 1);  //winner's affection tokens +1
     }
 
+    /**
+     * Initializing the Deck
+     * @author Nassrin
+     */
     public void initializeDeck(){
         this.deck = new Deck(this);
         //create 16 specific cards (like new Princess), add them to deck
         for(int i = 16; i > 0; i--){
         //System.out.println("really enter the for loop to initialize the deck");  //for testing
-            deck.getRemainingCards().add(new Princess(this));  //for testing
+
+            deck.getRemainingCards().add(
+                    new Princess(this));
+
+            deck.getRemainingCards().add(
+                    new Countess(this));
+
+            deck.getRemainingCards().add(
+                    new King(this));
+
+            deck.getRemainingCards().add(
+                    new Prince(this));
+
+            deck.getRemainingCards().add(
+                    new Prince(this));
+
+            deck.getRemainingCards().add(
+                    new Handmaid(this));
+
+            deck.getRemainingCards().add(
+                    new Handmaid(this));
+
+            deck.getRemainingCards().add(
+                    new Priest(this));
+
+            deck.getRemainingCards().add(
+                    new Priest(this));
+
+            deck.getRemainingCards().add(
+                    new Baron(this));
+
+            deck.getRemainingCards().add(
+                    new Baron(this));
+
+            deck.getRemainingCards().add(
+                    new Guard(this));
+
+            deck.getRemainingCards().add(
+                    new Guard(this));
+
+            deck.getRemainingCards().add(
+                    new Guard(this));
+
+            deck.getRemainingCards().add(
+                    new Guard(this));
+
+            deck.getRemainingCards().add(
+                    new Guard(this));
         }
         Collections.shuffle(deck.getRemainingCards());  //disorder the deck
         switch(activePlayers.size()){  //remove some cards

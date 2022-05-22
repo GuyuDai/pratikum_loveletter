@@ -150,7 +150,7 @@ public class Player {
     }
 
     /**
-     * @author dai
+     * @author Dai
      * @return a String Array of a player's hand
      */
     public String[] showHands(){  //return the cards from player's hand in String type
@@ -186,7 +186,7 @@ public class Player {
         return currentgame;
     }
 
-    public void setCurrentgame(LoveLetterGame currentgame) {
+    public void setCurrentGame(LoveLetterGame currentgame) {
         this.currentgame = currentgame;
     }
 

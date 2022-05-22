@@ -6,23 +6,28 @@ import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
 
+import static java.lang.Integer.parseInt;
+
 public class King extends Card {
     private static String NAME = "King";
     private static int VALUE = 6;
 
-    public King(LoveLetterGame currentGame, Player owner) {
+    public King(LoveLetterGame currentGame) {
         super("King", currentGame);
     }
 
-    //Player may trade hands with other player
+    /**Player may trade hands with other player
+     * @Author Nik*/
     @Override
     public void effect(){
         /** create nameList with all the Names of active Players */
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name to show their hands*/
-        owner.sendMessage(new GameChoiceRequestMessage("Choose one of the names to trade decks", namelist));
+        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the names to trade decks", namelist));
+        currentGame.waitForAllResponses();
         /** Chosen player needs to show his/her cards*/
-        Player targetPlayer= currentGame.getPlayer(owner.getLastResponse());
+        int responseIndex1 = parseInt(owner.getLastResponse().trim());
+        Player targetPlayer= currentGame.getPlayer(namelist[responseIndex1]);
         owner.sendMessage(new GameMessage(currentGame.choosePlayerDeck(targetPlayer)));
         owner.sendMessage(new GameMessage("Do you want to trade decks?"));
         /** If yes decks get changed*/
@@ -37,3 +42,4 @@ public class King extends Card {
         }
     }
 }
+

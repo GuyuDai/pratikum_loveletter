@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="container" prefHeight="709.0" prefWidth="546.0" spacing="10" style="-fx-background-color: #941131;" stylesheets="demo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.swe.oo.client.guiclient.ViewModel">
+<VBox fx:id="container" prefHeight="796.0" prefWidth="594.0" spacing="10" style="-fx-background-color: #941131;" stylesheets="demo.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.swe.oo.client.guiclient.ViewModel">
     <!--Love Letter title-->
    <Label>
       <graphic>
-          <ImageView fitHeight="85.0" fitWidth="547.0" pickOnBounds="true" preserveRatio="true">
+          <ImageView fitHeight="82.0" fitWidth="611.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@LL title 1.png" />
             </image>
@@ -19,14 +19,14 @@
     <!--Love Letter title end>
 
     <!-Rules Card-->
-   <Pane prefHeight="307.0" prefWidth="547.0">
+   <Pane prefHeight="295.0" prefWidth="547.0">
       <children>
          <Button fx:id="rulesBtn" layoutX="37.0" layoutY="93.0" mnemonicParsing="false" onAction="#showCardEffects" prefHeight="35.0" prefWidth="123.0" style="-fx-background-color: #0000007D; -fx-background-radius: 7;" text="CardEffects" textFill="#c6b7b7">
             <font>
                <Font name="Charter Roman" size="18.0" />
             </font>
          </Button>
-         <ImageView fx:id="rulesCard" fitHeight="221.0" fitWidth="181.0" layoutX="300.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <ImageView fx:id="rulesCard" fitHeight="290.0" fitWidth="250.0" layoutX="300.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
                <Image url="@rulesCard.png" />
             </image>
@@ -35,7 +35,7 @@
    </Pane>
     <!--Rules Card End-->
 
-    <Label alignment="CENTER" contentDisplay="CENTER" text="Chat" textFill="#e4e0c9">
+    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="94.0" text=" Chat" textFill="#e4e0c9">
         <font>
             <Font name="System Bold" size="18.0" />
         </font>

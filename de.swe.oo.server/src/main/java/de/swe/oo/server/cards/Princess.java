@@ -11,7 +11,8 @@ public class Princess extends Card {
     public Princess(LoveLetterGame currentGame) {
         super("Princess", currentGame);
     }
-    /** If the player plays or discards this card for any reason, they are eliminated from the round*/
+    /** If the player plays or discards this card for any reason, they are eliminated from the round
+     * @Author Nik*/
     @Override
     public void effect(){
     this.currentGame.playerKickedOff(owner);

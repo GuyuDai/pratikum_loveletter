@@ -11,19 +11,22 @@ public class Baron extends Card {
     private static String NAME = "Baron";
     private static int VALUE = 3;
 
-    public Baron(LoveLetterGame currentGame, Player owner) {
+    public Baron(LoveLetterGame currentGame) {
         super("Baron", currentGame);
     }
 
-    /**Player may choose another player and privately compare hands. The player with the lower-value card is eliminated.*/
+    /**Player may choose another player and privately compare hands. The player with the lower-value card is eliminated.
+     * @Author Nik*/
     @Override
     public void effect(){
     /** create nameList with all the Names of active Players */
     String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
     /** Player can choose a name to show their hands*/
-    owner.sendMessage(new GameChoiceRequestMessage("Choose one of the names to compare deck", namelist));
+    owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the names to compare deck", namelist));
+    currentGame.waitForAllResponses();
     /** Chosen player needs to show his/her cards*/
-    Player targetPlayer= currentGame.getPlayer(owner.getLastResponse());
+    int responseIndex1 = parseInt(owner.getLastResponse().trim());
+    Player targetPlayer= currentGame.getPlayer(namelist[responseIndex1]);
     owner.sendMessage(new GameMessage(currentGame.choosePlayerDeck(targetPlayer)));
     /** compare hands and eliminate player with lower hand*/
     Card targetPlayerCardOne= targetPlayer.getHands(0);
