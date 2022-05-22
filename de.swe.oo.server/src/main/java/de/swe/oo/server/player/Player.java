@@ -95,7 +95,13 @@ public class Player {
     }
 
     public String getLastResponse() {
-        return lastResponse;
+        String result = lastResponse;
+        resetLastResponse();
+        return result;
+    }
+
+    public void resetLastResponse(){
+        lastResponse = null;
     }
 
     public int getLastDateOfDate() {
