@@ -26,10 +26,7 @@ public class Deck {
   }
 
   public Card getCardFromDeck(){
-      int parameter = remainingCards.size() + 1;  //because the random() function gives out a floating number x, 0 <= x < 1
-      //so we need a parameter to size it up
-      int pointer = (int)(Math.random() * parameter);  //0 <= pointer < deck.size() + 1
-      return remainingCards.get(pointer);
+      return remainingCards.get(0);  //get the first card in the remaining cards
     }
 
     public void removeCard(){  //at the beginning of a round, we need to remove some cards out of the round

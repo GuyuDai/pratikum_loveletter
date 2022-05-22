@@ -7,6 +7,7 @@ import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.player.Player;
+import java.util.Collections;
 import java.util.List;
 
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import static java.lang.Integer.parseInt;
 public class LoveLetterGame extends Game implements GameLogic{
     private static int MINPLAYERS = 2;
     private static int MAXPLAYERS = 4;
+
+    protected int targetAffection;
 
     protected CopyOnWriteArrayList<Player> activePlayers;
 
@@ -30,17 +33,6 @@ public class LoveLetterGame extends Game implements GameLogic{
 
     public LoveLetterGame() {
         super(MINPLAYERS, MAXPLAYERS);
-        switch (this.players.size()){
-            case 2:
-                this.targetAffection = 7;
-                break;
-            case 3:
-                this.targetAffection = 5;
-                break;
-            case 4:
-                this.targetAffection = 4;
-                break;
-        }
     }
 
     @Override
@@ -67,6 +59,7 @@ public class LoveLetterGame extends Game implements GameLogic{
     }
 
     public void handleTurn() {
+        //System.out.println("really enter module handleTurn");  //for testing
         Player player = playerInCurrentTurn;
         sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
         getPlayerInCurrentTurn().resetIsProtected();  //the effect of handmaid expired
@@ -90,15 +83,33 @@ public class LoveLetterGame extends Game implements GameLogic{
         //the order is the same as the order in which the game was added
         //because the order of Players list will never be changed, so the players who was most recently on a date will always go first
         while(temp >= 0){
+        //System.out.println("temp" + temp);  //for testing
             for(Player player : players){
                 if(player.getLastDateOfDate() == temp){
                     activePlayers.add(player);
+                    //System.out.println(player.getName() + "was added");  //for testing
                     player.setCurrentgame(this);
+                    player.handInitialize();
                 }
             }
             temp--;
         }
         setPlayerInCurrentTurn();
+    }
+
+    public void affectionInitialize(){
+        switch (this.players.size()){
+            case 2:
+                this.targetAffection = 7;
+                break;
+            case 3:
+                this.targetAffection = 5;
+                break;
+            case 4:
+                this.targetAffection = 4;
+                break;
+        }
+        System.out.println("target affection : " + targetAffection);  //for testing
     }
 
     public void turnEnd(){  //current player will go to the end of activePlayers, and reset the playerInCurrentTurn
@@ -148,8 +159,10 @@ public class LoveLetterGame extends Game implements GameLogic{
         this.deck = new Deck(this);
         //create 16 specific cards (like new Princess), add them to deck
         for(int i = 16; i > 0; i--){
+        //System.out.println("really enter the for loop to initialize the deck");  //for testing
             deck.getRemainingCards().add(new Princess(this));  //for testing
         }
+        Collections.shuffle(deck.getRemainingCards());  //disorder the deck
         switch(activePlayers.size()){  //remove some cards
             case 2:
                 deck.removeCard();
@@ -167,11 +180,13 @@ public class LoveLetterGame extends Game implements GameLogic{
                 break;
         }
     }
+
     public void roundInitialize(){  //initialize a new round
         round++;  //round +1
         sendToAllPlayers(new GameAnnounceMessage("Round " + round));
         initializeScores();  //initialize the score
         reorderPlayers();  //reorder the players
+        affectionInitialize();  //initialize the target of affection tokens
         initializeDeck();  //initialize the card deck
         for(Player player : activePlayers){  //everyone draws a card
             deck.draw(player);

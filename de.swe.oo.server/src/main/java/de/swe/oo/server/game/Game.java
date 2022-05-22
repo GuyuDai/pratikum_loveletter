@@ -12,8 +12,6 @@ public class Game extends Thread {
     protected int minPlayers;
     protected int maxPlayers;
 
-    protected int targetAffection;
-
     protected boolean isGoingOn;
     protected CopyOnWriteArrayList<Player> players;
     protected HashMap<Player, Integer> scoreMap;

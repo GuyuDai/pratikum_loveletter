@@ -20,7 +20,7 @@ public class Player {
 
     private int affectionTockens = 0;
 
-    private ArrayList<Card> hands = new ArrayList<>(2);
+    private ArrayList<Card> hands;
 
 
     private Session session;
@@ -155,5 +155,9 @@ public class Player {
         card.effect();
         hands.remove(card);
         this.currentgame.getDeck().getUsedCards().add(card);
+    }
+
+    public void handInitialize(){
+        this.hands = new ArrayList<>(2);
     }
 }
