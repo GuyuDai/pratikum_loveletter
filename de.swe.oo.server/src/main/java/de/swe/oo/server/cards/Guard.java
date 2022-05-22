@@ -23,11 +23,13 @@ public class Guard extends Card{
     public void effect(){
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name */
-        owner.sendMessage(new GameChoiceRequestMessage("Choose one of the names", namelist));
+        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the names", namelist));
+        currentGame.waitForAllResponses();
         Player targetPlayer= currentGame.getPlayer(owner.getLastResponse());
         /** Choose number value of cards*/
         String[] options = {"2", "3", "4", "5", "6", "7", "8"};
-        owner.sendMessage(new GameChoiceRequestMessage("Choose number", options));
+        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose number", options));
+        currentGame.waitForAllResponses();
         int responseIndex = parseInt(owner.getLastResponse().trim());
         int response = parseInt(options[responseIndex]);
         Card targetPlayerCardOne= targetPlayer.getHands(0);
