@@ -7,6 +7,9 @@ import de.swe.oo.server.player.Player;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * @author Franz
+ */
 public class Game extends Thread {
     private static int BUSYWAIT_INTERVALMS = 40;
     protected int minPlayers;

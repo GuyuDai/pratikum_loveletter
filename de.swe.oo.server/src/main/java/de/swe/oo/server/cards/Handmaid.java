@@ -7,6 +7,9 @@ import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
 
+/**
+ * @auther Dai, Nik, Nargess, Nassrin, Minghao
+ */
 public class Handmaid extends Card {
     private static String NAME = "HANDMAID";
     private static int VALUE = 4;

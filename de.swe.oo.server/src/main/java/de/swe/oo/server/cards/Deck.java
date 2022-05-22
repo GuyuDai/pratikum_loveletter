@@ -10,7 +10,7 @@ public class Deck {
     private LoveLetterGame currentGame;
 
   /**
-   * @author dai
+   * @auther Dai, Nik, Nargess, Nassrin, Minghao
    * when the deck is created, the ramaining cards and used cards are all empty at first
    * these will only be initialized after a LoveLetterGame started
    * @param currentGame

@@ -9,6 +9,9 @@ import de.swe.oo.server.player.Player;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * @auther Dai, Nik, Nargess, Nassrin, Minghao
+ */
 public class Priest extends Card {
     private static String NAME = "PRIEST";
     private static int VALUE = 2;

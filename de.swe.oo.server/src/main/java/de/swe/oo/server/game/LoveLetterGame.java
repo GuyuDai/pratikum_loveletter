@@ -187,7 +187,7 @@ public class LoveLetterGame extends Game implements GameLogic{
 
     /**
      * Initializing the Deck
-     * @author Nassrin
+     * @author Nassrin, Minghao, Dai
      */
     public void initializeDeck(){
         this.deck = new Deck(this);

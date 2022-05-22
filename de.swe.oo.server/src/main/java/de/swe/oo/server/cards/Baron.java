@@ -8,6 +8,9 @@ import de.swe.oo.server.player.Player;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * @auther Dai, Nik, Nargess, Minghao, Nassrin
+ */
 public class Baron extends Card {
     private static String NAME = "BARON";
     private static int VALUE = 3;
@@ -47,7 +50,7 @@ public class Baron extends Card {
         currentGame.playerKickedOff(targetPlayer);
     }
      else owner.sendMessage(new GameAnnounceMessage("You two have the same cards."));
-     /**if they have same hands, no one will be kicked off */
+     /** if they have same hands, no one will be kicked off */
     }
 }
 

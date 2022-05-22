@@ -4,6 +4,7 @@ package de.swe.oo.server.messages;
 import de.swe.oo.server.player.Player;
 
 /**
+ * @author Franz
  * A message needs to implement two methods: Handle that specifies what should be done if a Message of this type is
  * received and output, that describes the sort of protocol via which the message is sent. Actually it might be possible
  * and desirable to split the Message class into an InMessage and OutMessage class, that implement only handle and output

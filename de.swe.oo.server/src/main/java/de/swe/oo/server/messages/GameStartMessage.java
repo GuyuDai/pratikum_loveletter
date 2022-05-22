@@ -2,6 +2,9 @@ package de.swe.oo.server.messages;
 
 import de.swe.oo.server.player.Player;
 
+/**
+ * @author Franz
+ */
 public class GameStartMessage extends GameMessage {
     public GameStartMessage() {
         super("");

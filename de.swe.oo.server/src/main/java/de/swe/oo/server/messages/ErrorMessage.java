@@ -4,6 +4,7 @@ package de.swe.oo.server.messages;
 import de.swe.oo.server.player.Player;
 
 /**
+ * @author Franz
  * This class isn't really used that much currently. Especially the client just ignores ErrorMessages. It might be
  * interesting to make the client write error messages into some kind of log.
  */

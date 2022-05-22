@@ -1,5 +1,8 @@
 package de.swe.oo.server.messages;
 
+/**
+ * @author Franz
+ */
 public class GameChoiceRequestMessage extends GameRequestMessage {
     String [] choices;
 

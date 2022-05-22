@@ -3,6 +3,9 @@ package de.swe.oo.server.messages;
 
 import de.swe.oo.server.player.Player;
 
+/**
+ * @author Franz
+ */
 public class GameMessage extends Message {
 
     public GameMessage(String messageText) {

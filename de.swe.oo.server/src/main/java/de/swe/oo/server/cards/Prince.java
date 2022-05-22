@@ -7,7 +7,9 @@ import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
 
 import static java.lang.Integer.parseInt;
-
+/**
+ * @auther Dai, Nik, Minghao
+ */
 public class Prince extends Card {
     private static String NAME = "PRINCE";
     private static int VALUE = 5;

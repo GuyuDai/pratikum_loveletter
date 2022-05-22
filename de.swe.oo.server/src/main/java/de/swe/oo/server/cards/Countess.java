@@ -5,6 +5,9 @@ import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
 
+/**
+ * @auther Dai, Nik, Nargess, Minghao, Nassrin
+ */
 public class Countess extends Card {
     private static String NAME = "COUNTESS";
     private static int VALUE = 7;

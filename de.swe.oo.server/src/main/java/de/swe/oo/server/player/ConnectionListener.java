@@ -6,6 +6,7 @@ import de.swe.oo.server.messages.*;
 import java.io.IOException;
 
 /**
+ * @author Franz
  * This class does all the message parsing. It receives any messages to a socket asynchronously and initiates the
  * appropriate actions. This is done by first parsing the input String to get a Message and then calling the handle
  * method of the Message with the player associated with the listener as an argument.

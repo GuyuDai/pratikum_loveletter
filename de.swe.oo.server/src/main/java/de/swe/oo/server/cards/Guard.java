@@ -20,7 +20,7 @@ public class Guard extends Card{
     @Override
     /**When you discard the Guard, choose a player and name a number (other than 1).
      * If that player has that number in their hand, that player is knocked out of the round.
-     * @author Dai, Minghao, Nassrin, Niklas, Nargess
+     * @author Dai, Minghao, Nassrin, Nik, Nargess
      */
     public void effect(){
         String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);

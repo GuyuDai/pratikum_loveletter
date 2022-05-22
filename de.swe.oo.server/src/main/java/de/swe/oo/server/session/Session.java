@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * @author Franz
  * Main Server class. Contains references to pretty much all state of the server application and handles setup and
  * shutdown.
  */
@@ -67,7 +68,9 @@ public class Session extends Thread {
             player.sendMessage(msg);
         }
     }
-
+    /**
+     * @author Dai, Minghao
+     */
     public void sendTo(Message msg, String targetName){
         getPlayerByName(targetName).sendMessage(msg);
     }
@@ -89,6 +92,9 @@ public class Session extends Thread {
         return null;
     }
 
+    /**
+     * @author Franz
+     */
     public synchronized void createNewGame() {
         currentGame = new LoveLetterGame();
     }

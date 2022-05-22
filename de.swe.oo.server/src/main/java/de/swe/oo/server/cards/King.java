@@ -17,7 +17,9 @@ public class King extends Card {
     }
 
     /**Player may trade hands with other player
-     * @Author Nik,Minghao Li*/
+     * @author Nik,Minghao Li
+     */
+
     @Override
     public void effect(){
         /** create nameList with all the Names of active Players */

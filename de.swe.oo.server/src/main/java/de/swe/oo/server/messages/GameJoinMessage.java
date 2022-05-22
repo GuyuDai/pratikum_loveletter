@@ -3,6 +3,9 @@ package de.swe.oo.server.messages;
 import de.swe.oo.server.game.Game;
 import de.swe.oo.server.player.Player;
 
+/**
+ * @author Franz
+ */
 public class GameJoinMessage extends GameMessage {
     public GameJoinMessage() {
         super("");

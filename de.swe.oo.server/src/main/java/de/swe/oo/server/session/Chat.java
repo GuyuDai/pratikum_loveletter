@@ -2,6 +2,7 @@ package de.swe.oo.server.session;
 
 
 /**
+ * @author Franz
  * This isn't currently used and probably also not necessary anymore as the chat doesn't have to be too complicated.
  * If the main project needs chatrooms it might be a good idea to reactivate this class.
  */

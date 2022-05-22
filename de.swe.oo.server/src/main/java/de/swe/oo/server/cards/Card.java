@@ -3,6 +3,9 @@ package de.swe.oo.server.cards;
 import de.swe.oo.server.game.LoveLetterGame;
 import de.swe.oo.server.player.Player;
 
+/**
+ * @auther Dai, Nik, Nargess, Minghao, Nassrin
+ */
 public abstract class Card {
 
     protected String name;

@@ -1,5 +1,8 @@
 package de.swe.oo.server.messages;
 
+/**
+ * @author Franz
+ */
 public class GameInputRequestMessage extends GameRequestMessage {
 
     public GameInputRequestMessage(String messageText) {

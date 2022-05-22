@@ -4,6 +4,9 @@ import de.swe.oo.server.game.Game;
 import de.swe.oo.server.game.LoveLetterGame;
 import de.swe.oo.server.player.Player;
 
+/**
+ * @auther Dai, Nik, Nargess, Nassrin, Minghao
+ */
 public class Princess extends Card {
     private static String NAME = "PRINCESS";
     private static int VALUE = 8;

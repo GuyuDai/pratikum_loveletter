@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
+ * @author Franz
  * Contains objects necessary for a connection. Makes it easier to close the connection in both directions and thus make
  * the client shut down more gracefully
  */

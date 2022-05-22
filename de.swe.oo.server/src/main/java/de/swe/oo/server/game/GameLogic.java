@@ -2,6 +2,10 @@ package de.swe.oo.server.game;
 
 import de.swe.oo.server.player.Player;
 
+/**
+ * @author Dai, Minghao
+ */
+
 public interface GameLogic {
   Player getPlayerInCurrentTurn();  //whose turn
   void setPlayerInCurrentTurn();  //who is in the next turn
