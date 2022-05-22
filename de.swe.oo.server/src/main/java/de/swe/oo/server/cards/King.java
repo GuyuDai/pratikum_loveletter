@@ -17,29 +17,26 @@ public class King extends Card {
     }
 
     /**Player may trade hands with other player
-     * @Author Nik*/
+     * @Author Nik,Minghao Li*/
     @Override
     public void effect(){
         /** create nameList with all the Names of active Players */
-        String [] namelist = currentGame.getNameOfActivePlayers().toArray(new String[0]);
+        String [] nameList = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name to show their hands*/
-        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the names to trade decks", namelist));
+        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the names to trade decks", nameList));
         currentGame.waitForAllResponses();
         /** Chosen player needs to show his/her cards*/
         int responseIndex1 = parseInt(owner.getLastResponse().trim());
-        Player targetPlayer= currentGame.getPlayer(namelist[responseIndex1]);
-        owner.sendMessage(new GameMessage(currentGame.choosePlayerDeck(targetPlayer)));
-        owner.sendMessage(new GameMessage("Do you want to trade decks?"));
-        /** If yes decks get changed*/
-        if (owner.getLastResponse().equalsIgnoreCase("yes")){
-            /** card1 and card 2 as temporary safed cards */
+        Player targetPlayer= currentGame.getPlayer(nameList[responseIndex1]);
+        /** Card King is already used so can’t be traded，trade another card in owner‘hand to targetPlayer*/
             Card card1= targetPlayer.getHands(0);
-            Card card2= targetPlayer.getHands(1);
-            targetPlayer.setHands(owner.getHands(0));
-            targetPlayer.setHands(owner.getHands(1));
-            owner.setHands(card1);
-            owner.setHands(card2);
+            int i=0;
+            if(owner.getHands(i).getName().equals("King")){
+                targetPlayer.setHands(owner.getHands(i+1));
+                owner.setHands(card1);
         }
+        else  targetPlayer.setHands(owner.getHands(i));
+               owner.setHands(card1);
     }
 }
 

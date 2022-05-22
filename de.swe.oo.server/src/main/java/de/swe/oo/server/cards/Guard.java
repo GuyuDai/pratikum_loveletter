@@ -2,6 +2,7 @@ package de.swe.oo.server.cards;
 
 import de.swe.oo.server.game.Game;
 import de.swe.oo.server.game.LoveLetterGame;
+import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.player.Player;
 
@@ -36,20 +37,13 @@ public class Guard extends Card{
         int responseIndex2 = parseInt(owner.getLastResponse().trim());
         int response = parseInt(options[responseIndex2]);
         Card targetPlayerCardOne= targetPlayer.getHands(0);
-
+        /** each player except owner can only have one card when it is s not his/her turn*/
         /**If number is consistent with value of one of the cards eliminate player*/
 
-        if(response == targetPlayerCardOne.getValue() && targetPlayer.getHandsSize() == 1){
+        if(response == targetPlayerCardOne.getValue()){
             currentGame.playerKickedOff(targetPlayer);
             return;
         }
-        if(targetPlayer.getHandsSize() == 2){
-            Card targetPlayerCardTwo= targetPlayer.getHands(1);
-            if(response == targetPlayerCardTwo.getValue()){
-                currentGame.playerKickedOff(targetPlayer);
-                return;
-            }
-        }
-
+       else owner.sendMessage(new GameAnnounceMessage("You guess wrongly"));
     }
 }
