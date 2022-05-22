@@ -9,8 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -26,6 +28,10 @@ public class ViewModel extends Client {
     private TextField input;
     @FXML
     private Button button;
+    @FXML
+    private ImageView rulesCard;
+    @FXML
+    private Button rulesBtn;
 
     private final Model model;
     private boolean loggedIn;
@@ -138,6 +144,18 @@ public class ViewModel extends Client {
     public void handleKeyPressed(KeyEvent keyEvent){
         if (keyEvent.getCode() == KeyCode.ENTER) {
             handleButtonPress(null);
+        }
+    }
+
+
+    @FXML
+    public void showCardEffects(ActionEvent actionEvent) {
+        if (rulesCard.isVisible()) {
+            rulesCard.setVisible(false);
+            rulesBtn.setText("CardEffects");
+        } else {
+            rulesCard.setVisible(true);
+            rulesBtn.setText("Close");
         }
     }
 
