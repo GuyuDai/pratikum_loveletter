@@ -9,7 +9,13 @@ public class Deck {
     private CopyOnWriteArrayList<Card> usedCards;
     private LoveLetterGame currentgame;
 
-    public Deck(LoveLetterGame currentgame) { //create a deck for a round
+  /**
+   * @author dai
+   * when the deck is created, the ramaining cards and used cards are all empty at first
+   * these will only be initialized after a LoveLetterGame started
+   * @param currentgame
+   */
+  public Deck(LoveLetterGame currentgame) { //create a deck for a round
       this.currentgame = currentgame;
       this.remainingCards = new CopyOnWriteArrayList<Card>();
       this.usedCards = new CopyOnWriteArrayList<Card>();
@@ -24,17 +30,30 @@ public class Deck {
     return usedCards;
   }
 
+  /**
+   * @author dai
+   * get the first card in the remaining cards
+   * @return
+   */
   public Card getCardFromDeck(){
       return remainingCards.get(0);  //get the first card in the remaining cards
     }
 
-    public void removeCard(){  //at the beginning of a round, we need to remove some cards out of the round
+  /**
+   * @author dai
+   * this method is used to initialize the deck. At the beginning of a round, some cards need to removed out of the game
+   */
+  public void removeCard(){  //at the beginning of a round, we need to remove some cards out of the round
       Card temp = getCardFromDeck();
       usedCards.add(temp);
       remainingCards.remove(temp);
     }
 
-    public void draw(Player player){  //a player draws card
+  /**
+   * @author dai
+   * @param player is who draws a card
+   */
+  public void draw(Player player){  //a player draws card
       Card card = getCardFromDeck();  //get a card from the game deck
       card.setOwner(player);  //this card will be assigned to the player who draw card
       player.setHands(card);  //this card will be added to the player's hand

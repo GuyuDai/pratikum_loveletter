@@ -44,21 +44,32 @@ public class LoveLetterGame extends Game implements GameLogic{
         return false;
     }
 
+    /**
+     * @author dai
+     * when a game started successfully, first initialize the round,
+     * and go into the while loop if the game is still going on
+     * in the while loop, we handle the behavior of a player
+     * after the turn ends, we will check whether the rounds end or the whole game ends
+     */
     @Override
     public void run() {
         sendToAllPlayers(new GameAnnounceMessage("The Game has been started successfully!"));
         roundInitialize();
         while (isGoingOn) {
             handleTurn();
-            ifRoundEnd();
             turnEnd();
+            ifRoundEnd();
         }
         cleanUp();
     }
 
+    /**
+     * @author dai
+     *this method is used to represent the behavior of a player in a turn
+     */
     public void handleTurn() {
         Player player = playerInCurrentTurn;
-        sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + "'s turn."));
+        sendToAllPlayers(new GameAnnounceMessage("It's " + player.getName() + " 's turn."));
         getPlayerInCurrentTurn().resetIsProtected();  //the effect of handmaid expired
         deck.draw(player);  //player draws card
         String[] options = player.showHands();  //use space to split the String hands to Array
@@ -71,6 +82,11 @@ public class LoveLetterGame extends Game implements GameLogic{
         announceScore();
     }
 
+    /**
+     * @author dai
+     * reorder the active player list regarding the last date with princess of each player
+     * if there is a tie, the order will be the same as the order in which the game was added
+     */
     @Override
     public void reorderPlayers() {
         int temp = round;  //first set a temporary variable equals the current round
@@ -92,6 +108,10 @@ public class LoveLetterGame extends Game implements GameLogic{
         setPlayerInCurrentTurn();
     }
 
+    /**
+     * @author dai
+     * initialize the target number of the affection tokens
+     */
     public void affectionInitialize(){
         switch (this.players.size()){
             case 2:
@@ -104,15 +124,25 @@ public class LoveLetterGame extends Game implements GameLogic{
                 this.targetAffection = 4;
                 break;
         }
-        System.out.println("target affection : " + targetAffection);  //for testing
+        //System.out.println("target affection : " + targetAffection);  //for testing
     }
 
+    /**
+     * @author dai
+     * when a turn ends, the player in current turn will be removed to the end of the list of active players
+     * and the player in current turn will be reseted
+     */
     public void turnEnd(){  //current player will go to the end of activePlayers, and reset the playerInCurrentTurn
         activePlayers.remove(getPlayerInCurrentTurn());
         activePlayers.add(getPlayerInCurrentTurn());
         setPlayerInCurrentTurn();  //next player will take his or her turn
     }
 
+    /**
+     * @author dai
+     * check if a round ends, if true, handle the behavior of the winner
+     * then check if the whole game ends
+     */
     public void ifRoundEnd(){  //check if a round end or not
         if(getNumberOfActivePlayers() == 1){  //check if there is only one active player
             playerWin(activePlayers.get(0));  //is true, this player will be the winner
@@ -144,8 +174,13 @@ public class LoveLetterGame extends Game implements GameLogic{
         return;
     }
 
+    /**
+     * @author dai
+     * handle the behavior of a winner
+     * @param player is the winner
+     */
     public void playerWin(Player player){  //when a player wins, this method will be called
-        sendToAllPlayers(new GameAnnounceMessage(player.getName() + "win!"));  //announce who wins
+        sendToAllPlayers(new GameAnnounceMessage(player.getName() + " wins!"));  //announce who wins
         player.setLastDateOfDate(this.getRound());  //the winner will have a date on the day "round" with princess
         player.setAffectionTockens(player.getAffectionTockens() + 1);  //winner's affection tokens +1
     }
@@ -175,6 +210,13 @@ public class LoveLetterGame extends Game implements GameLogic{
                 break;
         }
     }
+
+    /**
+     * @author dai
+     * inside this method these things will be down:
+     * round adds, initialize the scores of players, target affection tokens, and deck
+     * reorder the players, and players draw their first card
+     */
     public void roundInitialize(){  //initialize a new round
         round++;  //round +1
         sendToAllPlayers(new GameAnnounceMessage("Round " + round));
@@ -184,13 +226,20 @@ public class LoveLetterGame extends Game implements GameLogic{
         initializeDeck();  //initialize the card deck
         for(Player player : activePlayers){  //everyone draws a card
             deck.draw(player);
+            player.sendMessage(new GameAnnounceMessage
+                ("your first card is " + player.getHands(0).getName()));
         }
     }
+
+    /**
+     * @author dai
+     * check if the game ends, if not true, a new round will be initialized
+     */
     public void ifGameEnd(){  //check if the whole game end or not
         for(Player player : players){  //check whether there is a player achieve the target number of the affection tokens
             if(player.getAffectionTockens() == targetAffection){  //if true
                 sendToAllPlayers(new GameAnnounceMessage  //announce who is the final winner
-                    (player.getName() + "is the final winner"));
+                    (player.getName() + " is the final winner"));
                 isGoingOn = false;  //the game will not be going on
                 return;
             }
@@ -208,12 +257,16 @@ public class LoveLetterGame extends Game implements GameLogic{
         this.playerInCurrentTurn = activePlayers.get(0);
     }
 
+    /**
+     * @author dai
+     * @param targetPlayer this variable player will be removed out of the active players list
+     */
     public void playerKickedOff(Player targetPlayer){  //kick off a player in a certain round
         int pointer = 0;  //temp variable to traverse the activePlayers List
         while(pointer < this.getNumberOfActivePlayers()){  //traverse the activePlayers
             if(activePlayers.get(pointer).getName().equals(targetPlayer.getName())){  //if the current pointed player is the targetPlayer
                 sendToAllPlayers(new GameAnnounceMessage
-                    (targetPlayer.getName() + "is out of this round"));  // announce who is kicked off
+                    (targetPlayer.getName() + " is out of this round"));  // announce who is kicked off
                 activePlayers.remove(pointer);  //remove this player in the activePlayers List
                 setPlayerInCurrentTurn();  //to prevent that the removed player is the head of activePlayers
                 return;  //end the method
@@ -221,7 +274,7 @@ public class LoveLetterGame extends Game implements GameLogic{
             pointer ++;  //point to the next active player
         }
         sendToAllPlayers(new ErrorMessage  //if the target player is not active
-            (targetPlayer.getName() + "is not active in the current game"));
+            (targetPlayer.getName() + " is not active in the current game"));
     }
 
     public int getRound() {
@@ -264,11 +317,21 @@ public class LoveLetterGame extends Game implements GameLogic{
         }
     }
 
-
+    /**
+     * @author dai
+     * this method is better not to use anymore
+     * @param targetPlayer
+     * @return
+     */
     public String choosePlayerDeck(Player targetPlayer){
         return targetPlayer.showHands().toString();
     }
 
+    /**
+     * @author dai
+     * @param targetName is the name of the player who you want to choose
+     * @return the target player as type Player
+     */
     //when a player uses some kind of cards(like Baron), it is required to choose a certain player
     //but calling this method has a risk to return a null
     //maybe this problem could be handled by using a while(true) loop, to check the output of this method

@@ -114,6 +114,10 @@ public class Player {
         this.affectionTockens = affectionTockens;
     }
 
+    /**
+     * @author dai
+     * @return a String Array of a player's hand
+     */
     public String[] showHands(){  //return the cards from player's hand in String type
         String temp = "";
         for(Card card : hands){
@@ -151,12 +155,20 @@ public class Player {
         this.currentgame = currentgame;
     }
 
+    /**
+     * @author dai
+     * @param card the card which is discarded by a certain player
+     */
     public void discard(Card card){
         card.effect();
         hands.remove(card);
         this.currentgame.getDeck().getUsedCards().add(card);
     }
 
+    /**
+     *@author dai
+     * initialize the hand of a player as an empty list
+     */
     public void handInitialize(){
         this.hands = new ArrayList<>(2);
     }
