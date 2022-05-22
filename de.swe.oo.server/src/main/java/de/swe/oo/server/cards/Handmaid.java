@@ -22,7 +22,7 @@ public class Handmaid extends Card {
         currentGame.sendToAllPlayers(new GameAnnounceMessage
             (owner.getName() + " is now immune to any Effects!"));
         /**removes the current player for now, as he is immune (currentplayerlist only stores player which can be effected)*/
-        currentGame.removeCurrentPlayer(owner);
+        //currentGame.removeCurrentPlayer(owner);
     }
 }
 
