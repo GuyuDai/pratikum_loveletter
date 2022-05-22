@@ -11,7 +11,7 @@ public class Baron extends Card {
     private static String NAME = "Baron";
     private static int VALUE = 3;
 
-    public Baron(LoveLetterGame currentGame, Player owner) {
+    public Baron(LoveLetterGame currentGame) {
         super("Baron", currentGame);
     }
 

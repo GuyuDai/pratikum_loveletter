@@ -10,7 +10,7 @@ public class Handmaid extends Card {
     private static String NAME = "Handmaid";
     private static int VALUE = 4;
 
-    public Handmaid(LoveLetterGame currentGame, Player owner) {
+    public Handmaid(LoveLetterGame currentGame) {
         super("Handmaid", currentGame);
     }
 

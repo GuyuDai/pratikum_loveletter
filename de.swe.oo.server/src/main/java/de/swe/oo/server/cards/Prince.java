@@ -10,7 +10,7 @@ public class Prince extends Card {
     private static String NAME = "Prince";
     private static int VALUE = 5;
 
-    public Prince(LoveLetterGame currentGame, Player owner) {
+    public Prince(LoveLetterGame currentGame) {
         super("Prince",currentGame);
     }
 

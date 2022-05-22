@@ -12,7 +12,7 @@ public class Guard extends Card{
     private static String NAME = "Guard";
     private static int VALUE = 1;
 
-    public Guard(LoveLetterGame currentGame, Player owner) {
+    public Guard(LoveLetterGame currentGame) {
         super("Guard",currentGame);
     }
 

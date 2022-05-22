@@ -10,7 +10,7 @@ public class Priest extends Card {
     private static String NAME = "Priest";
     private static int VALUE = 2;
 
-    public Priest(LoveLetterGame currentGame, Player owner) {
+    public Priest(LoveLetterGame currentGame) {
         super("Priest", currentGame);
     }
 
