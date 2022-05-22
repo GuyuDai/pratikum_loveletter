@@ -56,7 +56,7 @@ public class Deck {
   public void draw(Player player){  //a player draws card
       Card card = getCardFromDeck();  //get a card from the game deck
       card.setOwner(player);  //this card will be assigned to the player who draw card
-      player.setHands(card);  //this card will be added to the player's hand
+      player.addHands(card);  //this card will be added to the player's hand
       remainingCards.remove(card);  //remove this card from the deck
     }
 }

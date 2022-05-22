@@ -1,6 +1,7 @@
 package de.swe.oo.server.cards;
 
 import de.swe.oo.server.game.LoveLetterGame;
+import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
@@ -23,7 +24,7 @@ public class Countess extends Card {
                 effect();
             }
         }
-            owner.sendMessage(new GameMessage("This card was played because you had a Prince or a King in your Hands"));
+            owner.sendMessage(new GameAnnounceMessage("This card was played because you had a Prince or a King in your Hands"));
     }
 }
 

@@ -32,11 +32,11 @@ public class King extends Card {
             Card card1= targetPlayer.getHands(0);
             int i=0;
             if(owner.getHands(i).getName().equals("King")){
-                targetPlayer.setHands(owner.getHands(i+1));
-                owner.setHands(card1);
+                targetPlayer.setHands(owner.getHands(i+1),i);
+                owner.setHands(card1,i+1);
         }
-        else  targetPlayer.setHands(owner.getHands(i));
-               owner.setHands(card1);
+        else  targetPlayer.setHands(owner.getHands(i),i);
+               owner.setHands(card1,i);
     }
 }
 

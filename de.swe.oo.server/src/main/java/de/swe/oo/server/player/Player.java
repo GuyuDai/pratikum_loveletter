@@ -166,8 +166,12 @@ public class Player {
         return temp.trim().split(" ");
     }
 
-    public void setHands(Card card) {
+    public void addHands(Card card) {
         hands.add(card);
+    }
+
+    public void setHands(Card card,int i){
+        hands.set(i,card);
     }
 
     public Card getHands(int i) {
