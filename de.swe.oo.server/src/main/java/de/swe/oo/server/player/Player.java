@@ -17,7 +17,7 @@ public class Player {
 
     private int affectionTockens = 0;
 
-    private ArrayList<Card> hands = new ArrayList<>(2);
+    private ArrayList<Card> hands;
 
 
     private Session session;
@@ -92,7 +92,13 @@ public class Player {
     }
 
     public String getLastResponse() {
-        return lastResponse;
+        String result = lastResponse;
+        resetLastResponse();
+        return result;
+    }
+
+    public void resetLastResponse(){
+        lastResponse = null;
     }
 
 
@@ -119,6 +125,10 @@ public class Player {
         this.affectionTockens = affectionTockens;
     }
 
+    /**
+     * @author Dai
+     * @return a String Array of a player's hand
+     */
     public String[] showHands(){  //return the cards from player's hand in String type
         String temp = "";
         for(Card card : hands){
@@ -152,13 +162,25 @@ public class Player {
         return currentgame;
     }
 
-    public void setCurrentgame(LoveLetterGame currentgame) {
+    public void setCurrentGame(LoveLetterGame currentgame) {
         this.currentgame = currentgame;
     }
 
+    /**
+     * @author dai
+     * @param card the card which is discarded by a certain player
+     */
     public void discard(Card card){
         card.effect();
         hands.remove(card);
         this.currentgame.getDeck().getUsedCards().add(card);
+    }
+
+    /**
+     *@author dai
+     * initialize the hand of a player as an empty list
+     */
+    public void handInitialize(){
+        this.hands = new ArrayList<>(2);
     }
 }

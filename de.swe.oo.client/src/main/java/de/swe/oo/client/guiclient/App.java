@@ -1,10 +1,13 @@
 package de.swe.oo.client.guiclient;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -39,8 +42,8 @@ public class App extends Application {
         System.out.println("2: start()");
 
         // setting stage title and icon
-        primaryStage.setTitle("Demo");
-        primaryStage.getIcons().add(loadIcon());
+        primaryStage.setTitle("Love Letter Game");
+        primaryStage.getIcons().add(loadTitle());
 
         // loading scene into primaryStage
         Scene scene = loadScene();
@@ -59,15 +62,15 @@ public class App extends Application {
     private Scene loadScene() throws IOException {
         Parent root;
         if (CREATE_VIEW_FROM_FXML) {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/demo.fxml")));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/game.fxml")));
         } else {
             root = new View();
         }
         return new Scene(root);
     }
 
-    private Image loadIcon() {
-        URL url = getClass().getResource("/demo-icon.png");
+    private Image loadTitle() {
+        URL url = getClass().getResource("/LL title 1.png");
         return new Image(Objects.requireNonNull(url).toString());
     }
 }

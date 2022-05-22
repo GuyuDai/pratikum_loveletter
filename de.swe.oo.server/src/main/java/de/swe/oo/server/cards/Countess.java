@@ -9,16 +9,16 @@ public class Countess extends Card {
     private static String NAME = "Countess";
     private static int VALUE = 7;
 
-    public Countess(LoveLetterGame currentGame, Player owner) {
+    public Countess(LoveLetterGame currentGame) {
         super("Countess", currentGame);
-
     }
 
     public void effect(){
         /** If the player holds this card either and the King or the Prince,
-         * this card must be played immediately, which otherwise does nothing*/
-        String[] handsdeck = this.owner.showHands();
-        for (String s : handsdeck) {
+         * this card must be played immediately, which otherwise does nothing
+         * @Author Nik*/
+        String[] handsDeck = this.owner.showHands();
+        for (String s : handsDeck) {
             if (s.contains("King") || s.contains("Prince")) {
                 effect();
             }
