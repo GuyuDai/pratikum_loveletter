@@ -19,14 +19,14 @@
     <!--Love Letter title end>
 
     <!-Rules Card-->
-   <Pane prefHeight="140.0" prefWidth="445.0">
+   <Pane prefHeight="307.0" prefWidth="547.0">
       <children>
-         <Button fx:id="rulesBtn" layoutX="38.0" layoutY="49.0" mnemonicParsing="false" onAction="#showCardEffects" prefHeight="35.0" prefWidth="123.0" style="-fx-background-color: #0000007D; -fx-background-radius: 7;" text="CardEffects" textFill="#c6b7b7">
+         <Button fx:id="rulesBtn" layoutX="37.0" layoutY="93.0" mnemonicParsing="false" onAction="#showCardEffects" prefHeight="35.0" prefWidth="123.0" style="-fx-background-color: #0000007D; -fx-background-radius: 7;" text="CardEffects" textFill="#c6b7b7">
             <font>
                <Font name="Charter Roman" size="18.0" />
             </font>
          </Button>
-         <ImageView fx:id="rulesCard" fitHeight="224.0" fitWidth="273.0" layoutX="232.0" layoutY="-45.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <ImageView fx:id="rulesCard" fitHeight="221.0" fitWidth="181.0" layoutX="300.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
             <image>
                <Image url="@rulesCard.png" />
             </image>
