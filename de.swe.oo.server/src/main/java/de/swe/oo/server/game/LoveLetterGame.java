@@ -99,7 +99,7 @@ public class LoveLetterGame extends Game implements GameLogic{
             for(Player player : players){
                 if(player.getLastDateOfDate() == temp){
                     activePlayers.add(player);
-                    player.setCurrentgame(this);
+                    player.setCurrentGame(this);
                     player.handInitialize();
                 }
             }
@@ -185,6 +185,10 @@ public class LoveLetterGame extends Game implements GameLogic{
         player.setAffectionTockens(player.getAffectionTockens() + 1);  //winner's affection tokens +1
     }
 
+    /**
+     * Initializing the Deck
+     * @author Nassrin
+     */
     public void initializeDeck(){
         this.deck = new Deck(this);
         //create 16 specific cards (like new Princess), add them to deck

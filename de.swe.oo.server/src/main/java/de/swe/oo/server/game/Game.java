@@ -132,7 +132,7 @@ public class Game extends Thread {
         return scoreString;
     }
 
-    protected void waitForAllResponses() {
+    public void waitForAllResponses() {
         boolean requestsOngoing = areRequestsOngoing();
         while (isGoingOn && requestsOngoing) {
             try {
