@@ -8,11 +8,11 @@ import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
 
 public class Handmaid extends Card {
-    private static String NAME = "Handmaid";
+    private static String NAME = "HANDMAID";
     private static int VALUE = 4;
 
     public Handmaid(LoveLetterGame currentGame) {
-        super("Handmaid", currentGame);
+        super("HANDMAID", currentGame);
     }
 
     /** Player cannot be affected by any other player´s cards until their next turn*/

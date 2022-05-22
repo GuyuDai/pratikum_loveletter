@@ -9,11 +9,11 @@ import de.swe.oo.server.player.Player;
 import static java.lang.Integer.parseInt;
 
 public class King extends Card {
-    private static String NAME = "King";
+    private static String NAME = "KING";
     private static int VALUE = 6;
 
     public King(LoveLetterGame currentGame) {
-        super("King", currentGame);
+        super("KING", currentGame);
     }
 
     /**Player may trade hands with other player
@@ -23,7 +23,7 @@ public class King extends Card {
         /** create nameList with all the Names of active Players */
         String [] nameList = currentGame.getNameOfActivePlayers().toArray(new String[0]);
         /** Player can choose a name to show their hands*/
-        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one of the names to trade decks", nameList));
+        owner.requestFromPlayer(new GameChoiceRequestMessage("Choose one player to trade your cards!", nameList));
         currentGame.waitForAllResponses();
         /** Chosen player needs to show his/her cards*/
         int responseIndex1 = parseInt(owner.getLastResponse().trim());
@@ -31,7 +31,7 @@ public class King extends Card {
         /** Card King is already used so can’t be traded，trade another card in owner‘hand to targetPlayer*/
             Card card1= targetPlayer.getHands(0);
             int i=0;
-            if(owner.getHands(i).getName().equals("King")){
+            if(owner.getHands(i).getName().equals("KING")){
                 targetPlayer.setHands(owner.getHands(i+1));
                 owner.setHands(card1);
         }

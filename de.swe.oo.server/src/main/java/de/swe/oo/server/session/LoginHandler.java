@@ -36,7 +36,7 @@ public class LoginHandler extends Thread {
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            System.out.println("Error while trying to start listening for connections." + e.getMessage());
+            System.out.println("Error while trying to connect." + e.getMessage());
             return;
         }
         while (true) {
@@ -78,7 +78,7 @@ public class LoginHandler extends Thread {
         if (session.checkIfValidUsername(newName)) {
             acceptPlayer(newName);
         } else {
-            out.println("ERROR Invalid Username");
+            out.println("This username does already exist!");
             try {
                 abortCurrentSocket();
             } catch (IOException e) {
@@ -108,14 +108,14 @@ public class LoginHandler extends Thread {
     }
 
     private void greet(Player player) {
-        Message msg = new ChatMessage("Willkommen " + player.getName() + ".");
+        Message msg = new ChatMessage("Welcome " + player.getName() + ".");
         player.sendMessage(msg);
     }
 
     private void announce(Player newPlayer) {
         for (Player player : session.players) {
             if (player.getName() != newPlayer.getName()) {
-                Message msg = new ChatMessage(newPlayer.getName() + " hat den Raum betreten.");
+                Message msg = new ChatMessage(newPlayer.getName() + " joined the room.");
                 player.sendMessage(msg);
             }
         }
