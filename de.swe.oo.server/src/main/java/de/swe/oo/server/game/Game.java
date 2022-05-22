@@ -12,7 +12,7 @@ public class Game extends Thread {
     protected int minPlayers;
     protected int maxPlayers;
 
-    protected int targetAffection;
+    public int targetAffection;
 
     protected boolean isGoingOn;
     protected CopyOnWriteArrayList<Player> players;
@@ -134,7 +134,7 @@ public class Game extends Thread {
         return scoreString;
     }
 
-    protected void waitForAllResponses() {
+    public void waitForAllResponses() {
         boolean requestsOngoing = areRequestsOngoing();
         while (isGoingOn && requestsOngoing) {
             try {

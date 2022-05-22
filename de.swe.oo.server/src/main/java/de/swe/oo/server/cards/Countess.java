@@ -11,6 +11,10 @@ public class Countess extends Card {
 
     public Countess(LoveLetterGame currentGame, Player owner) {
         super("Countess", currentGame);
+
+    }
+
+    public void effect(){
         /** If the player holds this card either and the King or the Prince,
          * this card must be played immediately, which otherwise does nothing*/
         String[] handsdeck = this.owner.showHands();
@@ -19,9 +23,6 @@ public class Countess extends Card {
                 effect();
             }
         }
-    }
-
-    public void effect(){
             owner.sendMessage(new GameMessage("This card was played because you had a Prince or a King in your Hands"));
     }
 }

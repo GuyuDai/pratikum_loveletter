@@ -23,16 +23,16 @@ public class Baron extends Card {
     /** Player can choose a name to show their hands*/
     owner.sendMessage(new GameChoiceRequestMessage("Choose one of the names to compare deck", namelist));
     /** Chosen player needs to show his/her cards*/
-    Player targetPlayer= currentGame.getPlayer(owner.getLastResponse());
-    owner.sendMessage(new GameMessage(currentGame.choosePlayerDeck(targetPlayer)));
+    int responseindex= parseInt(owner.getLastResponse().trim());
+    Player targetPlayer= currentGame.getPlayer(namelist[responseindex]);
     /** compare hands and eliminate player with lower hand*/
     Card targetPlayerCardOne= targetPlayer.getHands(0);
     Card targetPlayerCardTwo= targetPlayer.getHands(1);
     Card ownerCardOne= owner.getHands(0);
     Card ownerCardTwo= owner.getHands(1);
     /** The player with the smaller hand looses */
-    int ownerCardsAddedValue = ownerCardOne.value + ownerCardTwo.value;
-    int targetPlayerCardsAddedValue= targetPlayerCardOne.value + targetPlayerCardTwo.value;
+    int ownerCardsAddedValue = ownerCardOne.getValue() + ownerCardTwo.getValue();
+    int targetPlayerCardsAddedValue= targetPlayerCardOne.getValue() + targetPlayerCardTwo.getValue();
     if (ownerCardsAddedValue<targetPlayerCardsAddedValue){
         currentGame.playerKickedOff(owner);
     } else   currentGame.playerKickedOff(targetPlayer);

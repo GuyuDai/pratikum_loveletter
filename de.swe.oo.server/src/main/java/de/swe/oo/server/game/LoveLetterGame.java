@@ -1,8 +1,6 @@
 package de.swe.oo.server.game;
 
-import de.swe.oo.server.cards.Card;
-import de.swe.oo.server.cards.Deck;
-import de.swe.oo.server.cards.Princess;
+import de.swe.oo.server.cards.*;
 import de.swe.oo.server.messages.ErrorMessage;
 import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
@@ -22,7 +20,7 @@ public class LoveLetterGame extends Game implements GameLogic{
 
     private List<Player> currentPlayers;
 
-    protected Player playerInCurrentTurn = null;
+    protected Player playerInCurrentTurn ;
 
     protected int round = 0;
 
@@ -139,17 +137,29 @@ public class LoveLetterGame extends Game implements GameLogic{
     }
 
     public void playerWin(Player player){  //when a player wins, this method will be called
-        sendToAllPlayers(new GameAnnounceMessage(player.getName() + "win!"));  //announce who wins
+        sendToAllPlayers(new GameAnnounceMessage(player.getName() + " win!"));  //announce who wins
         player.setLastDateOfDate(this.getRound());  //the winner will have a date on the day "round" with princess
         player.setAffectionTockens(player.getAffectionTockens() + 1);  //winner's affection tokens +1
     }
 
     public void initializeDeck(){
         this.deck = new Deck(this);
-        //create 16 specific cards (like new Princess), add them to deck
-        for(int i = 16; i > 0; i--){
-            deck.getRemainingCards().add(new Princess(this,null));  //for testing
-        }
+        deck.getRemainingCards().add(new Guard(this,null));  //for testing
+        deck.getRemainingCards().add(new Guard(this,null));
+        deck.getRemainingCards().add(new Guard(this,null));
+        deck.getRemainingCards().add(new Guard(this,null));
+        deck.getRemainingCards().add(new Guard(this,null));
+        deck.getRemainingCards().add(new Priest(this,null));
+        deck.getRemainingCards().add(new Priest(this,null));
+        deck.getRemainingCards().add(new Baron(this,null));
+        deck.getRemainingCards().add(new Baron(this,null));
+        deck.getRemainingCards().add(new Handmaid(this,null));
+        deck.getRemainingCards().add(new Handmaid(this,null));
+        deck.getRemainingCards().add(new Prince(this,null));
+        deck.getRemainingCards().add(new Prince(this,null));
+        deck.getRemainingCards().add(new King(this,null));
+        deck.getRemainingCards().add(new Countess(this,null));
+        deck.getRemainingCards().add(new Princess(this,null));
         switch(activePlayers.size()){  //remove some cards
             case 2:
                 deck.removeCard();
@@ -181,7 +191,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         for(Player player : players){  //check whether there is a player achieve the target number of the affection tokens
             if(player.getAffectionTockens() == targetAffection){  //if true
                 sendToAllPlayers(new GameAnnounceMessage  //announce who is the final winner
-                    (player.getName() + "is the final winner"));
+                    (player.getName() + " is the final winner"));
                 isGoingOn = false;  //the game will not be going on
                 return;
             }
@@ -204,7 +214,7 @@ public class LoveLetterGame extends Game implements GameLogic{
         while(pointer < this.getNumberOfActivePlayers()){  //traverse the activePlayers
             if(activePlayers.get(pointer).getName().equals(targetPlayer.getName())){  //if the current pointed player is the targetPlayer
                 sendToAllPlayers(new GameAnnounceMessage
-                    (targetPlayer.getName() + "is out of this round"));  // announce who is kicked off
+                    (targetPlayer.getName() + " is out of this round"));  // announce who is kicked off
                 activePlayers.remove(pointer);  //remove this player in the activePlayers List
                 setPlayerInCurrentTurn();  //to prevent that the removed player is the head of activePlayers
                 return;  //end the method
@@ -212,7 +222,7 @@ public class LoveLetterGame extends Game implements GameLogic{
             pointer ++;  //point to the next active player
         }
         sendToAllPlayers(new ErrorMessage  //if the target player is not active
-            (targetPlayer.getName() + "is not active in the current game"));
+            (targetPlayer.getName() + " is not active in the current game"));
     }
 
     public int getRound() {

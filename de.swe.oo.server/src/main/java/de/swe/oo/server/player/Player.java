@@ -4,10 +4,7 @@ package de.swe.oo.server.player;
 import de.swe.oo.server.cards.Card;
 import de.swe.oo.server.game.Game;
 import de.swe.oo.server.game.LoveLetterGame;
-import de.swe.oo.server.messages.ErrorMessage;
-import de.swe.oo.server.messages.GameAnnounceMessage;
-import de.swe.oo.server.messages.GameRequestMessage;
-import de.swe.oo.server.messages.Message;
+import de.swe.oo.server.messages.*;
 import de.swe.oo.server.session.Session;
 
 import java.net.Socket;
@@ -97,6 +94,14 @@ public class Player {
     public String getLastResponse() {
         return lastResponse;
     }
+
+
+    public void resetLastResponse(GameResponseMessage msg){
+        this.lastResponse=lastResponse;
+
+    }
+
+
 
     public int getLastDateOfDate() {
         return lastDateOfDate;

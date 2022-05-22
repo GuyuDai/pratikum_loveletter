@@ -21,22 +21,22 @@ public abstract class Card {
 
             case "Priest":
                 this.value = 2;
-                this.name="Guard";
+                this.name="Priest";
                 break;
 
             case "Baron":
                 this.value = 3;
-                this.name="Guard";
+                this.name="Baron";
                 break;
 
             case "Handmaid":
                 this.value = 4;
-                this.name="Guard";
+                this.name="Handmaid";
                 break;
 
             case "Prince":
                 this.value = 5;
-                this.name="Guard";
+                this.name="Prince";
                 break;
 
             case "King":
@@ -46,6 +46,7 @@ public abstract class Card {
 
             case "Countess":
                 this.value = 7;
+                this.name="Countess";
                 break;
 
             case "Princess":
