@@ -33,6 +33,7 @@ public class GUIConnectionListener extends Listener {
             for (int i=1; i<args.length; ++i){    //The prompt is in the first slot
                 client.outputChat("Choice " + (i-1) +": " + unEncodedSpaces(args[i]));
             }
+            client.outputChat("Please enter the desired number");
         }
     }
     private String unEncodedSpaces(String in){

@@ -10,9 +10,6 @@ import de.swe.oo.server.session.Session;
 import java.net.Socket;
 import java.util.ArrayList;
 
-/**
- * @author Franz
- */
 public class Player {
     private String name;
 
@@ -123,34 +120,24 @@ public class Player {
         }
     }
 
-    /**
-     * @author Dai, Minghao
-     */
     public String getLastResponse() {
         String result = lastResponse;
         resetLastResponse();
         return result;
     }
 
-    /**
-     * @author Dai, Minghao
-     */
     public void resetLastResponse(){
         lastResponse = null;
     }
 
-    /**
-     * @author Dai, Minghao
-     */
+
     public void resetLastResponse(GameResponseMessage msg){
         this.lastResponse=lastResponse;
 
     }
 
 
-    /**
-     * @author Dai, Minghao
-     */
+
     public int getLastDateOfDate() {
         return lastDateOfDate;
     }
@@ -179,11 +166,12 @@ public class Player {
         return temp.trim().split(" ");
     }
 
-    /**
-     * @author Nik
-     */
-    public void setHands(Card card) {
+    public void addHands(Card card) {
         hands.add(card);
+    }
+
+    public void setHands(Card card,int i){
+        hands.set(i,card);
     }
 
     public Card getHands(int i) {
@@ -194,9 +182,7 @@ public class Player {
         return hands.size();
     }
 
-    /**
-     * @author Dai, Minghao
-     */
+
     public boolean getIsProtected(){
         return isProtected;
     }
