@@ -30,7 +30,10 @@ public class Baron extends Card {
     /** Chosen player needs to show his/her cards*/
     int responseIndex1 = parseInt(owner.getLastResponse().trim());
     Player targetPlayer= currentGame.getPlayer(nameList[responseIndex1]);
-
+        if (targetPlayer==null){
+            owner.sendMessage(new GameAnnounceMessage("this player is protected,so your card have no effect"));
+            return;
+        }
     /** compare hands and eliminate player with lower hand*/
     Card targetPlayerCardOne= targetPlayer.getHands(0);
     Card ownerCardOne= owner.getHands(0);

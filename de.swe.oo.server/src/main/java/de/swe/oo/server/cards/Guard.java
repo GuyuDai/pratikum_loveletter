@@ -29,6 +29,10 @@ public class Guard extends Card{
         currentGame.waitForAllResponses();
         int responseIndex1 = parseInt(owner.getLastResponse().trim());
         Player targetPlayer= currentGame.getPlayer(namelist[responseIndex1]);
+        if (targetPlayer==null){
+            owner.sendMessage(new GameAnnounceMessage("this player is protected,so your card have no effect"));
+            return;
+        }
         /** Choose number value of cards*/
         String[] options = {"2", "3", "4", "5", "6", "7", "8"};
         owner.requestFromPlayer((new GameChoiceRequestMessage("Now choose a number!", options)));
