@@ -30,6 +30,10 @@ public class Priest extends Card {
         /** Chosen player needs to show his/her cards*/
         int responseIndex1 = parseInt(owner.getLastResponse().trim());
         Player targetPlayer= currentGame.getPlayer(namelist[responseIndex1]);
+        if (targetPlayer==null){
+            owner.sendMessage(new GameAnnounceMessage("this player is protected,so your card have no effect"));
+            return;
+        }
            Card card1 = targetPlayer.getHands(0);
         /** each player except owner can only have one card when it is s not his/her turn*/
         owner.sendMessage(new GameAnnounceMessage(targetPlayer.getName()+"'s card is "+card1.getName()));

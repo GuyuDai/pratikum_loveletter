@@ -2,6 +2,7 @@ package de.swe.oo.server.cards;
 
 import de.swe.oo.server.game.Game;
 import de.swe.oo.server.game.LoveLetterGame;
+import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
@@ -30,6 +31,10 @@ public class King extends Card {
         /** Chosen player needs to show his/her cards*/
         int responseIndex1 = parseInt(owner.getLastResponse().trim());
         Player targetPlayer= currentGame.getPlayer(nameList[responseIndex1]);
+        if (targetPlayer==null){
+            owner.sendMessage(new GameAnnounceMessage("this player is protected,so your card have no effect"));
+            return;
+        }
         /** Card King is already used so can’t be traded，trade another card in owner‘hand to targetPlayer*/
             Card card1= targetPlayer.getHands(0);
             int i=0;

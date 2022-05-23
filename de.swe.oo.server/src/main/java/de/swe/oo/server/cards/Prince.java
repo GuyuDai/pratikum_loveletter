@@ -2,6 +2,7 @@ package de.swe.oo.server.cards;
 
 import de.swe.oo.server.game.Game;
 import de.swe.oo.server.game.LoveLetterGame;
+import de.swe.oo.server.messages.GameAnnounceMessage;
 import de.swe.oo.server.messages.GameChoiceRequestMessage;
 import de.swe.oo.server.messages.GameMessage;
 import de.swe.oo.server.player.Player;
@@ -26,6 +27,10 @@ public class Prince extends Card {
         currentGame.waitForAllResponses();
         int responseIndex = parseInt(owner.getLastResponse().trim());
         Player targetPlayer= currentGame.getPlayer(namelist[responseIndex]);
+        if (targetPlayer==null){
+            owner.sendMessage(new GameAnnounceMessage("this player is protected,so your card have no effect"));
+            return;
+        }
         //get the target player's hand and check whether it is Princess
         Card targetCard = targetPlayer.getHands(0);
         if(targetCard.getName().equals("PRINCESS")){  //if true, this player discard Princess
